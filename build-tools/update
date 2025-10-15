@@ -127,7 +127,10 @@ try {
 	);
 } catch {}
 
+console.log("compileOpts.ignore?")
+
 if (!compileOpts.ignore) {
+	console.log("COMPILING graphics.js")
 	compiledFiles += compiler.compileToFile(
 		['play.pokemonshowdown.com/src/battle-animations.ts', 'play.pokemonshowdown.com/src/battle-animations-moves.ts'],
 		'play.pokemonshowdown.com/data/graphics.js',

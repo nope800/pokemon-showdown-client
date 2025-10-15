@@ -2826,6 +2826,8 @@ export class PokemonSprite extends Sprite {
 			else $prevhp.addClass('prevhp-yellow prevhp-red');
 		}
 		let status = '';
+		console.log("LOOKING AT STATUSES")
+		console.log(pokemon.status)
 		if (pokemon.status === 'brn') {
 			status += '<span class="brn">BURN</span> ';
 		} else if (pokemon.status === 'psn') {
