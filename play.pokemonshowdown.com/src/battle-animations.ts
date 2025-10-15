@@ -2793,7 +2793,6 @@ export class PokemonSprite extends Sprite {
 	}
 
 	updateStatbar(pokemon: Pokemon, updatePrevhp?: boolean, updateHp?: boolean) {
-		console.log("UPDATING STAT BAR")
 		if (!this.scene.animating) return;
 		if (!pokemon.isActive()) {
 			if (this.$statbar) this.$statbar.hide();
@@ -2826,8 +2825,6 @@ export class PokemonSprite extends Sprite {
 			else $prevhp.addClass('prevhp-yellow prevhp-red');
 		}
 		let status = '';
-		console.log("LOOKING AT STATUSES")
-		console.log(pokemon.status)
 		if (pokemon.status === 'brn') {
 			status += '<span class="brn">BURN</span> ';
 		} else if (pokemon.status === 'psn') {
@@ -2841,8 +2838,9 @@ export class PokemonSprite extends Sprite {
 		} else if (pokemon.status === 'frz') {
 			status += '<span class="frz">FRZ</span> ';
 		} else if (pokemon.status === 'afraid') {
-			console.log("AFRAID")
 			status += '<span class="afraid">AFRAID</span> ';
+		} else if (pokemon.status === 'heat') {
+			status += '<span class="heat">HEAT</span> ';
 		}
 		if (pokemon.terastallized) {
 			status += `<img src="${Dex.resourcePrefix}sprites/types/${encodeURIComponent(pokemon.terastallized)}.png" alt="${pokemon.terastallized}" class="pixelated" /> `;

@@ -251,7 +251,8 @@ License: GPLv2
 .statbar span.slp,
 .statbar span.par,
 .statbar span.frz,
-.statbar span.afraid {
+.statbar span.afraid,
+.statbar span.heat {
 	padding: 1px 2px;
 	border: 0;
 	border-radius: 3px;
@@ -278,6 +279,10 @@ License: GPLv2
 }
 .statbar span.afraid {
 	background: #000000;
+	color: #FFFFFF;
+}
+.statbar span.heat {
+	background: #FF1493;
 	color: #FFFFFF;
 }
 .statbar span.bad {

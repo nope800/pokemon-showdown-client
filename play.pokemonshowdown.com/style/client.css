@@ -1812,6 +1812,9 @@ p.or:after {
 .status.afraid {
 	background: #000000;
 }
+.status.heat {
+	background: #FF1493;
+}
 
 .movebutton {
 	float: left;

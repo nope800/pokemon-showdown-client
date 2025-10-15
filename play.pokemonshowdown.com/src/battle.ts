@@ -2195,8 +2195,11 @@ export class Battle {
 				this.scene.runStatusAnim('frz' as ID, [poke]);
 				break;
 			case 'afraid': //amoros statuses
-				console.log("AAAAAAAAAAAAAAAAAAAAAAAAAAAA")
 				this.scene.resultAnim(poke, 'Afraid', 'afraid');
+				this.scene.updateStatbar(poke);
+				break;
+			case 'heat': 
+				this.scene.resultAnim(poke, 'In Heat', 'afraid');
 				this.scene.updateStatbar(poke);
 				break;
 			default:
@@ -2245,6 +2248,9 @@ export class Battle {
 					break;
 				case 'afraid':
 					this.scene.resultAnim(poke, 'Afraid cured', 'good');
+					break;
+				case 'heat':
+					this.scene.resultAnim(poke, 'Heat cured', 'good');
 					break;
 				default:
 					poke.removeVolatile('confusion' as ID);
@@ -3271,8 +3277,7 @@ export class Battle {
 		// status parse
 		if (!status) {
 			output.status = '';
-		} else if (status === 'par' || status === 'brn' || status === 'slp' || status === 'frz' || status === 'tox' || status == 'afraid') {
-			console.log("THIS DID SOMETHING")
+		} else if (status === 'par' || status === 'brn' || status === 'slp' || status === 'frz' || status === 'tox' || status == 'afraid' || status == "heat") {
 			output.status = status;
 		} else if (status === 'psn' && output.status !== 'tox') {
 			output.status = status;
