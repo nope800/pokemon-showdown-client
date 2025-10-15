@@ -39,7 +39,7 @@ export class BattleSceneStub {
 	resetBgm(): void { }
 	updateBgm(): void { }
 	resultAnim(
-		pokemon: Pokemon, result: string, type: "bad" | "good" | "neutral" | "par" | "psn" | "frz" | "slp" | "brn" | "afraid" | "heat"
+		pokemon: Pokemon, result: string, type: "bad" | "good" | "neutral" | "par" | "psn" | "frz" | "slp" | "brn" | "afraid" | "heat" | "trance"
 	): void { }
 	typeAnim(pokemon: Pokemon, types: string): void { }
 	resume(): void { }
