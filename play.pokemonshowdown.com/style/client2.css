@@ -1872,6 +1872,9 @@ pre.textbox.textbox-empty[placeholder]:before {
 .status.frz {
 	background: #009AA4;
 }
+.status.afraid {
+	background: #000000;
+}
 
 .movebutton {
 	float: left;
