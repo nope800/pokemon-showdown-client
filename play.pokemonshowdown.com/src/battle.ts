@@ -2194,6 +2194,11 @@ export class Battle {
 				this.scene.resultAnim(poke, 'Frozen', 'frz');
 				this.scene.runStatusAnim('frz' as ID, [poke]);
 				break;
+			case 'afraid': //amoros statuses
+				console.log("AAAAAAAAAAAAAAAAAAAAAAAAAAAA")
+				this.scene.resultAnim(poke, 'Afraid', 'afraid');
+				this.scene.updateStatbar(poke);
+				break;
 			default:
 				this.scene.updateStatbar(poke);
 				break;
@@ -2237,6 +2242,9 @@ export class Battle {
 					break;
 				case 'frz':
 					this.scene.resultAnim(poke, 'Thawed', 'good');
+					break;
+				case 'afraid':
+					this.scene.resultAnim(poke, 'Afraid cured', 'good');
 					break;
 				default:
 					poke.removeVolatile('confusion' as ID);

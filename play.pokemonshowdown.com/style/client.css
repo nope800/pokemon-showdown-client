@@ -1808,6 +1808,10 @@ p.or:after {
 .status.frz {
 	background: #009AA4;
 }
+/* amoros statuses */
+.status.afraid {
+	background: #000000;
+}
 
 .movebutton {
 	float: left;
