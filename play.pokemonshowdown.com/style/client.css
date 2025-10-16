@@ -1821,6 +1821,9 @@ p.or:after {
 .status.embarrassed {
 	background: #ffa38a;
 }
+.status.held {
+	background: #895200;;
+}
 
 .movebutton {
 	float: left;

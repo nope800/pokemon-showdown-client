@@ -1884,6 +1884,9 @@ pre.textbox.textbox-empty[placeholder]:before {
 .status.embarrassed {
 	background: #ffa38a;
 }
+.status.held {
+	background: #895200;;
+}
 
 
 .movebutton {
