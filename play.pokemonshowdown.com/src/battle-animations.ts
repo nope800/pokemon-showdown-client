@@ -2843,6 +2843,8 @@ export class PokemonSprite extends Sprite {
 			status += '<span class="heat">HEAT</span> ';
 		} else if (pokemon.status === 'trance') {
 			status += '<span class="trance">TRANCE</span> ';
+		} else if (pokemon.status === 'embarrassed') {
+			status += '<span class="trance">TRANCE</span> ';
 		}
 		if (pokemon.terastallized) {
 			status += `<img src="${Dex.resourcePrefix}sprites/types/${encodeURIComponent(pokemon.terastallized)}.png" alt="${pokemon.terastallized}" class="pixelated" /> `;

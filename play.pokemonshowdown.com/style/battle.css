@@ -253,7 +253,8 @@ License: GPLv2
 .statbar span.frz,
 .statbar span.afraid,
 .statbar span.heat,
-.statbar span.trance {
+.statbar span.trance,
+.statbar span.embarrassed {
 	padding: 1px 2px;
 	border: 0;
 	border-radius: 3px;
@@ -288,6 +289,10 @@ License: GPLv2
 }
 .statbar span.trance {
 	background: #55aaff;
+	color: #FFFFFF;
+}
+.statbar span.embarrassed {
+	background: #ffa38a;
 	color: #FFFFFF;
 }
 .statbar span.bad {
