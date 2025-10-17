@@ -1879,13 +1879,16 @@ pre.textbox.textbox-empty[placeholder]:before {
 	background: #FF1493;
 }
 .status.trance {
-	background: #55aaff;
+	background: #707adf;
 }
 .status.embarrassed {
-	background: #ffa38a;
+	background: #dfa3a3;
 }
 .status.held {
-	background: #895200;;
+	background: #dba762;
+}
+.status.swarm {
+	background: #b2d078;
 }
 
 

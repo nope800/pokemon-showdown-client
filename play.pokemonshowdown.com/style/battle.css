@@ -255,7 +255,8 @@ License: GPLv2
 .statbar span.heat,
 .statbar span.trance,
 .statbar span.embarrassed,
-.statbar span.held {
+.statbar span.held,
+.statbar span.swarm {
 	padding: 1px 2px;
 	border: 0;
 	border-radius: 3px;
@@ -289,15 +290,19 @@ License: GPLv2
 	color: #FFFFFF;
 }
 .statbar span.trance {
-	background: #55aaff;
+	background: #707adf;
 	color: #FFFFFF;
 }
 .statbar span.embarrassed {
-	background: #ffa38a;
+	background: #dfa3a3;
 	color: #FFFFFF;
 }
 .statbar span.held {
-	background: #895200;
+	background: #dba762;
+	color: #FFFFFF;
+}
+.statbar span.swarm {
+	background: #b2d078;
 	color: #FFFFFF;
 }
 .statbar span.bad {

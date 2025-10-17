@@ -2214,6 +2214,10 @@ export class Battle {
 				this.scene.resultAnim(poke, 'Held', 'held');
 				this.scene.updateStatbar(poke);
 				break;
+			case 'swarming': 
+				this.scene.resultAnim(poke, 'Swarming', 'swarming');
+				this.scene.updateStatbar(poke);
+				break;
 			default:
 				this.scene.updateStatbar(poke);
 				break;
@@ -2272,6 +2276,9 @@ export class Battle {
 					break;
 				case 'held':
 					this.scene.resultAnim(poke, 'Held cured', 'good');
+					break;
+				case 'swarm':
+					this.scene.resultAnim(poke, 'Swarm dispersed', 'bad');
 					break;
 				default:
 					poke.removeVolatile('confusion' as ID);
@@ -3298,7 +3305,7 @@ export class Battle {
 		// status parse
 		if (!status) {
 			output.status = '';
-		} else if (status === 'par' || status === 'brn' || status === 'slp' || status === 'frz' || status === 'tox' || status == 'afraid' || status == "heat" || status == "trance" || status == "embarrassed" || status == "held") {
+		} else if (status === 'par' || status === 'brn' || status === 'slp' || status === 'frz' || status === 'tox' || status == 'afraid' || status == "heat" || status == "trance" || status == "embarrassed" || status == "held" || status == "swarming") {
 			output.status = status;
 		} else if (status === 'psn' && output.status !== 'tox') {
 			output.status = status;
