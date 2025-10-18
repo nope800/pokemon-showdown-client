@@ -229,10 +229,13 @@ export const Dex = new class implements ModdedDex {
 
 	pokeballs: string[] | null = null;
 
+
+	//DOES THIS WORK???
 	resourcePrefix = (() => {
 		let prefix = '';
-		if (window.document?.location?.protocol !== 'http:') prefix = 'https:';
-		return `${prefix}//${window.Config ? Config.routes.client : 'play.pokemonshowdown.com'}/`;
+		var scripts = document.getElementsByTagName("script"),
+    	src = scripts[scripts.length-1].src;
+		return src.substring(0, src.length - 16); //CHANGE THIS TO BE LESS MAGIC LATER
 	})();
 
 	fxPrefix = (() => {

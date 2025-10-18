@@ -222,7 +222,7 @@ export class PSIcon extends preact.Component<{
 			return <img
 				src={`${Dex.resourcePrefix}sprites/types/${sanitizedType}.png`}
 				alt={this.props.hideAlt ? undefined : type}
-				height="14"
+				height="32"
 				width="32"
 				class="pixelated"
 			/>;
