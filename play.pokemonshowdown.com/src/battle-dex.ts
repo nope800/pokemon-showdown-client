@@ -945,7 +945,7 @@ export const Dex = new class implements ModdedDex {
 			sanitizedCategory = 'undefined';
 			break;
 		}
-		return `<img src="${Dex.resourcePrefix}sprites/categories/${sanitizedCategory}.png" alt="${sanitizedCategory}" height="14" width="32" class="pixelated" />`;
+		return `<img src="${Dex.resourcePrefix}sprites/categories/${sanitizedCategory}.png" alt="${sanitizedCategory}" height="20" width="20" class="pixelated" />`;
 	}
 
 	getPokeballs() {
