@@ -624,7 +624,7 @@ export class BattleScene implements BattleSceneStub {
 			name += ' (fainted)';
 		} else {
 			let statustext = '';
-			if (pokemon.hp !== pokemon.maxhp) {
+			if (pokemon.st !== pokemon.maxhp) {
 				statustext += pokemon.getHPText();
 			}
 			if (pokemon.status) {
@@ -1467,21 +1467,21 @@ export class BattleScene implements BattleSceneStub {
 		if (!pokemon.sprite.$statbar) return;
 		pokemon.sprite.updateHPText(pokemon);
 
-		let $hp = pokemon.sprite.$statbar.find('div.hp');
+		let $st = pokemon.sprite.$statbar.find('div.st');
 		let w = pokemon.hpWidth(150);
 		let hpcolor = BattleScene.getHPColor(pokemon);
 		let callback;
 		if (hpcolor === 'y') {
-			callback = () => { $hp.addClass('hp-yellow'); };
+			callback = () => { $st.addClass('st-yellow'); };
 		}
 		if (hpcolor === 'r') {
-			callback = () => { $hp.addClass('hp-yellow hp-red'); };
+			callback = () => { $st.addClass('st-yellow st-red'); };
 		}
 
-		if (damage === '100%' && pokemon.hp > 0) damage = '99%';
+		if (damage === '100%' && pokemon.st > 0) damage = '99%';
 		this.resultAnim(pokemon, this.battle.hardcoreMode ? 'Damage' : `&minus;${damage}`, 'bad');
 
-		$hp.animate({
+		$st.animate({
 			width: w,
 			'border-right-width': w ? 1 : 0,
 		}, 350, callback);
@@ -1491,20 +1491,20 @@ export class BattleScene implements BattleSceneStub {
 		if (!pokemon.sprite.$statbar) return;
 		pokemon.sprite.updateHPText(pokemon);
 
-		let $hp = pokemon.sprite.$statbar.find('div.hp');
+		let $st = pokemon.sprite.$statbar.find('div.st');
 		let w = pokemon.hpWidth(150);
 		let hpcolor = BattleScene.getHPColor(pokemon);
 		let callback;
 		if (hpcolor === 'g') {
-			callback = () => { $hp.removeClass('hp-yellow hp-red'); };
+			callback = () => { $st.removeClass('st-yellow st-red'); };
 		}
 		if (hpcolor === 'y') {
-			callback = () => { $hp.removeClass('hp-red'); };
+			callback = () => { $st.removeClass('st-red'); };
 		}
 
 		this.resultAnim(pokemon, this.battle.hardcoreMode ? 'Heal' : `+${damage}`, 'good');
 
-		$hp.animate({
+		$st.animate({
 			width: w,
 			'border-right-width': w ? 1 : 0,
 		}, 350, callback);
@@ -1705,8 +1705,8 @@ export class BattleScene implements BattleSceneStub {
 		}
 		this.battle = null!;
 	}
-	static getHPColor(pokemon: { hp: number, maxhp: number }) {
-		let ratio = pokemon.hp / pokemon.maxhp;
+	static getHPColor(pokemon: { st: number, maxhp: number }) {
+		let ratio = pokemon.st / pokemon.maxhp;
 		if (ratio > 0.5) return 'g';
 		if (ratio > 0.2) return 'y';
 		return 'r';
@@ -2764,7 +2764,7 @@ export class PokemonSprite extends Sprite {
 			buf += ` <img src="${Dex.resourcePrefix}sprites/types/Tera${pokemon.terastallized}.png" alt="Tera-${pokemon.terastallized}" style="vertical-align:text-bottom;" height="16" width="16" />`;
 		}
 
-		buf += `</strong><div class="hpbar"><div class="hptext"></div><div class="hptextborder"></div><div class="prevhp"><div class="hp"></div></div><div class="status"></div>`;
+		buf += `</strong><div class="hpbar"><div class="hptext"></div><div class="hptextborder"></div><div class="prevhp"><div class="st"></div></div><div class="status"></div>`;
 		buf += `</div>`;
 		return buf;
 	}
@@ -2807,14 +2807,14 @@ export class PokemonSprite extends Sprite {
 		if (updatePrevhp || updateHp) {
 			hpcolor = BattleScene.getHPColor(pokemon);
 			let w = pokemon.hpWidth(150);
-			let $hp = this.$statbar.find('.hp');
-			$hp.css({
+			let $st = this.$statbar.find('.st');
+			$st.css({
 				width: w,
 				'border-right-width': (w ? 1 : 0),
 			});
-			if (hpcolor === 'g') $hp.removeClass('hp-yellow hp-red');
-			else if (hpcolor === 'y') $hp.removeClass('hp-red').addClass('hp-yellow');
-			else $hp.addClass('hp-yellow hp-red');
+			if (hpcolor === 'g') $st.removeClass('st-yellow st-red');
+			else if (hpcolor === 'y') $st.removeClass('st-red').addClass('st-yellow');
+			else $st.addClass('st-yellow st-red');
 			this.updateHPText(pokemon);
 		}
 		if (updatePrevhp) {
@@ -2912,7 +2912,7 @@ export class PokemonSprite extends Sprite {
 			$hptext.hide();
 			$hptextborder.hide();
 		} else if (this.scene.battle.hardcoreMode || this.scene.battle.reportExactHP) {
-			$hptext.html(`${pokemon.hp}/`);
+			$hptext.html(`${pokemon.st}/`);
 			$hptext.show();
 			$hptextborder.show();
 		} else {

@@ -80,7 +80,7 @@ export class Pokemon implements PokemonDetails, PokemonHealth {
 	slot = 0;
 
 	fainted = false;
-	hp = 0;
+	st = 0;
 	maxhp = 1000;
 	level = 100;
 	gender: Dex.GenderName = 'N';
@@ -135,7 +135,7 @@ export class Pokemon implements PokemonDetails, PokemonHealth {
 	/** @deprecated */
 	private getHPColor(): HPColor {
 		if (this.hpcolor) return this.hpcolor;
-		let ratio = this.hp / this.maxhp;
+		let ratio = this.st / this.maxhp;
 		if (ratio > 0.5) return 'g';
 		if (ratio > 0.2) return 'y';
 		return 'r';
@@ -192,7 +192,7 @@ export class Pokemon implements PokemonDetails, PokemonHealth {
 		}
 		return `${lower}${separator}${upper}%`;
 	}
-	// Returns [min, max] damage dealt as a proportion of total HP from 0 to 1
+	// Returns [min, max] damage dealt as a proportion of total St from 0 to 1
 	getDamageRange(damage: any): [number, number] {
 		if (damage[1] !== 48) {
 			let ratio = damage[0] / damage[1];
@@ -228,10 +228,10 @@ export class Pokemon implements PokemonDetails, PokemonHealth {
 				// unusual check preseved for backward compatbility
 				if (isNaN(damage)) damage = 50;
 				if (heal) {
-					this.hp += this.maxhp * damage / 100;
-					if (this.hp > this.maxhp) this.hp = this.maxhp;
+					this.st += this.maxhp * damage / 100;
+					if (this.st > this.maxhp) this.st = this.maxhp;
 				} else {
-					this.hp -= this.maxhp * damage / 100;
+					this.st -= this.maxhp * damage / 100;
 				}
 				// parse the absolute health information
 				let ret = this.healthParse(hpstring);
@@ -250,18 +250,18 @@ export class Pokemon implements PokemonDetails, PokemonHealth {
 			hpstring = hpstring.substr(parenIndex + 1, hpstring.length - parenIndex - 2);
 		}
 
-		let oldhp = this.fainted ? 0 : (this.hp || 1);
+		let oldhp = this.fainted ? 0 : (this.st || 1);
 		let oldmaxhp = this.maxhp;
 		let oldwidth = this.hpWidth(100);
 		let oldcolor = this.hpcolor;
 
 		this.side.battle.parseHealth(hpstring, this);
-		if (oldmaxhp === 0) { // max hp not known before parsing this message
+		if (oldmaxhp === 0) { // max st not known before parsing this message
 			oldmaxhp = oldhp = this.maxhp;
 		}
 
 		let oldnum = oldhp ? (Math.floor(this.maxhp * oldhp / oldmaxhp) || 1) : 0;
-		let delta = this.hp - oldnum;
+		let delta = this.st - oldnum;
 		let deltawidth = this.hpWidth(100) - oldwidth;
 		return [delta, this.maxhp, deltawidth, oldnum, oldcolor];
 	}
@@ -555,34 +555,34 @@ export class Pokemon implements PokemonDetails, PokemonHealth {
 	}
 	reset() {
 		this.clearVolatile();
-		this.hp = this.maxhp;
+		this.st = this.maxhp;
 		this.fainted = false;
 		this.status = '';
 		this.moveTrack = [];
 		this.name = this.name || this.speciesForme;
 	}
 	// This function is used for two things:
-	//   1) The percentage to display beside the HP bar.
-	//   2) The width to draw an HP bar.
+	//   1) The percentage to display beside the St bar.
+	//   2) The width to draw an St bar.
 	//
 	// This function is NOT used in the calculation of any other displayed
 	// percentages or ranges, which have their own, more complex, formulae.
 	hpWidth(maxWidth: number) {
-		if (this.fainted || !this.hp) return 0;
+		if (this.fainted || !this.st) return 0;
 
 		// bottom case for low health...
-		if (this.hp === 1 && this.maxhp > 45) return 1;
+		if (this.st === 1 && this.maxhp > 45) return 1;
 
 		if (this.maxhp === 48) {
 			// Draw the health bar to the middle of the range.
 			// This affects the width of the visual health bar *only*; it
 			// does not affect the ranges displayed in any way.
-			let range = Pokemon.getPixelRange(this.hp, this.hpcolor);
+			let range = Pokemon.getPixelRange(this.st, this.hpcolor);
 			let ratio = (range[0] + range[1]) / 2;
 			return Math.round(maxWidth * ratio) || 1;
 		}
-		let percentage = Math.ceil(100 * this.hp / this.maxhp);
-		if ((percentage === 100) && (this.hp < this.maxhp)) {
+		let percentage = Math.ceil(100 * this.st / this.maxhp);
+		if ((percentage === 100) && (this.st < this.maxhp)) {
 			percentage = 99;
 		}
 		return percentage * maxWidth / 100;
@@ -591,10 +591,10 @@ export class Pokemon implements PokemonDetails, PokemonHealth {
 		return Pokemon.getHPText(this, this.side.battle.reportExactHP, precision);
 	}
 	static getHPText(pokemon: PokemonHealth, exactHP: boolean, precision = 1) {
-		if (exactHP) return `${pokemon.hp}/${pokemon.maxhp}`;
-		if (pokemon.maxhp === 100) return `${pokemon.hp}%`;
-		if (pokemon.maxhp !== 48) return (100 * pokemon.hp / pokemon.maxhp).toFixed(precision) + '%';
-		let range = Pokemon.getPixelRange(pokemon.hp, pokemon.hpcolor);
+		if (exactHP) return `${pokemon.st}/${pokemon.maxhp}`;
+		if (pokemon.maxhp === 100) return `${pokemon.st}%`;
+		if (pokemon.maxhp !== 48) return (100 * pokemon.st / pokemon.maxhp).toFixed(precision) + '%';
+		let range = Pokemon.getPixelRange(pokemon.st, pokemon.hpcolor);
 		return Pokemon.getFormattedRange(range, precision, '\u2013');
 	}
 	destroy() {
@@ -822,7 +822,7 @@ export class Side {
 					}
 					if (illusionFound) {
 						illusionFound.fainted = true;
-						illusionFound.hp = 0;
+						illusionFound.st = 0;
 						illusionFound.status = '';
 					}
 				}
@@ -872,7 +872,7 @@ export class Side {
 		pokemon.clearVolatile();
 		if (oldpokemon) {
 			pokemon.lastMove = oldpokemon.lastMove;
-			pokemon.hp = oldpokemon.hp;
+			pokemon.st = oldpokemon.st;
 			pokemon.maxhp = oldpokemon.maxhp;
 			pokemon.hpcolor = oldpokemon.hpcolor;
 			pokemon.status = oldpokemon.status;
@@ -887,7 +887,7 @@ export class Side {
 			// we don't know anything about the illusioned pokemon except that it's not fainted
 			// technically we also know its status but only at the end of the turn, not here
 			oldpokemon.fainted = false;
-			oldpokemon.hp = oldpokemon.maxhp;
+			oldpokemon.st = oldpokemon.maxhp;
 			oldpokemon.status = '???';
 		}
 		this.active[slot] = pokemon;
@@ -960,7 +960,7 @@ export class Side {
 		this.active[slot] = null;
 
 		pokemon.fainted = true;
-		pokemon.hp = 0;
+		pokemon.st = 0;
 		pokemon.terastallized = '';
 		pokemon.details = pokemon.details.replace(/, tera:[a-z]+/i, '');
 		pokemon.searchid = pokemon.searchid.replace(/, tera:[a-z]+/i, '');
@@ -987,7 +987,7 @@ export interface PokemonDetails {
 	searchid: string;
 }
 export interface PokemonHealth {
-	hp: number;
+	st: number;
 	maxhp: number;
 	hpcolor: HPColor | '';
 	status: Dex.StatusName | 'tox' | '' | '???';
@@ -3278,28 +3278,28 @@ export class Battle {
 		return output;
 	}
 	parseHealth(hpstring: string, output: PokemonHealth = {} as any) {
-		let [hp, status] = hpstring.split(' ');
+		let [st, status] = hpstring.split(' ');
 
-		// hp parse
+		// st parse
 		output.hpcolor = '';
-		if (hp === '0' || hp === '0.0') {
+		if (st === '0' || st === '0.0') {
 			if (!output.maxhp) output.maxhp = 100;
-			output.hp = 0;
-		} else if (hp.indexOf('/') > 0) {
-			let [curhp, maxhp] = hp.split('/');
+			output.st = 0;
+		} else if (st.indexOf('/') > 0) {
+			let [curhp, maxhp] = st.split('/');
 			if (isNaN(parseFloat(curhp)) || isNaN(parseFloat(maxhp))) {
 				return null;
 			}
-			output.hp = parseFloat(curhp);
+			output.st = parseFloat(curhp);
 			output.maxhp = parseFloat(maxhp);
-			if (output.hp > output.maxhp) output.hp = output.maxhp;
+			if (output.st > output.maxhp) output.st = output.maxhp;
 			const colorchar = maxhp.slice(-1);
 			if (colorchar === 'r' || colorchar === 'y' || colorchar === 'g') {
 				output.hpcolor = colorchar;
 			}
-		} else if (!isNaN(parseFloat(hp))) {
+		} else if (!isNaN(parseFloat(st))) {
 			if (!output.maxhp) output.maxhp = 100;
-			output.hp = output.maxhp * parseFloat(hp) / 100;
+			output.st = output.maxhp * parseFloat(st) / 100;
 		}
 
 		// status parse
@@ -3310,7 +3310,7 @@ export class Battle {
 		} else if (status === 'psn' && output.status !== 'tox') {
 			output.status = status;
 		} else if (status === 'fnt') {
-			output.hp = 0;
+			output.st = 0;
 			output.fainted = true;
 		}
 		return output;
@@ -3398,7 +3398,7 @@ export class Battle {
 
 		for (const pokemon of side.pokemon) {
 			if (isInactive && !this.compatMode && side.active.includes(pokemon)) continue;
-			if (faintedOnly && pokemon.hp) continue;
+			if (faintedOnly && pokemon.st) continue;
 			if (pokemon.ident === pokemonid) { // name matched, good enough
 				if (slot >= 0) pokemon.slot = slot;
 				return pokemon;
@@ -3535,7 +3535,7 @@ export class Battle {
 				this.messageFadeTime = 40;
 				this.isBlitz = true;
 			}
-			if (ruleName === 'Exact HP Mod') this.reportExactHP = true;
+			if (ruleName === 'Exact St Mod') this.reportExactHP = true;
 			this.rules[ruleName] = 1;
 			this.log(args);
 			break;

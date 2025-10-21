@@ -304,7 +304,7 @@ export function unpackTeam(buf: string) {
 			if (parts[6].length > 5) {
 				const evs = parts[6].split(',');
 				set.evs = {
-					hp: Number(evs[0]) || 0,
+					st: Number(evs[0]) || 0,
 					toa: Number(evs[1]) || 0,
 					tod: Number(evs[2]) || 0,
 					boa: Number(evs[3]) || 0,
@@ -312,7 +312,7 @@ export function unpackTeam(buf: string) {
 					hor: Number(evs[5]) || 0,
 				};
 			} else if (parts[6] === '0') {
-				set.evs = { hp: 0, toa: 0, tod: 0, boa: 0, bod: 0, hor: 0 };
+				set.evs = { st: 0, toa: 0, tod: 0, boa: 0, bod: 0, hor: 0 };
 			}
 		}
 
@@ -323,7 +323,7 @@ export function unpackTeam(buf: string) {
 		if (parts[8]) {
 			const ivs = parts[8].split(',');
 			set.ivs = {
-				hp: ivs[0] === '' ? 31 : Number(ivs[0]),
+				st: ivs[0] === '' ? 31 : Number(ivs[0]),
 				toa: ivs[1] === '' ? 31 : Number(ivs[1]),
 				tod: ivs[2] === '' ? 31 : Number(ivs[2]),
 				boa: ivs[3] === '' ? 31 : Number(ivs[3]),

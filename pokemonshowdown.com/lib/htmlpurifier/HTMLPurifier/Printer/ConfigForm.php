@@ -95,11 +95,11 @@ class HTMLPurifier_Printer_ConfigForm extends HTMLPurifier_Printer
         }
 
         $ret = '';
-        $ret .= $this->start('table', array('class' => 'hp-config'));
+        $ret .= $this->start('table', array('class' => 'st-config'));
         $ret .= $this->start('thead');
         $ret .= $this->start('tr');
-            $ret .= $this->element('th', 'Directive', array('class' => 'hp-directive'));
-            $ret .= $this->element('th', 'Value', array('class' => 'hp-value'));
+            $ret .= $this->element('th', 'Directive', array('class' => 'st-directive'));
+            $ret .= $this->element('th', 'Value', array('class' => 'st-value'));
         $ret .= $this->end('tr');
         $ret .= $this->end('thead');
         foreach ($all as $ns => $directives) {

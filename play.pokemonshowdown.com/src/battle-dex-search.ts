@@ -1220,7 +1220,7 @@ class BattlePokemonSearch extends BattleTypedSearch<'pokemon'> {
 	}
 	sort(results: SearchRow[], sortCol: string, reverseSort?: boolean) {
 		const sortOrder = reverseSort ? -1 : 1;
-		if (['hp', 'toa', 'tod', 'boa', 'bod', 'hor'].includes(sortCol)) {
+		if (['st', 'toa', 'tod', 'boa', 'bod', 'hor'].includes(sortCol)) {
 			return results.sort(([rowType1, id1], [rowType2, id2]) => {
 				const stat1 = this.dex.species.get(id1).baseStats[sortCol as Dex.StatName];
 				const stat2 = this.dex.species.get(id2).baseStats[sortCol as Dex.StatName];
@@ -1230,8 +1230,8 @@ class BattlePokemonSearch extends BattleTypedSearch<'pokemon'> {
 			return results.sort(([rowType1, id1], [rowType2, id2]) => {
 				const base1 = this.dex.species.get(id1).baseStats;
 				const base2 = this.dex.species.get(id2).baseStats;
-				let bst1 = base1.hp + base1.toa + base1.tod + base1.boa + base1.bod + base1.hor;
-				let bst2 = base2.hp + base2.toa + base2.tod + base2.boa + base2.bod + base2.hor;
+				let bst1 = base1.st + base1.toa + base1.tod + base1.boa + base1.bod + base1.hor;
+				let bst2 = base2.st + base2.toa + base2.tod + base2.boa + base2.bod + base2.hor;
 				if (this.dex.gen === 1) {
 					bst1 -= base1.bod;
 					bst2 -= base2.bod;
@@ -1533,7 +1533,7 @@ class BattleMoveSearch extends BattleTypedSearch<'move'> {
 		case 'chillingwater':
 			return !moves.includes('scald');
 		case 'counter': case 'mirrorcoat':
-			return species.baseStats.hp >= 65;
+			return species.baseStats.st >= 65;
 		case 'dazzlinggleam':
 			return !moves.includes('alluringvoice') || this.formatType?.includes('doubles');
 		case 'darkvoid':

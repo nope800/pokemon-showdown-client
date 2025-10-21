@@ -173,30 +173,30 @@ function turnCallback(battle)
 		B = Bswitch?Bswitch[1]:{};
 		Bswitch = null;
 	}
-	// var imagestring = 'a='+A.speciesid+'&ahp='+(100*A.hp/A.maxhp)+'&ast='+A.status+'&b='+B.speciesid+'&bhp='+(100*B.hp/B.maxhp)+'&bst='+B.status;
+	// var imagestring = 'a='+A.speciesid+'&ahp='+(100*A.st/A.maxhp)+'&ast='+A.status+'&b='+B.speciesid+'&bhp='+(100*B.st/B.maxhp)+'&bst='+B.status;
 	// if (Aswitch)
 	// {
 	// 	var oA = Aswitch[1];
-	// 	imagestring += '&oa='+oA.speciesid+'&oahp='+(100*oA.hp/oA.maxhp)+'&oast='+oA.status+'&oat='+Aswitch[0];
+	// 	imagestring += '&oa='+oA.speciesid+'&oahp='+(100*oA.st/oA.maxhp)+'&oast='+oA.status+'&oat='+Aswitch[0];
 	// 	Aswitch = null;
 	// }
 	// if (Bswitch)
 	// {
 	// 	var oB = Bswitch[1];
-	// 	imagestring += '&ob='+oB.speciesid+'&obhp='+(100*oB.hp/oB.maxhp)+'&obst='+oB.status+'&obt='+Bswitch[0];
+	// 	imagestring += '&ob='+oB.speciesid+'&obhp='+(100*oB.st/oB.maxhp)+'&obst='+oB.status+'&obt='+Bswitch[0];
 	// 	Bswitch = null;
 	// }
 
 	var imagestring = '';
 	if (Aswitch) {
 		var oA = Aswitch[1];
-		imagestring += ''+Aswitch[0]+'.'+oA.spriteid+'.'+(100*oA.hp/oA.maxhp)+(oA.status?'.'+oA.status:'')+'_';
+		imagestring += ''+Aswitch[0]+'.'+oA.spriteid+'.'+(100*oA.st/oA.maxhp)+(oA.status?'.'+oA.status:'')+'_';
 		Aswitch = null;
 	}
-	imagestring += ''+A.spriteid+'.'+(100*A.hp/A.maxhp)+(A.status?'.'+A.status:'')+'_'+B.spriteid+'.'+(100*B.hp/B.maxhp)+(B.status?'.'+B.status:'');
+	imagestring += ''+A.spriteid+'.'+(100*A.st/A.maxhp)+(A.status?'.'+A.status:'')+'_'+B.spriteid+'.'+(100*B.st/B.maxhp)+(B.status?'.'+B.status:'');
 	if (Bswitch) {
 		var oB = Bswitch[1];
-		imagestring += '_'+Bswitch[0]+'.'+oB.spriteid+'.'+(100*oB.hp/oB.maxhp)+(oB.status?'.'+oB.status:'');
+		imagestring += '_'+Bswitch[0]+'.'+oB.spriteid+'.'+(100*oB.st/oB.maxhp)+(oB.status?'.'+oB.status:'');
 		Bswitch = null;
 	}
 

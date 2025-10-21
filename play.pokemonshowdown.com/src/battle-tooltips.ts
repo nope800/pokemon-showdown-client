@@ -475,10 +475,10 @@ export class BattleTooltips {
 	static zMoveEffects: { [zEffect: string]: string } = {
 		'clearnegativeboost': "Restores negative stat stages to 0",
 		'crit2': "Crit ratio +2",
-		'heal': "Restores HP 100%",
-		'curse': "Restores HP 100% if user is Ghost type, otherwise Attack +1",
+		'heal': "Restores St 100%",
+		'curse': "Restores St 100% if user is Ghost type, otherwise Attack +1",
 		'redirect': "Redirects opposing attacks to user",
-		'healreplacement': "Restores replacement's HP 100%",
+		'healreplacement': "Restores replacement's St 100%",
 	};
 
 	getStatusZMoveEffect(move: Dex.Move) {
@@ -786,23 +786,23 @@ export class BattleTooltips {
 			if (this.battle.gen === 1 && !toID(this.battle.tier).includes('stadium') &&
 				['recover', 'softboiled', 'rest'].includes(move.id)) {
 				const hpValues = [];
-				// glitches at HP values equal to `maxHP + 1 % 256` unless they are `0 % 256`
-				const hp = serverPokemon.maxhp - 255;
-				if (hp > 0 && hp % 256 !== 0) {
-					hpValues.push(hp);
-					if (hp - 256 > 0) {
-						hpValues.push(hp - 256);
+				// glitches at St values equal to `maxHP + 1 % 256` unless they are `0 % 256`
+				const st = serverPokemon.maxhp - 255;
+				if (st > 0 && st % 256 !== 0) {
+					hpValues.push(st);
+					if (st - 256 > 0) {
+						hpValues.push(st - 256);
 					}
 				}
-				let failMessage = hpValues.length ? `Fails if current HP is ${hpValues.join(' or ')}.` : '';
-				if (hpValues.includes(serverPokemon.hp)) failMessage = `<strong class="message-error">${failMessage}</strong>`;
+				let failMessage = hpValues.length ? `Fails if current St is ${hpValues.join(' or ')}.` : '';
+				if (hpValues.includes(serverPokemon.st)) failMessage = `<strong class="message-error">${failMessage}</strong>`;
 				if (failMessage) text += `<p>${failMessage}</p>`;
 			}
 			if (this.battle.gen === 1 && !toID(this.battle.tier).includes('stadium') &&
 				move.id === 'substitute') {
 				const selfKO = serverPokemon.maxhp % 4 === 0 ? serverPokemon.maxhp / 4 : null;
-				let failMessage = selfKO ? `KOs yourself if current HP is exactly ${selfKO}.` : '';
-				if (selfKO === serverPokemon.hp) failMessage = `<strong class="message-error">${failMessage}</strong>`;
+				let failMessage = selfKO ? `KOs yourself if current St is exactly ${selfKO}.` : '';
+				if (selfKO === serverPokemon.st) failMessage = `<strong class="message-error">${failMessage}</strong>`;
 				if (failMessage) text += `<p>${failMessage}</p>`;
 			}
 		}
@@ -871,21 +871,21 @@ export class BattleTooltips {
 		}
 
 		if (pokemon.fainted) {
-			text += '<p><small>HP:</small> (fainted)</p>';
+			text += '<p><small>St:</small> (fainted)</p>';
 		} else if (this.battle.hardcoreMode) {
 			if (serverPokemon) {
 				const status = pokemon.status ? ` <span class="status ${pokemon.status}">${pokemon.status.toUpperCase()}</span>` : '';
-				text += `<p><small>HP:</small> ${serverPokemon.hp}/${serverPokemon.maxhp}${status}</p>`;
+				text += `<p><small>St:</small> ${serverPokemon.st}/${serverPokemon.maxhp}${status}</p>`;
 			}
 		} else {
 			let exacthp = '';
 			if (serverPokemon) {
-				exacthp = ` (${serverPokemon.hp}/${serverPokemon.maxhp})`;
+				exacthp = ` (${serverPokemon.st}/${serverPokemon.maxhp})`;
 			} else if (pokemon.maxhp === 48) {
-				exacthp = ` <small>(${pokemon.hp}/${pokemon.maxhp} pixels)</small>`;
+				exacthp = ` <small>(${pokemon.st}/${pokemon.maxhp} pixels)</small>`;
 			}
 			const status = pokemon.status ? ` <span class="status ${pokemon.status}">${pokemon.status.toUpperCase()}</span>` : '';
-			text += `<p><small>HP:</small> ${Pokemon.getHPText(pokemon, this.battle.reportExactHP)}${exacthp}${status}`;
+			text += `<p><small>St:</small> ${Pokemon.getHPText(pokemon, this.battle.reportExactHP)}${exacthp}${status}`;
 			if (clientPokemon) {
 				if (pokemon.status === 'tox') {
 					if (pokemon.ability === 'Poison Heal' || pokemon.ability === 'Magic Guard') {
@@ -1194,7 +1194,7 @@ export class BattleTooltips {
 				}
 			}
 		}
-		if (ability === 'defeatist' && serverPokemon.hp <= serverPokemon.maxhp / 2) {
+		if (ability === 'defeatist' && serverPokemon.st <= serverPokemon.maxhp / 2) {
 			stats.toa = Math.floor(stats.toa * 0.5);
 			stats.boa = Math.floor(stats.boa * 0.5);
 		}
@@ -1502,8 +1502,8 @@ export class BattleTooltips {
 		let rules = this.battle.rules;
 		let baseSpe = species.baseStats.hor;
 		if (rules['Scalemons Mod']) {
-			const bstWithoutHp = species.bst - species.baseStats.hp;
-			const scale = 600 - species.baseStats.hp;
+			const bstWithoutHp = species.bst - species.baseStats.st;
+			const scale = 600 - species.baseStats.st;
 			baseSpe = tr(baseSpe * scale / bstWithoutHp);
 			if (baseSpe < 1) baseSpe = 1;
 			if (baseSpe > 255) baseSpe = 255;
@@ -1517,7 +1517,7 @@ export class BattleTooltips {
 			}
 		}
 		if (rules['Flipped Mod']) {
-			baseSpe = species.baseStats.hp;
+			baseSpe = species.baseStats.st;
 			if (baseSpe < 1) baseSpe = 1;
 			if (baseSpe > 255) baseSpe = 255;
 		}
@@ -1915,7 +1915,7 @@ export class BattleTooltips {
 		if (variableBPCap && target) {
 			value.set(
 				Math.floor(
-					Math.floor((variableBPCap * (100 * Math.floor(target.hp * 4096 / target.maxhp)) + 2048 - 1) / 4096) / 100
+					Math.floor((variableBPCap * (100 * Math.floor(target.st * 4096 / target.maxhp)) + 2048 - 1) / 4096) / 100
 				) || 1,
 				'approximate'
 			);
@@ -1923,11 +1923,11 @@ export class BattleTooltips {
 		if (move.id === 'terablast' && pokemon.terastallized === 'Stellar') {
 			value.set(100, 'Tera Stellar boost');
 		}
-		if (move.id === 'brine' && target && target.hp * 2 <= target.maxhp) {
-			value.modify(2, 'Brine + target below half HP');
+		if (move.id === 'brine' && target && target.st * 2 <= target.maxhp) {
+			value.modify(2, 'Brine + target below half St');
 		}
 		if (move.id === 'eruption' || move.id === 'waterspout' || move.id === 'dragonenergy') {
-			value.set(Math.floor(150 * pokemon.hp / pokemon.maxhp) || 1);
+			value.set(Math.floor(150 * pokemon.st / pokemon.maxhp) || 1);
 		}
 		if (move.id === 'facade' && !['', 'slp', 'frz'].includes(pokemon.status)) {
 			value.modify(2, 'Facade + status');
@@ -1942,7 +1942,7 @@ export class BattleTooltips {
 				multiplier = 64;
 				ratios = [2, 6, 13, 22, 43];
 			}
-			let ratio = pokemon.hp * multiplier / pokemon.maxhp;
+			let ratio = pokemon.st * multiplier / pokemon.maxhp;
 			let basePower;
 			if (ratio < ratios[0]) basePower = 200;
 			else if (ratio < ratios[1]) basePower = 150;
@@ -2582,7 +2582,7 @@ export class BattleStatGuesser {
 	guess(set: Dex.PokemonSet) {
 		let role = this.guessRole(set);
 		let comboEVs = this.guessEVs(set, role);
-		let evs = { hp: 0, toa: 0, tod: 0, boa: 0, bod: 0, hor: 0 };
+		let evs = { st: 0, toa: 0, tod: 0, boa: 0, bod: 0, hor: 0 };
 		for (let stat in evs) {
 			evs[stat as Dex.StatName] = comboEVs[stat as Dex.StatName] || 0;
 		}
@@ -2699,8 +2699,8 @@ export class BattleStatGuesser {
 		if (hasMove['dragondance'] || hasMove['quiverdance']) moveCount['Ultrafast'] = 1;
 
 		let isFast = (stats.hor >= 80);
-		let topBulk = (stats.hp + 75) * (stats.tod + 87);
-		let bottomBulk = (stats.hp + 75) * (stats.bod + 87);
+		let topBulk = (stats.st + 75) * (stats.tod + 87);
+		let bottomBulk = (stats.st + 75) * (stats.bod + 87);
 
 		if (hasMove['willowisp'] || hasMove['acidarmor'] || hasMove['irondefense'] || hasMove['cottonguard']) {
 			topBulk *= 1.6;
@@ -2880,7 +2880,7 @@ export class BattleStatGuesser {
 			diff -= change;
 		}
 		if (diff <= 0) return evTotal;
-		let evPriority = { tod: 1, bod: 1, hp: 1, toa: 1, boa: 1, hor: 1 };
+		let evPriority = { tod: 1, bod: 1, st: 1, toa: 1, boa: 1, hor: 1 };
 		let prioStat: Dex.StatName;
 		for (prioStat in evPriority) {
 			if (prioStat === stat) continue;
@@ -2912,15 +2912,15 @@ export class BattleStatGuesser {
 		let moveCount = this.moveCount;
 
 		let evs: Dex.StatsTable & { plusStat?: Dex.StatNameExceptHP, minusStat?: Dex.StatNameExceptHP } = {
-			hp: 0, toa: 0, tod: 0, boa: 0, bod: 0, hor: 0,
+			st: 0, toa: 0, tod: 0, boa: 0, bod: 0, hor: 0,
 		};
 		let plusStat: Dex.StatNameExceptHP;
 		let minusStat: Dex.StatNameExceptHP | undefined = undefined;
 
 		let statChart: { [role: string]: [Dex.StatNameExceptHP, Dex.StatName] } = {
-			'Bulky Band': ['toa', 'hp'],
+			'Bulky Band': ['toa', 'st'],
 			'Fast Band': ['hor', 'toa'],
-			'Bulky Specs': ['boa', 'hp'],
+			'Bulky Specs': ['boa', 'st'],
 			'Fast Specs': ['hor', 'boa'],
 			'Top Scarf': ['hor', 'toa'],
 			'Bottom Scarf': ['hor', 'boa'],
@@ -2928,11 +2928,11 @@ export class BattleStatGuesser {
 			'Bottom Biased Mixed Scarf': ['hor', 'boa'],
 			'Fast Top Sweeper': ['hor', 'toa'],
 			'Fast Bottom Sweeper': ['hor', 'boa'],
-			'Bulky Top Sweeper': ['toa', 'hp'],
-			'Bulky Bottom Sweeper': ['boa', 'hp'],
-			'Fast Bulky Support': ['hor', 'hp'],
-			'Toply Defensive': ['tod', 'hp'],
-			'Bottomly Defensive': ['bod', 'hp'],
+			'Bulky Top Sweeper': ['toa', 'st'],
+			'Bulky Bottom Sweeper': ['boa', 'st'],
+			'Fast Bulky Support': ['hor', 'st'],
+			'Toply Defensive': ['tod', 'st'],
+			'Bottomly Defensive': ['bod', 'st'],
 		};
 
 		plusStat = statChart[role][0];
@@ -2951,7 +2951,7 @@ export class BattleStatGuesser {
 
 		if (this.supportsAVs) {
 			// Let's Go, AVs enabled
-			evs = { hp: 200, toa: 200, tod: 200, boa: 200, bod: 200, hor: 200 };
+			evs = { st: 200, toa: 200, tod: 200, boa: 200, bod: 200, hor: 200 };
 			if (!moveCount['TopAttack']) evs.toa = 0;
 			if (!moveCount['BottomAttack']) evs.boa = 0;
 			if (hasMove['gyroball'] || hasMove['trickroom']) evs.hor = 0;
@@ -2960,7 +2960,7 @@ export class BattleStatGuesser {
 			// no change
 		} else if (this.ignoreEVLimits) {
 			// Gen 1-2, hackable EVs (like Hackmons)
-			evs = { hp: 252, toa: 252, tod: 252, boa: 252, bod: 252, hor: 252 };
+			evs = { st: 252, toa: 252, tod: 252, boa: 252, bod: 252, hor: 252 };
 			if (!moveCount['TopAttack']) evs.toa = 0;
 			if (!moveCount['BottomAttack'] && this.dex.gen > 1) evs.boa = 0;
 			if (hasMove['gyroball'] || hasMove['trickroom']) evs.hor = 0;
@@ -2980,7 +2980,7 @@ export class BattleStatGuesser {
 			evTotal += ev;
 
 			let secondaryStat: Dex.StatName | null = statChart[role][1];
-			if (secondaryStat === 'hp' && set.level && set.level < 20) secondaryStat = 'bod';
+			if (secondaryStat === 'st' && set.level && set.level < 20) secondaryStat = 'bod';
 			stat = this.getStat(secondaryStat, set, 252, plusStat === secondaryStat ? 1.1 : 1.0);
 			ev = 252;
 			while (ev > 0 && stat <= this.getStat(secondaryStat, set, ev - 4, plusStat === secondaryStat ? 1.1 : 1.0)) ev -= 4;
@@ -3004,8 +3004,8 @@ export class BattleStatGuesser {
 			}
 			let hpDivisibility = 0;
 			let hpShouldBeDivisible = false;
-			let hp = evs['hp'] || 0;
-			stat = this.getStat('hp', set, hp, 1);
+			let st = evs['st'] || 0;
+			stat = this.getStat('st', set, st, 1);
 			if ((set.item === 'Leftovers' || set.item === 'Black Sludge') && hasMove['substitute'] && stat !== 404) {
 				hpDivisibility = 4;
 			} else if (set.item === 'Leftovers' || set.item === 'Black Sludge') {
@@ -3025,21 +3025,21 @@ export class BattleStatGuesser {
 			}
 
 			if (hpDivisibility) {
-				while (hp < 252 && evTotal < 508 && !(stat % hpDivisibility) !== hpShouldBeDivisible) {
-					hp += 4;
-					stat = this.getStat('hp', set, hp, 1);
+				while (st < 252 && evTotal < 508 && !(stat % hpDivisibility) !== hpShouldBeDivisible) {
+					st += 4;
+					stat = this.getStat('st', set, st, 1);
 					evTotal += 4;
 				}
-				while (hp > 0 && !(stat % hpDivisibility) !== hpShouldBeDivisible) {
-					hp -= 4;
-					stat = this.getStat('hp', set, hp, 1);
+				while (st > 0 && !(stat % hpDivisibility) !== hpShouldBeDivisible) {
+					st -= 4;
+					stat = this.getStat('st', set, st, 1);
 					evTotal -= 4;
 				}
-				while (hp > 0 && stat === this.getStat('hp', set, hp - 4, 1)) {
-					hp -= 4;
+				while (st > 0 && stat === this.getStat('st', set, st - 4, 1)) {
+					st -= 4;
 					evTotal -= 4;
 				}
-				if (hp || evs['hp']) evs['hp'] = hp;
+				if (st || evs['st']) evs['st'] = st;
 			}
 
 			if (species.id === 'tentacruel') {
@@ -3054,7 +3054,7 @@ export class BattleStatGuesser {
 				evTotal = this.ensureMinEVs(evs, 'hor', 52, evTotal);
 			} else if (species.id === 'gliscor') {
 				evTotal = this.ensureMinEVs(evs, 'hor', 72, evTotal);
-			} else if (species.id === 'dragonite' && evs['hp']) {
+			} else if (species.id === 'dragonite' && evs['st']) {
 				evTotal = this.ensureMaxEVs(evs, 'hor', 220, evTotal);
 			}
 
@@ -3066,7 +3066,7 @@ export class BattleStatGuesser {
 					secondaryStat = 'toa';
 				} else if (!evs['boa'] && moveCount['BottomAttack'] >= 1) {
 					secondaryStat = 'boa';
-				} else if (stats.hp === 1 && !evs['tod']) {
+				} else if (stats.st === 1 && !evs['tod']) {
 					secondaryStat = 'tod';
 				} else if (stats.tod === stats.bod && !evs['bod']) {
 					secondaryStat = 'bod';
@@ -3137,7 +3137,7 @@ export class BattleStatGuesser {
 		if (typeof ev !== 'number') ev = (this.dex.gen > 2 ? 0 : 252);
 		if (evOverride !== undefined) ev = evOverride;
 
-		if (stat === 'hp') {
+		if (stat === 'st') {
 			if (baseStat === 1) return 1;
 			if (!this.supportsEVs) return ~~(~~(2 * baseStat + iv + 100) * level / 100 + 10) + (this.supportsAVs ? ev : 0);
 			return ~~(~~(2 * baseStat + iv + ~~(ev / 4) + 100) * level / 100 + 10);
@@ -3189,7 +3189,7 @@ export function BattleStatOptimizer(set: Dex.PokemonSet, formatid: ID) {
 
 	const origNature = BattleNatures[set.nature || 'Serious'];
 	const origStats = {
-		// no need to calculate hp
+		// no need to calculate st
 		toa: getStat('toa', set.evs.toa || 0, origNature),
 		tod: getStat('tod', set.evs.tod || 0, origNature),
 		boa: getStat('boa', set.evs.boa || 0, origNature),

@@ -159,9 +159,9 @@ License: GPLv2
 	border-radius: 4px;
 }
 
-/* The declaration order of these hp* classes is significant. */
+/* The declaration order of these st* classes is significant. */
 
-.statbar .hpbar .hp {
+.statbar .hpbar .st {
 	height: 4px;
 	border-top: 2px solid #00dd60;
 	background: #00bb51;
@@ -169,13 +169,13 @@ License: GPLv2
 	border-right: 1px solid #007734;
 	border-radius: 3px;
 }
-.statbar .hpbar .hp-yellow {
+.statbar .hpbar .st-yellow {
 	border-top-color: #f8e379;
 	background-color: #f5d538;
 	border-bottom-color: #be9f0a;
 	border-right-color: #be9f0a;
 }
-.statbar .hpbar .hp-red {
+.statbar .hpbar .st-red {
 	border-top-color: #f37f67;
 	background-color: #ee4928;
 	border-bottom-color: #a3260d;

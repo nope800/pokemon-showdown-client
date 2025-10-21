@@ -329,7 +329,7 @@ class csstidy_print {
 				foreach ($vali as $property => $valj) {
 					if (strncmp($property,"//",2)!==0) {
 						$matches = array();
-						if ($sort_properties && preg_match('/^(\*|_|\/|-)(?!(ms|moz|o\b|xv|atsc|wap|khtml|webkit|ah|hp|ro|rim|tc)-)/', $property, $matches)) {
+						if ($sort_properties && preg_match('/^(\*|_|\/|-)(?!(ms|moz|o\b|xv|atsc|wap|khtml|webkit|ah|st|ro|rim|tc)-)/', $property, $matches)) {
 							$invalid[$matches[1]][$property] = $valj;
 						} else {
 							$this->parser->_add_token(PROPERTY, $property, true);

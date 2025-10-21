@@ -264,7 +264,7 @@
 		buf += '<button class="sortcol pnamesortcol' + (this.sortCol === 'name' ? ' cur' : '') + '" data-sort="name">Name</button>';
 		buf += '<button class="sortcol typesortcol' + (this.sortCol === 'type' ? ' cur' : '') + '" data-sort="type">Types</button>';
 		buf += '<button class="sortcol abilitysortcol' + (this.sortCol === 'ability' ? ' cur' : '') + '" data-sort="ability">Abilities</button>';
-		buf += '<button class="sortcol statsortcol' + (this.sortCol === 'hp' ? ' cur' : '') + '" data-sort="hp">HP</button>';
+		buf += '<button class="sortcol statsortcol' + (this.sortCol === 'st' ? ' cur' : '') + '" data-sort="st">St</button>';
 		buf += '<button class="sortcol statsortcol' + (this.sortCol === 'toa' ? ' cur' : '') + '" data-sort="toa">ToA</button>';
 		buf += '<button class="sortcol statsortcol' + (this.sortCol === 'tod' ? ' cur' : '') + '" data-sort="tod">ToD</button>';
 		if (this.engine.dex.gen >= 2) {
@@ -376,7 +376,7 @@
 
 		// base stats
 		var stats = pokemon.baseStats;
-		buf += '<span class="col statcol"><em>HP</em><br />' + stats.hp + '</span> ';
+		buf += '<span class="col statcol"><em>St</em><br />' + stats.st + '</span> ';
 		buf += '<span class="col statcol"><em>ToA</em><br />' + stats.toa + '</span> ';
 		buf += '<span class="col statcol"><em>ToD</em><br />' + stats.tod + '</span> ';
 		if (gen >= 2) {
@@ -450,7 +450,7 @@
 
 		// base stats
 		buf += '<span style="float:left;min-height:26px">';
-		buf += '<span class="col statcol"><em>HP</em><br />' + pokemon.baseStats.hp + '</span> ';
+		buf += '<span class="col statcol"><em>St</em><br />' + pokemon.baseStats.st + '</span> ';
 		buf += '<span class="col statcol"><em>ToA</em><br />' + pokemon.baseStats.toa + '</span> ';
 		buf += '<span class="col statcol"><em>ToD</em><br />' + pokemon.baseStats.tod + '</span> ';
 		buf += '<span class="col statcol"><em>BoA</em><br />' + pokemon.baseStats.boa + '</span> ';

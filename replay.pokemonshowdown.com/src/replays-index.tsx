@@ -372,7 +372,7 @@ class FeaturedReplays extends preact.Component {
 				{this.moreCompetitive && <li><ReplayLink
 					replay={{ id: 'randombattle-213274483', format: 'gen6-randombattle', players: ['The Immortal', 'Amphinobite'] }}
 				>
-					Substitute Lugia and Rotom-Fan take advantage of Slowking's utility and large HP stat, respectively,
+					Substitute Lugia and Rotom-Fan take advantage of Slowking's utility and large St stat, respectively,
 					in this high ladder match.
 				</ReplayLink></li>}
 			</ul>

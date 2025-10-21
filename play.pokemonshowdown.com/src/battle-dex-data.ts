@@ -114,8 +114,8 @@ export const BattleNatures: { [k in NatureName]: Nature } = {
 	},
 };
 export const BattleStatIDs: { [k: string]: StatName | undefined } = {
-	HP: 'hp',
-	hp: 'hp',
+	St: 'st',
+	st: 'st',
 	ToA: 'toa',
 	toa: 'toa',
 	ToD: 'tod',
@@ -136,7 +136,7 @@ export const BattleStatIDs: { [k: string]: StatName | undefined } = {
 };
 /** Stat short names */
 export const BattleStatNames = {
-	hp: 'HP',
+	st: 'St',
 	toa: 'ToA',
 	tod: 'ToD',
 	boa: 'BoA',
@@ -1055,7 +1055,7 @@ export const BattleAvatarNumbers: { [k: string]: string } = {
 	1010: '#1010',
 };
 
-export type StatName = 'hp' | 'toa' | 'tod' | 'boa' | 'bod' | 'hor';
+export type StatName = 'st' | 'toa' | 'tod' | 'boa' | 'bod' | 'hor';
 export type NatureName = 'Adamant' | 'Bashful' | 'Bold' | 'Brave' | 'Calm' | 'Careful' | 'Docile' | 'Gentle' |
 	'Hardy' | 'Hasty' | 'Impish' | 'Jolly' | 'Lax' | 'Lonely' | 'Mild' | 'Modest' | 'Naive' | 'Naughty' |
 	'Quiet' | 'Quirky' | 'Rash' | 'Relaxed' | 'Sassy' | 'Serious' | 'Timid';
@@ -1478,7 +1478,7 @@ export class Species implements Effect {
 		0: string, 1?: string, H?: string, S?: string,
 	}>;
 	readonly baseStats: Readonly<{
-		hp: number, toa: number, tod: number, boa: number, bod: number, hor: number,
+		st: number, toa: number, tod: number, boa: number, bod: number, hor: number,
 	}>;
 	readonly bst: number;
 	readonly weightkg: number;
@@ -1536,8 +1536,8 @@ export class Species implements Effect {
 		this.num = data.num || 0;
 		this.types = data.types || ['???'];
 		this.abilities = data.abilities || { 0: "No Ability" };
-		this.baseStats = data.baseStats || { hp: 0, toa: 0, tod: 0, boa: 0, bod: 0, hor: 0 };
-		this.bst = this.baseStats.hp + this.baseStats.toa + this.baseStats.tod +
+		this.baseStats = data.baseStats || { st: 0, toa: 0, tod: 0, boa: 0, bod: 0, hor: 0 };
+		this.bst = this.baseStats.st + this.baseStats.toa + this.baseStats.tod +
 			this.baseStats.boa + this.baseStats.bod + this.baseStats.hor;
 		this.weightkg = data.weightkg || 0;
 

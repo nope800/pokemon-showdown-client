@@ -30,7 +30,7 @@ describe('Battle', () => {
 				"|rated|",
 				"|seed|",
 				"|rule|Sleep Clause Mod: Limit one foe put to sleep",
-				"|rule|HP Percentage Mod: HP is shown in percentages",
+				"|rule|St Percentage Mod: St is shown in percentages",
 				"|",
 				"|start",
 				"|switch|p1a: Leafeon|Leafeon, L83, F|100/100",
@@ -46,7 +46,7 @@ describe('Battle', () => {
 		let p1leafeon = p1.pokemon[0];
 		assert(p1leafeon.ident === 'p1: Leafeon');
 		assert(p1leafeon.details === 'Leafeon, L83, F');
-		assert(p1leafeon.hp === 100);
+		assert(p1leafeon.st === 100);
 		assert(p1leafeon.maxhp === 100);
 		assert(p1leafeon.isActive());
 		assert.deepEqual(p1leafeon.moveTrack, []);
@@ -55,7 +55,7 @@ describe('Battle', () => {
 		let p2gliscor = p2.pokemon[0];
 		assert(p2gliscor.ident === 'p2: Gliscor');
 		assert(p2gliscor.details === 'Gliscor, L77, F');
-		assert(p2gliscor.hp === 242);
+		assert(p2gliscor.st === 242);
 		assert(p2gliscor.maxhp === 242);
 		assert(p2gliscor.isActive());
 		assert.deepEqual(p2gliscor.moveTrack, []);
@@ -79,7 +79,7 @@ describe('Battle', () => {
 		let p2kyurem = p2.pokemon[1];
 		assert(p2kyurem.ident === 'p2: Kyurem');
 		assert(p2kyurem.details === 'Kyurem-White, L73');
-		assert(p2kyurem.hp === 226);
+		assert(p2kyurem.st === 226);
 		assert(p2kyurem.maxhp === 303);
 		assert(p2kyurem.isActive());
 		assert(p2kyurem.item === '');

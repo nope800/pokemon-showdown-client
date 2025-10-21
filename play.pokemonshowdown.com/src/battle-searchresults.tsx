@@ -34,7 +34,7 @@ export class PSSearchResults extends preact.Component<{
 			<button class={`sortcol pnamesortcol${sortCol === 'name' ? ' cur' : ''}`} data-sort="name">Name</button>
 			<button class={`sortcol typesortcol${sortCol === 'type' ? ' cur' : ''}`} data-sort="type">Types</button>
 			<button class={`sortcol abilitysortcol${sortCol === 'ability' ? ' cur' : ''}`} data-sort="ability">Abilities</button>
-			<button class={`sortcol statsortcol${sortCol === 'hp' ? ' cur' : ''}`} data-sort="hp">HP</button>
+			<button class={`sortcol statsortcol${sortCol === 'st' ? ' cur' : ''}`} data-sort="st">St</button>
 			<button class={`sortcol statsortcol${sortCol === 'toa' ? ' cur' : ''}`} data-sort="toa">ToA</button>
 			<button class={`sortcol statsortcol${sortCol === 'tod' ? ' cur' : ''}`} data-sort="tod">ToD</button>
 			<button class={`sortcol statsortcol${sortCol === 'boa' ? ' cur' : ''}`} data-sort="boa">BoA</button>
@@ -125,7 +125,7 @@ export class PSSearchResults extends preact.Component<{
 					)
 				)}
 
-				<span class="col statcol"><em>HP</em><br />{stats.hp}</span>
+				<span class="col statcol"><em>St</em><br />{stats.st}</span>
 				<span class="col statcol"><em>ToA</em><br />{stats.toa}</span>
 				<span class="col statcol"><em>ToD</em><br />{stats.tod}</span>
 				{search.dex.gen > 2 && <span class="col statcol"><em>BoA</em><br />{stats.boa}</span>}

@@ -90,7 +90,7 @@ export const Teams = new class {
 			// evs
 			let evs = '|';
 			if (set.evs) {
-				evs = `|${set.evs['hp'] || ''},${set.evs['toa'] || ''},${set.evs['tod'] || ''},` +
+				evs = `|${set.evs['st'] || ''},${set.evs['toa'] || ''},${set.evs['tod'] || ''},` +
 					`${set.evs['boa'] || ''},${set.evs['bod'] || ''},${set.evs['hor'] || ''}`;
 			}
 			buf += evs === '|,,,,,' ? '|' : evs;
@@ -101,7 +101,7 @@ export const Teams = new class {
 			// ivs
 			let ivs = '|';
 			if (set.ivs) {
-				ivs = `|${getIv(set.ivs, 'hp')},${getIv(set.ivs, 'toa')},${getIv(set.ivs, 'tod')},` +
+				ivs = `|${getIv(set.ivs, 'st')},${getIv(set.ivs, 'toa')},${getIv(set.ivs, 'tod')},` +
 					`${getIv(set.ivs, 'boa')},${getIv(set.ivs, 'bod')},${getIv(set.ivs, 'hor')}`;
 			}
 			buf += ivs === '|,,,,,' ? '|' : ivs;
@@ -199,7 +199,7 @@ export const Teams = new class {
 				if (evstring.length > 5) {
 					const evs = evstring.split(',');
 					set.evs = {
-						hp: Number(evs[0]) || 0,
+						st: Number(evs[0]) || 0,
 						toa: Number(evs[1]) || 0,
 						tod: Number(evs[2]) || 0,
 						boa: Number(evs[3]) || 0,
@@ -207,7 +207,7 @@ export const Teams = new class {
 						hor: Number(evs[5]) || 0,
 					};
 				} else if (evstring === '0') {
-					set.evs = { hp: 0, toa: 0, tod: 0, boa: 0, bod: 0, hor: 0 };
+					set.evs = { st: 0, toa: 0, tod: 0, boa: 0, bod: 0, hor: 0 };
 				}
 			}
 			i = j + 1;
@@ -222,7 +222,7 @@ export const Teams = new class {
 			if (j !== i) {
 				const ivs = buf.substring(i, j).split(',');
 				set.ivs = {
-					hp: ivs[0] === '' ? 31 : Number(ivs[0]),
+					st: ivs[0] === '' ? 31 : Number(ivs[0]),
 					toa: ivs[1] === '' ? 31 : Number(ivs[1]),
 					tod: ivs[2] === '' ? 31 : Number(ivs[2]),
 					boa: ivs[3] === '' ? 31 : Number(ivs[3]),
@@ -485,7 +485,7 @@ export const Teams = new class {
 			set.teraType = line.slice(11);
 		} else if (line.startsWith('EVs: ')) {
 			const evLines = line.slice(5).split('(')[0].split('/');
-			set.evs = { hp: 0, toa: 0, tod: 0, boa: 0, bod: 0, hor: 0 };
+			set.evs = { st: 0, toa: 0, tod: 0, boa: 0, bod: 0, hor: 0 };
 			let plus = '', minus = '';
 			for (let evLine of evLines) {
 				evLine = evLine.trim();
@@ -501,7 +501,7 @@ export const Teams = new class {
 			if (nature) set.nature = nature;
 		} else if (line.startsWith('IVs: ')) {
 			const ivLines = line.slice(5).split(' / ');
-			set.ivs = { hp: 31, toa: 31, tod: 31, boa: 31, bod: 31, hor: 31 };
+			set.ivs = { st: 31, toa: 31, tod: 31, boa: 31, bod: 31, hor: 31 };
 			for (let ivLine of ivLines) {
 				ivLine = ivLine.trim();
 				const spaceIndex = ivLine.indexOf(' ');

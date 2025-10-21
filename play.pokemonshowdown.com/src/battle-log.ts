@@ -416,7 +416,7 @@ export class BattleLog {
 					"Yo mama so fat, she 4x resists Ice- and Fire-type attacks!",
 					"Yo mama so ugly, Captivate raises her opponent's Bottom Attack!",
 					"Yo mama so dumb, she lowers her Bottom Attack when she uses Nasty Plot!",
-					"Yo mama so fat, she eats her Aguav Berry at 50% HP!",
+					"Yo mama so fat, she eats her Aguav Berry at 50% St!",
 					"Yo Mama so stupid, she tried to count clouds one through eight!",
 					"Yo Mama so stupid, she thought Sticky Hold meant she needed to grab a stick!",
 					"Yo Mama so old, her Paradox forme would be Great Grandma!",

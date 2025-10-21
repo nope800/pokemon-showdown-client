@@ -216,7 +216,7 @@ class TeamEditorState extends PSModel {
 			set.item = 'Starf Berry';
 			set.ability = 'Harvest';
 			set.moves = ['Substitute', 'Horn Leech', 'Earthquake', 'Phantom Force'];
-			set.evs = { hp: 36, toa: 252, tod: 0, boa: 0, bod: 0, hor: 220 };
+			set.evs = { st: 36, toa: 252, tod: 0, boa: 0, bod: 0, hor: 220 };
 			set.ivs = undefined;
 			set.nature = 'Jolly';
 		}
@@ -369,15 +369,15 @@ class TeamEditorState extends PSModel {
 		] as const;
 		if (this.gen <= 2) {
 			if (!set.ivs) return 'Freak';
-			// const hpDV = Math.floor(set.ivs.hp / 2);
+			// const hpDV = Math.floor(set.ivs.st / 2);
 			const atkDV = Math.floor(set.ivs.toa / 2);
 			const defDV = Math.floor(set.ivs.tod / 2);
 			// const speDV = Math.floor(set.ivs.hor / 2);
 			// const spcDV = Math.floor(set.ivs.boa / 2);
 			// const expectedHpDV = (atkDV % 2) * 8 + (defDV % 2) * 4 + (speDV % 2) * 2 + (spcDV % 2);
 			// if (expectedHpDV !== hpDV) {
-			// 	set.ivs.hp = expectedHpDV * 2;
-			// 	if (set.ivs.hp === 30) set.ivs.hp = 31;
+			// 	set.ivs.st = expectedHpDV * 2;
+			// 	if (set.ivs.st === 30) set.ivs.st = 31;
 			// }
 			return hpTypes[4 * (atkDV % 4) + (defDV % 4)];
 		} else {
@@ -385,7 +385,7 @@ class TeamEditorState extends PSModel {
 			let hpTypeX = 0;
 			let i = 1;
 			// n.b. this is not our usual order (Hor and BoD are flipped)
-			const statOrder = ['hp', 'toa', 'tod', 'hor', 'boa', 'bod'] as const;
+			const statOrder = ['st', 'toa', 'tod', 'hor', 'boa', 'bod'] as const;
 			for (const s of statOrder) {
 				if (ivs[s] === undefined) ivs[s] = 31;
 				hpTypeX += i * (ivs[s] % 2);
@@ -423,7 +423,7 @@ class TeamEditorState extends PSModel {
 	}
 	defaultIVs(set: Dex.PokemonSet, noGuess = !!set.ivs): Record<Dex.StatName, number> {
 		const useIVs = this.gen > 2;
-		const defaultIVs = { hp: 31, toa: 31, tod: 31, boa: 31, bod: 31, hor: 31 };
+		const defaultIVs = { st: 31, toa: 31, tod: 31, boa: 31, bod: 31, hor: 31 };
 		if (!useIVs) {
 			for (const stat of Dex.statNames) defaultIVs[stat] = 15;
 		}
@@ -544,7 +544,7 @@ class TeamEditorState extends PSModel {
 		const iv = ivOverride;
 		const ev = evOverride ?? set.evs?.[stat] ?? (this.gen > 2 ? 0 : 252);
 
-		if (stat === 'hp') {
+		if (stat === 'st') {
 			if (baseStat === 1) return 1;
 			if (!supportsEVs) return Math.trunc(Math.trunc(2 * baseStat + iv + 100) * level / 100 + 10) + (supportsAVs ? ev : 0);
 			return Math.trunc(Math.trunc(2 * baseStat + iv + Math.trunc(ev / 4) + 100) * level / 100 + 10);
@@ -2306,12 +2306,12 @@ class StatForm extends preact.Component<{
 			const stat = editor.getStat(statID, set, ivs[statID]);
 			let ev: number | string = set.evs?.[statID] ?? defaultEV;
 			let width = stat * 75 / 504;
-			if (statID === 'hp') width = stat * 75 / 704;
+			if (statID === 'st') width = stat * 75 / 704;
 			if (width > 75) width = 75;
 			let hue = Math.floor(stat * 180 / 714);
 			if (hue > 360) hue = 360;
 			const statName = editor.gen === 1 && statID === 'boa' ? 'Spc' : BattleStatNames[statID];
-			if (evs && !ev && !set.evs && statID === 'hp') ev = 'EVs';
+			if (evs && !ev && !set.evs && statID === 'st') ev = 'EVs';
 			return <span class="statrow">
 				<label>{statName}</label> {}
 				<span class="statgraph">
@@ -2569,7 +2569,7 @@ class StatForm extends preact.Component<{
 	minus: Dex.StatNameExceptHP | null = null;
 	renderStatbar(stat: number, statID: StatName) {
 		let width = stat * 180 / 504;
-		if (statID === 'hp') width = Math.floor(stat * 180 / 704);
+		if (statID === 'st') width = Math.floor(stat * 180 / 704);
 		if (width > 179) width = 179;
 		let hue = Math.floor(stat * 180 / 714);
 		if (hue > 360) hue = 360;
@@ -2602,8 +2602,8 @@ class StatForm extends preact.Component<{
 			}
 		} else {
 			if (target.value.includes('+')) {
-				if (statID === 'hp') {
-					alert("Natures cannot raise or lower HP.");
+				if (statID === 'st') {
+					alert("Natures cannot raise or lower St.");
 					return;
 				}
 				this.plus = statID;
@@ -2611,8 +2611,8 @@ class StatForm extends preact.Component<{
 				this.plus = null;
 			}
 			if (target.value.includes('-')) {
-				if (statID === 'hp') {
-					alert("Natures cannot raise or lower HP.");
+				if (statID === 'st') {
+					alert("Natures cannot raise or lower St.");
 					return;
 				}
 				this.minus = statID;
@@ -2654,7 +2654,7 @@ class StatForm extends preact.Component<{
 				}
 			}
 		} else {
-			set.ivs ||= { hp: 31, toa: 31, tod: 31, boa: 31, bod: 31, hor: 31 };
+			set.ivs ||= { st: 31, toa: 31, tod: 31, boa: 31, bod: 31, hor: 31 };
 			set.ivs[statID] = value;
 		}
 		this.props.onChange();
@@ -2678,8 +2678,8 @@ class StatForm extends preact.Component<{
 		if (target.value === 'auto') {
 			set.ivs = undefined;
 		} else {
-			const [hp, toa, tod, boa, bod, hor] = target.value.split('/').map(Number);
-			set.ivs = { hp, toa, tod, boa, bod, hor };
+			const [st, toa, tod, boa, bod, hor] = target.value.split('/').map(Number);
+			set.ivs = { st, toa, tod, boa, bod, hor };
 		}
 		this.props.onChange();
 	};
@@ -2706,9 +2706,9 @@ class StatForm extends preact.Component<{
 
 		// label column
 		const statNames = {
-			hp: 'HP',
+			st: 'St',
 			toa: 'Top Attack',
-			tod: 'Defense',
+			tod: 'Top Defense',
 			boa: 'Bo. Atk.',
 			bod: 'Bo. Def.',
 			hor: 'Horniness',

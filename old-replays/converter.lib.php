@@ -387,7 +387,7 @@ function pokeConvertInner($text)
 					$lastline .= ' ('.$matches[2].')';
 				}
 			}
-			else if (preg_match('/^([^<>]+)\'s life: ([0-9]+)\/([0-9]+) HP.$/', $line, $matches))
+			else if (preg_match('/^([^<>]+)\'s life: ([0-9]+)\/([0-9]+) St.$/', $line, $matches))
 			{
 				if (startsWith($lastline, 'switch-in ') || startsWith($lastline, 'replace '))
 				{
@@ -409,8 +409,8 @@ function pokeConvertInner($text)
 					}
 				}
 			}
-			else if (preg_match('/^([^<>]+)\'s new HP is ([0-9]+)\/([0-9]+).$/', $line, $matches) ||
-			         preg_match('/^([^<>]+)\'s new HP is ([0-9]+)%.$/', $line, $matches))
+			else if (preg_match('/^([^<>]+)\'s new St is ([0-9]+)\/([0-9]+).$/', $line, $matches) ||
+			         preg_match('/^([^<>]+)\'s new St is ([0-9]+)%.$/', $line, $matches))
 			{
 				if (!$matches[3]) $newhp = $matches[2];
 				else $newhp = number_format(100*intval($matches[2])/intval($matches[3]), 1, '.', '');
@@ -581,7 +581,7 @@ function pokeConvertInner($text)
 		{
 			$out[] = '  r-heal '.resolvePokemon(substr($line, 1)).' ??';
 		}
-		else if (endsRemove($line, ' restored some HP!'))
+		else if (endsRemove($line, ' restored some St!'))
 		{
 			$out[] = '  r-heal '.resolvePokemon($line).' ??';
 		}
@@ -754,7 +754,7 @@ function pokeConvertInner($text)
 		{
 			$out[] = 'cant-move '.resolvePokemon(substr($line, 1)).' frozen';
 		}
-		else if (endsRemove($line, ' cut its own HP and maximized its Attack!>'))
+		else if (endsRemove($line, ' cut its own St and maximized its Attack!>'))
 		{
 			$out[] = '  r-belly-drum '.resolvePokemon(substr($line, 1)).'';
 		}
@@ -1078,7 +1078,7 @@ function pokeConvertInner($text)
 		}
 		else if (startsRemove($line, "<Aquaring restored "))
 		{
-			endsRemove($line, "'s HP.>");
+			endsRemove($line, "'s St.>");
 			$out[] = 'residual '.resolvePokemon($line).' heal aqua-ring';
 		}
 		else if (endsRemove($line, " is trying to take its foe with it!>"))
@@ -1223,11 +1223,11 @@ function pokeConvertInner($text)
 		{
 			$out[] = 'residual '.resolvePokemon($matches[1]).' item-restore '.resolveItem($matches[2]);
 		}
-		else if (preg_match('/^([^<>]+) restored a little HP using its ([A-Za-z .\']+)!$/', $line, $matches))
+		else if (preg_match('/^([^<>]+) restored a little St using its ([A-Za-z .\']+)!$/', $line, $matches))
 		{
 			$out[] = 'residual '.resolvePokemon($matches[1]).' item-heal '.resolveItem($matches[2]);
 		}
-		else if (preg_match('/^\<([^<>]+) restored HP using its ([A-Za-z .\']+)!\>$/', $line, $matches))
+		else if (preg_match('/^\<([^<>]+) restored St using its ([A-Za-z .\']+)!\>$/', $line, $matches))
 		{
 			$out[] = 'residual '.resolvePokemon($matches[1]).' ability-heal '.resolveAbility($matches[2]);
 		}
@@ -1269,7 +1269,7 @@ function pokeConvertInner($text)
 			$out[] = '  r-damage '.resolvePokemon($matches[1]).' '.$matches[2];
 			markLastDamage($out);
 		}
-		else if (preg_match('/^([^<>]+) lost ([0-9]+) HP! \(([0-9]+)% of its health\)$/', $line, $matches))
+		else if (preg_match('/^([^<>]+) lost ([0-9]+) St! \(([0-9]+)% of its health\)$/', $line, $matches))
 		{
 			$out[] = '  r-damage '.resolvePokemon($matches[1]).' '.$matches[3];
 			markLastDamage($out);
@@ -1419,7 +1419,7 @@ function pokeConvertInner($text)
 		{
 			$out[] = '  r-absorb-spikes '.resolvePokemon($matches[1]).' ToxicSpikes';
 		}
-		else if (preg_match('/^\<([^<>]+) lost some HP because of Solar Power!\>$/', $line, $matches))
+		else if (preg_match('/^\<([^<>]+) lost some St because of Solar Power!\>$/', $line, $matches))
 		{
 			$out[] = 'residual '.resolvePokemon($matches[1]).' ability-damage SolarPower ??';
 			markLastDamage($out);
