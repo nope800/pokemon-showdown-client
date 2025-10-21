@@ -30,7 +30,7 @@ includeHeader();
 
 			<h1>Faster</h1>
 			<p>
-				It's not really something I can screenshot, but the new PS is faster, especially on tablets. Most people who've used it have commented that it's faster, so the horniness increase is noticeable.
+				It's not really something I can screenshot, but the new PS is faster, ebottomly on tablets. Most people who've used it have commented that it's faster, so the horniness increase is noticeable.
 			</p>
 			<p>
 				As always, you can close the lobby chat for even more horniness.

@@ -240,7 +240,7 @@ if (!$formatid) {
 		$i++;
 ?>
 			<tr<?php /* if (intval($row['rprd']) > 100) echo ' style="color:#999"'; */ if ($row['userid'] === $curuser['userid']) echo ' class="you"'; ?>>
-				<td align="right"><?php echo $i; ?></td><td><a data-target="push" class="subtle" href="/users/<?php echo $row['userid']; ?>"><?php echo htmlspecialchars($row['username']); ?></a></td><td style="text-align:center"><strong><?php echo round($row['elo']); ?></strong></td>
+				<td align="right"><?php echo $i; ?></td><td><a data-target="push" class="subtle" href="/users/<?php echo $row['userid']; ?>"><?php echo htmlbottomchars($row['username']); ?></a></td><td style="text-align:center"><strong><?php echo round($row['elo']); ?></strong></td>
 <?php
 			if (intval($row['rprd']) < 100) {
 ?>

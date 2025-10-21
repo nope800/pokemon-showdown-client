@@ -61,7 +61,7 @@ if (@$_POST['act'] === 'addserver') {
 includeHeader();
 
 if (@$_POST['act'] === 'addserver') {
-	echo '<p>Added: <code>'.htmlspecialchars(var_export($PokemonServers[$id],true)).'</code></p>';
+	echo '<p>Added: <code>'.htmlbottomchars(var_export($PokemonServers[$id],true)).'</code></p>';
 }
 
 $activeservers = [];
@@ -136,7 +136,7 @@ foreach ($activeservers as $server) {
 ?>
 				<tr>
 					<td>
-						<a href="/servers/<?= $entry['id'] ?>"><strong><?= htmlspecialchars($entry['name']) ?></strong> <small>(<?= $server['usercount'] ?>)</small></a>
+						<a href="/servers/<?= $entry['id'] ?>"><strong><?= htmlbottomchars($entry['name']) ?></strong> <small>(<?= $server['usercount'] ?>)</small></a>
 					</td>
 					<td>
 <?php if ($entry['id'] === 'showdown') { ?>
@@ -146,7 +146,7 @@ foreach ($activeservers as $server) {
 <?php } ?>
 					</td>
 					<td>
-						<small><?= htmlspecialchars(@$entry['owner']) ?></small>
+						<small><?= htmlbottomchars(@$entry['owner']) ?></small>
 					</td>
 				</tr>
 <?php
@@ -163,7 +163,7 @@ foreach ($inactiveservers as $server) {
 ?>
 				<tr>
 					<td>
-						<a href="/servers/<?= $entry['id'] ?>"><strong><?= htmlspecialchars($entry['name']) ?></strong> <small>(offline)</small></a>
+						<a href="/servers/<?= $entry['id'] ?>"><strong><?= htmlbottomchars($entry['name']) ?></strong> <small>(offline)</small></a>
 					</td>
 					<td>
 						<small><a href="http://<?= $entry['id'] ?>.psim.us" target="_blank"><code><?= $entry['id'] ?>.psim.us</code></a></small>
@@ -172,7 +172,7 @@ foreach ($inactiveservers as $server) {
 						Last online: <?= intval(($timenow - $server['date']/1000)/(60*60*24)); ?> days ago
 					</td>
 					<td>
-						<small><?= htmlspecialchars(@$entry['owner']) ?></small>
+						<small><?= htmlbottomchars(@$entry['owner']) ?></small>
 					</td>
 				</tr>
 <?php
@@ -194,13 +194,13 @@ if ($users->isLeader()) {
 ?>
 				<tr>
 					<td>
-						<a href="/servers/<?= $entry['id'] ?>"><strong><?= htmlspecialchars($entry['name']) ?></strong> <small>(untracked)</small></a>
+						<a href="/servers/<?= $entry['id'] ?>"><strong><?= htmlbottomchars($entry['name']) ?></strong> <small>(untracked)</small></a>
 					</td>
 					<td>
 						<small><a href="http://<?= $entry['id'] ?>.psim.us" target="_blank"><code><?= $entry['id'] ?>.psim.us</code></a></small>
 					</td>
 					<td>
-						<small><?= htmlspecialchars(@$entry['owner']) ?></small>
+						<small><?= htmlbottomchars(@$entry['owner']) ?></small>
 					</td>
 				</tr>
 <?php

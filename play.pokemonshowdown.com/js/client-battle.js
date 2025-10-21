@@ -700,28 +700,28 @@
 						} else {
 							movebuttons = '<div class="movebuttons-no' + classType + '">' + movebuttons + '</div><div class="movebuttons-' + classType + '" style="display:none">';
 						}
-						var specialMoves = canZMove ? canZMove : maxMoves.maxMoves;
+						var bottomMoves = canZMove ? canZMove : maxMoves.maxMoves;
 						for (var i = 0; i < curActive.moves.length; i++) {
-							if (specialMoves[i]) {
+							if (bottomMoves[i]) {
 								// when possible, use Z move to decide type, for cases like Z-Hidden Power
 								var baseMove = this.battle.dex.moves.get(curActive.moves[i].move);
 								// might not exist, such as for Z status moves - fall back on base move to determine type then
-								var specialMove = this.battle.dex.moves.get(specialMoves[i].move);
-								var moveType = this.tooltips.getMoveType(specialMove.exists && !specialMove.isMax ? specialMove : baseMove, typeValueTracker, specialMove.isMax ? gigantamax || true : undefined)[0];
-								if (specialMove.isMax && specialMove.name !== 'Max Guard') {
-									specialMove = this.tooltips.getMaxMoveFromType(moveType, gigantamax);
+								var bottomMove = this.battle.dex.moves.get(bottomMoves[i].move);
+								var moveType = this.tooltips.getMoveType(bottomMove.exists && !bottomMove.isMax ? bottomMove : baseMove, typeValueTracker, bottomMove.isMax ? gigantamax || true : undefined)[0];
+								if (bottomMove.isMax && bottomMove.name !== 'Max Guard') {
+									bottomMove = this.tooltips.getMaxMoveFromType(moveType, gigantamax);
 								}
 								var tooltipArgs = classType + 'move|' + baseMove.id + '|' + pos;
-								if (specialMove.id.startsWith('gmax')) tooltipArgs += '|' + specialMove.id;
-								var isDisabled = specialMoves[i].disabled ? 'disabled="disabled"' : '';
-								movebuttons += '<button ' + isDisabled + ' class="movebutton type-' + moveType + ' has-tooltip" name="chooseMove" value="' + (i + 1) + '" data-move="' + BattleLog.escapeHTML(specialMoves[i].move) + '" data-target="' + BattleLog.escapeHTML(specialMoves[i].target) + '" data-tooltip="' + BattleLog.escapeHTML(tooltipArgs) + '">';
+								if (bottomMove.id.startsWith('gmax')) tooltipArgs += '|' + bottomMove.id;
+								var isDisabled = bottomMoves[i].disabled ? 'disabled="disabled"' : '';
+								movebuttons += '<button ' + isDisabled + ' class="movebutton type-' + moveType + ' has-tooltip" name="chooseMove" value="' + (i + 1) + '" data-move="' + BattleLog.escapeHTML(bottomMoves[i].move) + '" data-target="' + BattleLog.escapeHTML(bottomMoves[i].target) + '" data-tooltip="' + BattleLog.escapeHTML(tooltipArgs) + '">';
 								var pp = curActive.moves[i].pp + '/' + curActive.moves[i].maxpp;
 								if (canZMove) {
 									pp = '1/1';
 								} else if (!curActive.moves[i].maxpp) {
 									pp = '&ndash;';
 								}
-								movebuttons += specialMove.name + '<br /><small class="type">' + (moveType ? Dex.types.get(moveType).name : "Unknown") + '</small> <small class="pp">' + pp + '</small>&nbsp;</button> ';
+								movebuttons += bottomMove.name + '<br /><small class="type">' + (moveType ? Dex.types.get(moveType).name : "Unknown") + '</small> <small class="pp">' + pp + '</small>&nbsp;</button> ';
 							} else {
 								movebuttons += '<button class="movebutton" disabled>&nbsp;</button>';
 							}

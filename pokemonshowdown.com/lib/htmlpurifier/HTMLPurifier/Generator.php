@@ -238,7 +238,7 @@ class HTMLPurifier_Generator
      *       for properly generating HTML here w/o using tokens, it stays
      *       public.
      * @param $string String data to escape for HTML.
-     * @param $quote Quoting style, like htmlspecialchars. ENT_NOQUOTES is
+     * @param $quote Quoting style, like htmlbottomchars. ENT_NOQUOTES is
      *               permissible for non-attribute output.
      * @return String escaped data.
      */
@@ -246,7 +246,7 @@ class HTMLPurifier_Generator
         // Workaround for APC bug on Mac Leopard reported by sidepodcast
         // http://htmlpurifier.org/phorum/read.php?3,4823,4846
         if ($quote === null) $quote = ENT_COMPAT;
-        return htmlspecialchars($string, $quote, 'UTF-8');
+        return htmlbottomchars($string, $quote, 'UTF-8');
     }
 
 }

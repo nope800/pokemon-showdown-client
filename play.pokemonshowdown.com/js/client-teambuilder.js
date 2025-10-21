@@ -2295,7 +2295,7 @@
 				if (guessedPlus && guessedMinus) buf += ' (+' + BattleStatNames[guessedPlus] + ', -' + BattleStatNames[guessedMinus] + ')';
 				else buf = buf.slice(0, -3);
 				buf += '</button><small> (<a target="_blank" href="' + this.smogdexLink(species) + '">Smogon&nbsp;analysis</a>)</small></p>';
-				// buf += ' <small>(' + role + ' | bulk: phys ' + Math.round(guess.moveCount.physicalBulk/1000) + ' + spec ' + Math.round(guess.moveCount.specialBulk/1000) + ' = ' + Math.round(guess.moveCount.bulk/1000) + ')</small>';
+				// buf += ' <small>(' + role + ' | bulk: phys ' + Math.round(guess.moveCount.topBulk/1000) + ' + spec ' + Math.round(guess.moveCount.bottomBulk/1000) + ' = ' + Math.round(guess.moveCount.bulk/1000) + ')</small>';
 			}
 
 			if (setGuessed) {
@@ -2328,7 +2328,7 @@
 			if (this.curTeam.gen === 1) {
 				buf += '<label>Bottom</label></div>';
 			} else {
-				buf += '<label>Sp. ToA.</label></div><div><label>Sp. ToD.</label></div>';
+				buf += '<label>Bo. Atk.</label></div><div><label>Bo. Def.</label></div>';
 			}
 
 			buf += '<div><label>Horniness</label></div></div>';
@@ -3536,10 +3536,10 @@
 				if (baseFormat.substr(-5) === 'draft') baseFormat = baseFormat.substr(0, baseFormat.length - 5);
 				if (!baseFormat) baseFormat = 'ou';
 				if (this.curTeam && this.curTeam.format) {
-					if (baseFormat.substr(0, 10) === 'battlespot' && baseFormat.substr(0, 19) !== 'battlespotspecial13' ||
+					if (baseFormat.substr(0, 10) === 'battlespot' && baseFormat.substr(0, 19) !== 'battlespotbottom13' ||
 						baseFormat.substr(0, 3) === 'vgc' || baseFormat.substr(0, 14) === 'battlefestival') set.level = 50;
 					if (baseFormat.startsWith('lc') || baseFormat.endsWith('lc')) set.level = 5;
-					if (baseFormat.substr(0, 19) === 'battlespotspecial17') set.level = 1;
+					if (baseFormat.substr(0, 19) === 'battlespotbottom17') set.level = 1;
 					if (format && format.teambuilderLevel) {
 						set.level = format.teambuilderLevel;
 					}

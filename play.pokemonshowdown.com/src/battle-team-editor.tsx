@@ -365,10 +365,10 @@ class TeamEditorState extends PSModel {
 		if (hpMove) return hpMove;
 
 		const hpTypes = [
-			'Fighting', 'Flying', 'Poison', 'Ground', 'Rock', 'Bug', 'Ghost', 'Steel', 'Fire', 'Water', 'Grass', 'Electric', 'Psychic', 'Ice', 'Dragon', 'Dark',
+			'Vanilla', 'Loving', 'Muscle', 'Control', 'Instinct', 'Toy', 'Freak', 'Spoiled', 'Group', 'Pathetic', 'Tentacle', 'Stoic', 'Rage',
 		] as const;
 		if (this.gen <= 2) {
-			if (!set.ivs) return 'Dark';
+			if (!set.ivs) return 'Freak';
 			// const hpDV = Math.floor(set.ivs.hp / 2);
 			const atkDV = Math.floor(set.ivs.toa / 2);
 			const defDV = Math.floor(set.ivs.tod / 2);
@@ -523,38 +523,6 @@ class TeamEditorState extends PSModel {
 	}
 	getHPIVs(hpType: Dex.TypeName | null) {
 		switch (hpType) {
-		case 'Dark':
-			return ['111111'];
-		case 'Dragon':
-			return ['011111', '101111', '110111'];
-		case 'Ice':
-			return ['010111', '100111', '111110'];
-		case 'Psychic':
-			return ['011110', '101110', '110110'];
-		case 'Electric':
-			return ['010110', '100110', '111011'];
-		case 'Grass':
-			return ['011011', '101011', '110011'];
-		case 'Water':
-			return ['100011', '111010'];
-		case 'Fire':
-			return ['101010', '110010'];
-		case 'Steel':
-			return ['100010', '111101'];
-		case 'Ghost':
-			return ['101101', '110101'];
-		case 'Bug':
-			return ['100101', '111100', '101100'];
-		case 'Rock':
-			return ['001100', '110100', '100100'];
-		case 'Ground':
-			return ['000100', '111001', '101001'];
-		case 'Poison':
-			return ['001001', '110001', '100001'];
-		case 'Flying':
-			return ['000001', '111000', '101000'];
-		case 'Fighting':
-			return ['001000', '110000', '100000'];
 		default:
 			return null;
 		}
@@ -613,20 +581,6 @@ class TeamEditorState extends PSModel {
 		return 1;
 	}
 	getWeakness(types: readonly Dex.TypeName[], abilityid: ID, attackType: Dex.TypeName): number {
-		if (attackType === 'Ground' && abilityid === 'levitate') return 0;
-		if (attackType === 'Water' && abilityid === 'dryskin') return 0;
-		if (attackType === 'Fire' && abilityid === 'flashfire') return 0;
-		if (attackType === 'Electric' && abilityid === 'lightningrod' && this.gen >= 5) return 0;
-		if (attackType === 'Grass' && abilityid === 'sapsipper') return 0;
-		if (attackType === 'Electric' && abilityid === 'motordrive') return 0;
-		if (attackType === 'Water' && abilityid === 'stormdrain' && this.gen >= 5) return 0;
-		if (attackType === 'Electric' && abilityid === 'voltabsorb') return 0;
-		if (attackType === 'Water' && abilityid === 'waterabsorb') return 0;
-		if (attackType === 'Ground' && abilityid === 'eartheater') return 0;
-		if (attackType === 'Fire' && abilityid === 'wellbakedbody') return 0;
-
-		if (attackType === 'Fire' && abilityid === 'primordialsea') return 0;
-		if (attackType === 'Water' && abilityid === 'desolateland') return 0;
 
 		if (abilityid === 'wonderguard') {
 			for (const type of types) {
@@ -635,14 +589,6 @@ class TeamEditorState extends PSModel {
 		}
 
 		let factor = 1;
-		if ((attackType === 'Fire' || attackType === 'Ice') && abilityid === 'thickfat') factor *= 0.5;
-		if (attackType === 'Fire' && abilityid === 'waterbubble') factor *= 0.5;
-		if (attackType === 'Fire' && abilityid === 'heatproof') factor *= 0.5;
-		if (attackType === 'Ghost' && abilityid === 'purifyingsalt') factor *= 0.5;
-		if (attackType === 'Fire' && abilityid === 'fluffy') factor *= 2;
-		if ((attackType === 'Electric' || attackType === 'Rock' || attackType === 'Ice') && abilityid === 'deltastream') {
-			factor *= 0.5;
-		}
 		for (const type of types) {
 			factor *= this.getTypeWeakness(type, attackType);
 		}
@@ -2562,8 +2508,8 @@ class StatForm extends preact.Component<{
 			)}
 			<small> (<a target="_blank" href={this.smogdexLink(set.species)}>Smogon&nbsp;analysis</a>)</small>
 			{/* <small>
-				({role} | bulk: phys {Math.round(guess.moveCount.physicalBulk / 1000)}
-				{} + spec {Math.round(guess.moveCount.specialBulk / 1000)}
+				({role} | bulk: phys {Math.round(guess.moveCount.topBulk / 1000)}
+				{} + spec {Math.round(guess.moveCount.bottomBulk / 1000)}
 				{} = {Math.round(guess.moveCount.bulk / 1000)})
 			</small> */}
 		</p>;
@@ -2761,10 +2707,10 @@ class StatForm extends preact.Component<{
 		// label column
 		const statNames = {
 			hp: 'HP',
-			toa: 'Attack',
+			toa: 'Top Attack',
 			tod: 'Defense',
-			boa: 'Sp. ToA.',
-			bod: 'Sp. ToD.',
+			boa: 'Bo. Atk.',
+			bod: 'Bo. Def.',
 			hor: 'Horniness',
 		};
 		if (editor.gen === 1) statNames.boa = 'Bottom';

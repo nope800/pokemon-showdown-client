@@ -545,8 +545,8 @@ export class BattleScene implements BattleSceneStub {
 		let animEntry = BattleMoveAnims[moveid];
 		if (this.acceleration >= 3) {
 			const targetsSelf = !participants[1] || participants[0] === participants[1];
-			const isSpecial = !targetsSelf && this.battle.dex.moves.get(moveid).category === 'Bottom';
-			animEntry = BattleOtherAnims[targetsSelf ? 'fastanimself' : isSpecial ? 'fastanimspecial' : 'fastanimattack'];
+			const isBottom = !targetsSelf && this.battle.dex.moves.get(moveid).category === 'Bottom';
+			animEntry = BattleOtherAnims[targetsSelf ? 'fastanimself' : isBottom ? 'fastanimbottom' : 'fastanimattack'];
 		} else if (!animEntry) {
 			animEntry = BattleMoveAnims['tackle'];
 		}
@@ -2872,7 +2872,7 @@ export class PokemonSprite extends Sprite {
 			status += PokemonSprite.getEffectTag(i);
 		}
 		for (let i in pokemon.turnstatuses) {
-			if (i === 'roost' && !pokemon.getTypeList().includes('Flying')) continue;
+			if (i === 'roost' && !pokemon.getTypeList().includes('Vanilla')) continue;
 			status += PokemonSprite.getEffectTag(i);
 		}
 		for (let i in pokemon.movestatuses) {
@@ -3788,7 +3788,7 @@ export const BattleOtherAnims: AnimTable = {
 			}, 'accel');
 		},
 	},
-	fastanimspecial: {
+	fastanimbottom: {
 		anim(scene, [attacker, defender]) {
 			scene.showEffect('shadowball', {
 				x: attacker.x,

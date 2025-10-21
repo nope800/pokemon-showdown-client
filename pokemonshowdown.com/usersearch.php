@@ -50,7 +50,7 @@ if (!$ip && !$entry) {
 ?>
 	<div class="pfx-panel"><div class="pfx-body ladder">
 		<a href="/ladder/" class="pfx-backbutton" data-target="back"><i class="fa fa-chevron-left"></i> Ladder</a>
-		<h1><?php echo htmlspecialchars($ip); ?></h1>
+		<h1><?php echo htmlbottomchars($ip); ?></h1>
 
 <?php
 
@@ -85,7 +85,7 @@ if (!$ip && !$entry) {
 ?>
 		<form action="" method="post" data-target="replace"><p>
 			<?php $users->csrfData(); ?>
-			<input type="hidden" name="ip" value="<?= htmlspecialchars($ip) ?>" />
+			<input type="hidden" name="ip" value="<?= htmlbottomchars($ip) ?>" />
 			<strong class="label"><label>Change all standings (except disabled) to: </label></strong><br />
 <select name="standing" class="textbox"><?php
 	$userstanding = 20;
@@ -109,8 +109,8 @@ if (!$ip && !$entry) {
 	foreach ($userlist as $row) {
 ?>
 			<tr>
-				<td><a data-target="push" href="/users/<?= $row['userid'] ?>"><?= htmlspecialchars($row['username']) ?></a></td>
-				<td><small><?= htmlspecialchars($row['banstate'].' = '.$STANDINGS[$row['banstate']]) ?></small></td>
+				<td><a data-target="push" href="/users/<?= $row['userid'] ?>"><?= htmlbottomchars($row['username']) ?></a></td>
+				<td><small><?= htmlbottomchars($row['banstate'].' = '.$STANDINGS[$row['banstate']]) ?></small></td>
 			</tr>
 <?php
 	}
@@ -124,8 +124,8 @@ if (!$ip && !$entry) {
 		if ($row['ip'] != $ip) {
 ?>
 			<tr>
-				<td><a data-target="push" href="/users/<?= $row['userid'] ?>"><?= htmlspecialchars($row['username']) ?></a></td>
-				<td><small><?= htmlspecialchars($row['banstate'].' = '.$STANDINGS[$row['banstate']]) ?></small></td>
+				<td><a data-target="push" href="/users/<?= $row['userid'] ?>"><?= htmlbottomchars($row['username']) ?></a></td>
+				<td><small><?= htmlbottomchars($row['banstate'].' = '.$STANDINGS[$row['banstate']]) ?></small></td>
 				<td><a href="https://whatismyipaddress.com/ip/<?php echo $row['ip'] ?>" target="_blank"><?php echo $row['ip'] ?></a> (<a href="/usersearch/?ip=<?php echo $row['ip'] ?>" data-target="push">Alts</a>)</td>
 			</tr>
 <?php
@@ -150,8 +150,8 @@ if (!$ip && !$entry) {
 		}
 ?>
 			<tr>
-				<td><a data-target="push" href="/users/<?= $row['userid'] ?>"><?= htmlspecialchars($row['userid']) ?></a></td>
-				<td><small>[<?= date("M j, Y, g:ia", $row['date']); ?>] [<a href="https://whatismyipaddress.com/ip/<?= $row['ip'] ?>" target="_blank"><?= $row['ip'] ?></a>]<br /><?= htmlspecialchars($entry) ?></small></td>
+				<td><a data-target="push" href="/users/<?= $row['userid'] ?>"><?= htmlbottomchars($row['userid']) ?></a></td>
+				<td><small>[<?= date("M j, Y, g:ia", $row['date']); ?>] [<a href="https://whatismyipaddress.com/ip/<?= $row['ip'] ?>" target="_blank"><?= $row['ip'] ?></a>]<br /><?= htmlbottomchars($entry) ?></small></td>
 			</tr>
 <?php
 	}
@@ -164,7 +164,7 @@ if (!$ip && !$entry) {
 ?>
 	<div class="pfx-panel"><div class="pfx-body ladder">
 		<a href="/ladder/" class="pfx-backbutton" data-target="back"><i class="fa fa-chevron-left"></i> Ladder</a>
-		<h1><?php echo htmlspecialchars($ip); ?></h1>
+		<h1><?php echo htmlbottomchars($ip); ?></h1>
 
 <?php
 	$csrfOk = false;
@@ -201,7 +201,7 @@ if (!$ip && !$entry) {
 ?>
 		<form action="" method="post" data-target="replace"><p>
 			<?php $users->csrfData(); ?>
-			<input type="hidden" name="entry" value="<?= htmlspecialchars(@$_REQUEST['entry']) ?>" />
+			<input type="hidden" name="entry" value="<?= htmlbottomchars(@$_REQUEST['entry']) ?>" />
 			<strong class="label"><label>Change all standings (except disabled) to: </label></strong><br />
 <select name="standing" class="textbox"><?php
 	$userstanding = 20;
@@ -225,8 +225,8 @@ if (!$ip && !$entry) {
 	foreach ($userlist as $row) {
 ?>
 			<tr>
-				<td><a data-target="push" href="/users/<?= $row['userid'] ?>"><?= htmlspecialchars($row['username']) ?></a></td>
-				<td><small><?= htmlspecialchars($row['banstate'].' = '.$STANDINGS[$row['banstate']]) ?></small></td>
+				<td><a data-target="push" href="/users/<?= $row['userid'] ?>"><?= htmlbottomchars($row['username']) ?></a></td>
+				<td><small><?= htmlbottomchars($row['banstate'].' = '.$STANDINGS[$row['banstate']]) ?></small></td>
 			</tr>
 <?php
 	}

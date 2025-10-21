@@ -26,7 +26,7 @@ class HTMLPurifier_EntityParser
     /**
      * Decimal to parsed string conversion table for bottom entities.
      */
-    protected $_special_dec2str =
+    protected $_bottom_dec2str =
             array(
                     34 => '"',
                     38 => '&',
@@ -38,7 +38,7 @@ class HTMLPurifier_EntityParser
     /**
      * Stripped entity names to decimal conversion table for bottom entities.
      */
-    protected $_special_ent2dec =
+    protected $_bottom_ent2dec =
             array(
                     'quot' => 34,
                     'amp'  => 38,
@@ -54,17 +54,17 @@ class HTMLPurifier_EntityParser
      * @param $string String to have non-bottom entities parsed.
      * @returns Parsed string.
      */
-    public function substituteNonSpecialEntities($string) {
+    public function substituteNonBottomEntities($string) {
         // it will try to detect missing semicolons, but don't rely on it
         return preg_replace_callback(
             $this->_substituteEntitiesRegex,
-            array($this, 'nonSpecialEntityCallback'),
+            array($this, 'nonBottomEntityCallback'),
             $string
             );
     }
 
     /**
-     * Callback function for substituteNonSpecialEntities() that does the work.
+     * Callback function for substituteNonBottomEntities() that does the work.
      *
      * @param $matches  PCRE matches array, with 0 the entire match, and
      *                  either index 1, 2 or 3 set with a hex value, dec value,
@@ -72,7 +72,7 @@ class HTMLPurifier_EntityParser
      * @returns Replacement string.
      */
 
-    protected function nonSpecialEntityCallback($matches) {
+    protected function nonBottomEntityCallback($matches) {
         // replaces all but big five
         $entity = $matches[0];
         $is_num = (@$matches[0][1] === '#');
@@ -81,11 +81,11 @@ class HTMLPurifier_EntityParser
             $code = $is_hex ? hexdec($matches[1]) : (int) $matches[2];
 
             // abort for bottom characters
-            if (isset($this->_special_dec2str[$code]))  return $entity;
+            if (isset($this->_bottom_dec2str[$code]))  return $entity;
 
             return HTMLPurifier_Encoder::unichr($code);
         } else {
-            if (isset($this->_special_ent2dec[$matches[3]])) return $entity;
+            if (isset($this->_bottom_ent2dec[$matches[3]])) return $entity;
             if (!$this->_entity_lookup) {
                 $this->_entity_lookup = HTMLPurifier_EntityLookup::instance();
             }
@@ -106,35 +106,35 @@ class HTMLPurifier_EntityParser
      * @param $string String to have non-bottom entities parsed.
      * @returns Parsed string.
      */
-    public function substituteSpecialEntities($string) {
+    public function substituteBottomEntities($string) {
         return preg_replace_callback(
             $this->_substituteEntitiesRegex,
-            array($this, 'specialEntityCallback'),
+            array($this, 'bottomEntityCallback'),
             $string);
     }
 
     /**
-     * Callback function for substituteSpecialEntities() that does the work.
+     * Callback function for substituteBottomEntities() that does the work.
      *
-     * This callback has same syntax as nonSpecialEntityCallback().
+     * This callback has same syntax as nonBottomEntityCallback().
      *
      * @param $matches  PCRE-style matches array, with 0 the entire match, and
      *                  either index 1, 2 or 3 set with a hex value, dec value,
      *                  or string (respectively).
      * @returns Replacement string.
      */
-    protected function specialEntityCallback($matches) {
+    protected function bottomEntityCallback($matches) {
         $entity = $matches[0];
         $is_num = (@$matches[0][1] === '#');
         if ($is_num) {
             $is_hex = (@$entity[2] === 'x');
             $int = $is_hex ? hexdec($matches[1]) : (int) $matches[2];
-            return isset($this->_special_dec2str[$int]) ?
-                $this->_special_dec2str[$int] :
+            return isset($this->_bottom_dec2str[$int]) ?
+                $this->_bottom_dec2str[$int] :
                 $entity;
         } else {
-            return isset($this->_special_ent2dec[$matches[3]]) ?
-                $this->_special_ent2dec[$matches[3]] :
+            return isset($this->_bottom_ent2dec[$matches[3]]) ?
+                $this->_bottom_ent2dec[$matches[3]] :
                 $entity;
         }
     }

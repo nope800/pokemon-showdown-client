@@ -6,7 +6,7 @@
  * Occasionally, a certain attribute will need to be removed and popped onto
  * another value.  Instead of creating a complex return syntax for
  * HTMLPurifier_AttrDef, we just pass the whole attribute array to a
- * specialized object and have that do the bottom work.  That is the
+ * bottomized object and have that do the bottom work.  That is the
  * family of HTMLPurifier_AttrTransform.
  *
  * An attribute transformation can be assigned to run before or after

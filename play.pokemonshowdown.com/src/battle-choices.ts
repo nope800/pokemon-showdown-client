@@ -513,7 +513,7 @@ export class BattleChoiceBuilder {
 		switch (choice.choiceType) {
 		case 'move':
 			const target = choice.targetLoc ? ` ${choice.targetLoc > 0 ? '+' : ''}${choice.targetLoc}` : ``;
-			return `move ${choice.move}${this.moveSpecial(choice)}${target}`;
+			return `move ${choice.move}${this.moveBottom(choice)}${target}`;
 		case 'switch':
 		case 'team':
 			return `${choice.choiceType} ${choice.targetPokemon}`;
@@ -522,7 +522,7 @@ export class BattleChoiceBuilder {
 			return choice.choiceType;
 		}
 	}
-	moveSpecial(choice: BattleMoveChoice) {
+	moveBottom(choice: BattleMoveChoice) {
 		return (choice.max ? ' max' : '') +
 			(choice.mega ? ' mega' : '') +
 			(choice.megax ? ' megax' : '') +

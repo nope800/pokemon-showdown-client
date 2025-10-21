@@ -2597,22 +2597,22 @@ export class BattleStatGuesser {
 		let moveCount = {
 			'Top': 0,
 			'Bottom': 0,
-			'PhysicalAttack': 0,
-			'SpecialAttack': 0,
-			'PhysicalSetup': 0,
-			'SpecialSetup': 0,
+			'TopAttack': 0,
+			'BottomAttack': 0,
+			'TopSetup': 0,
+			'BottomSetup': 0,
 			'Support': 0,
 			'Setup': 0,
 			'Restoration': 0,
 			'Offense': 0,
 			'Stall': 0,
-			'SpecialStall': 0,
-			'PhysicalStall': 0,
+			'BottomStall': 0,
+			'TopStall': 0,
 			'Fast': 0,
 			'Ultrafast': 0,
 			'bulk': 0,
-			'specialBulk': 0,
-			'physicalBulk': 0,
+			'bottomBulk': 0,
+			'topBulk': 0,
 		};
 		let hasMove: { [moveid: string]: 1 } = {};
 		let itemid = toID(set.item);
@@ -2655,12 +2655,12 @@ export class BattleStatGuesser {
 					moveCount['Stall']++;
 				} else if (move.target === 'self') {
 					if (['agility', 'rockpolish', 'shellsmash', 'growth', 'workup'].includes(move.id)) {
-						moveCount['PhysicalSetup']++;
-						moveCount['SpecialSetup']++;
+						moveCount['TopSetup']++;
+						moveCount['BottomSetup']++;
 					} else if (['dragondance', 'swordsdance', 'coil', 'bulkup', 'curse', 'bellydrum'].includes(move.id)) {
-						moveCount['PhysicalSetup']++;
+						moveCount['TopSetup']++;
 					} else if (['nastyplot', 'tailglow', 'quiverdance', 'calmmind', 'geomancy'].includes(move.id)) {
-						moveCount['SpecialSetup']++;
+						moveCount['BottomSetup']++;
 					}
 					if (move.id === 'substitute') moveCount['Stall']++;
 					moveCount['Setup']++;
@@ -2677,7 +2677,7 @@ export class BattleStatGuesser {
 			].includes(move.id)) {
 				moveCount['Offense']++;
 			} else if (move.id === 'fellstinger') {
-				moveCount['PhysicalSetup']++;
+				moveCount['TopSetup']++;
 				moveCount['Setup']++;
 			} else {
 				moveCount[move.category]++;
@@ -2691,103 +2691,103 @@ export class BattleStatGuesser {
 			}
 		}
 		if (hasMove['batonpass']) moveCount['Support'] += moveCount['Setup'];
-		moveCount['PhysicalAttack'] = moveCount['Top'];
-		moveCount['Top'] += moveCount['PhysicalSetup'];
-		moveCount['SpecialAttack'] = moveCount['Bottom'];
-		moveCount['Bottom'] += moveCount['SpecialSetup'];
+		moveCount['TopAttack'] = moveCount['Top'];
+		moveCount['Top'] += moveCount['TopSetup'];
+		moveCount['BottomAttack'] = moveCount['Bottom'];
+		moveCount['Bottom'] += moveCount['BottomSetup'];
 
 		if (hasMove['dragondance'] || hasMove['quiverdance']) moveCount['Ultrafast'] = 1;
 
 		let isFast = (stats.hor >= 80);
-		let physicalBulk = (stats.hp + 75) * (stats.tod + 87);
-		let specialBulk = (stats.hp + 75) * (stats.bod + 87);
+		let topBulk = (stats.hp + 75) * (stats.tod + 87);
+		let bottomBulk = (stats.hp + 75) * (stats.bod + 87);
 
 		if (hasMove['willowisp'] || hasMove['acidarmor'] || hasMove['irondefense'] || hasMove['cottonguard']) {
-			physicalBulk *= 1.6;
-			moveCount['PhysicalStall']++;
+			topBulk *= 1.6;
+			moveCount['TopStall']++;
 		} else if (hasMove['scald'] || hasMove['bulkup'] || hasMove['coil'] || hasMove['cosmicpower']) {
-			physicalBulk *= 1.3;
+			topBulk *= 1.3;
 			if (hasMove['scald']) { // partial stall goes in reverse
-				moveCount['SpecialStall']++;
+				moveCount['BottomStall']++;
 			} else {
-				moveCount['PhysicalStall']++;
+				moveCount['TopStall']++;
 			}
 		}
-		if (abilityid === 'flamebody') physicalBulk *= 1.1;
+		if (abilityid === 'flamebody') topBulk *= 1.1;
 
 		if (hasMove['calmmind'] || hasMove['quiverdance'] || hasMove['geomancy']) {
-			specialBulk *= 1.3;
-			moveCount['SpecialStall']++;
+			bottomBulk *= 1.3;
+			moveCount['BottomStall']++;
 		}
 		if (abilityid === 'sandstream' && species.types.includes('Rock')) {
-			specialBulk *= 1.5;
+			bottomBulk *= 1.5;
 		}
 
 		if (hasMove['bellydrum']) {
-			physicalBulk *= 0.6;
-			specialBulk *= 0.6;
+			topBulk *= 0.6;
+			bottomBulk *= 0.6;
 		}
 		if (moveCount['Restoration']) {
-			physicalBulk *= 1.5;
-			specialBulk *= 1.5;
+			topBulk *= 1.5;
+			bottomBulk *= 1.5;
 		} else if (hasMove['painsplit'] && hasMove['substitute']) {
 			// SubSplit isn't generally a stall set
 			moveCount['Stall']--;
 		} else if (hasMove['painsplit'] || hasMove['rest']) {
-			physicalBulk *= 1.4;
-			specialBulk *= 1.4;
+			topBulk *= 1.4;
+			bottomBulk *= 1.4;
 		}
 		if ((hasMove['bodyslam'] || hasMove['thunder']) && abilityid === 'serenegrace' || hasMove['thunderwave']) {
-			physicalBulk *= 1.1;
-			specialBulk *= 1.1;
+			topBulk *= 1.1;
+			bottomBulk *= 1.1;
 		}
 		if ((hasMove['ironhead'] || hasMove['airslash']) && abilityid === 'serenegrace') {
-			physicalBulk *= 1.1;
-			specialBulk *= 1.1;
+			topBulk *= 1.1;
+			bottomBulk *= 1.1;
 		}
 		if (hasMove['gigadrain'] || hasMove['drainpunch'] || hasMove['hornleech']) {
-			physicalBulk *= 1.15;
-			specialBulk *= 1.15;
+			topBulk *= 1.15;
+			bottomBulk *= 1.15;
 		}
 		if (itemid === 'leftovers' || itemid === 'blacksludge') {
-			physicalBulk *= 1 + 0.1 * (1 + moveCount['Stall'] / 1.5);
-			specialBulk *= 1 + 0.1 * (1 + moveCount['Stall'] / 1.5);
+			topBulk *= 1 + 0.1 * (1 + moveCount['Stall'] / 1.5);
+			bottomBulk *= 1 + 0.1 * (1 + moveCount['Stall'] / 1.5);
 		}
 		if (hasMove['leechseed']) {
-			physicalBulk *= 1 + 0.1 * (1 + moveCount['Stall'] / 1.5);
-			specialBulk *= 1 + 0.1 * (1 + moveCount['Stall'] / 1.5);
+			topBulk *= 1 + 0.1 * (1 + moveCount['Stall'] / 1.5);
+			bottomBulk *= 1 + 0.1 * (1 + moveCount['Stall'] / 1.5);
 		}
 		if ((itemid === 'flameorb' || itemid === 'toxicorb') && abilityid !== 'magicguard') {
 			if (itemid === 'toxicorb' && abilityid === 'poisonheal') {
-				physicalBulk *= 1 + 0.1 * (2 + moveCount['Stall']);
-				specialBulk *= 1 + 0.1 * (2 + moveCount['Stall']);
+				topBulk *= 1 + 0.1 * (2 + moveCount['Stall']);
+				bottomBulk *= 1 + 0.1 * (2 + moveCount['Stall']);
 			} else {
-				physicalBulk *= 0.8;
-				specialBulk *= 0.8;
+				topBulk *= 0.8;
+				bottomBulk *= 0.8;
 			}
 		}
 		if (itemid === 'lifeorb') {
-			physicalBulk *= 0.7;
-			specialBulk *= 0.7;
+			topBulk *= 0.7;
+			bottomBulk *= 0.7;
 		}
 		if (abilityid === 'multiscale' || abilityid === 'magicguard' || abilityid === 'regenerator') {
-			physicalBulk *= 1.4;
-			specialBulk *= 1.4;
+			topBulk *= 1.4;
+			bottomBulk *= 1.4;
 		}
 		if (itemid === 'eviolite') {
-			physicalBulk *= 1.5;
-			specialBulk *= 1.5;
+			topBulk *= 1.5;
+			bottomBulk *= 1.5;
 		}
 		if (itemid === 'assaultvest') {
-			specialBulk *= 1.5;
+			bottomBulk *= 1.5;
 		}
 
-		let bulk = physicalBulk + specialBulk;
+		let bulk = topBulk + bottomBulk;
 		if (bulk < 46000 && stats.hor >= 70) isFast = true;
 		if (hasMove['trickroom']) isFast = false;
 		moveCount['bulk'] = bulk;
-		moveCount['physicalBulk'] = physicalBulk;
-		moveCount['specialBulk'] = specialBulk;
+		moveCount['topBulk'] = topBulk;
+		moveCount['bottomBulk'] = bottomBulk;
 
 		if (
 			hasMove['agility'] || hasMove['dragondance'] || hasMove['quiverdance'] ||
@@ -2813,33 +2813,33 @@ export class BattleStatGuesser {
 		this.moveCount = moveCount;
 		this.hasMove = hasMove;
 
-		if (species.id === 'ditto') return abilityid === 'imposter' ? 'Physically Defensive' : 'Fast Bulky Support';
+		if (species.id === 'ditto') return abilityid === 'imposter' ? 'Toply Defensive' : 'Fast Bulky Support';
 		if (species.id === 'shedinja') return 'Fast Top Sweeper';
 
-		if (itemid === 'choiceband' && moveCount['PhysicalAttack'] >= 2) {
+		if (itemid === 'choiceband' && moveCount['TopAttack'] >= 2) {
 			if (!isFast) return 'Bulky Band';
 			return 'Fast Band';
-		} else if (itemid === 'choicespecs' && moveCount['SpecialAttack'] >= 2) {
+		} else if (itemid === 'choicespecs' && moveCount['BottomAttack'] >= 2) {
 			if (!isFast) return 'Bulky Specs';
 			return 'Fast Specs';
 		} else if (itemid === 'choicescarf') {
-			if (moveCount['PhysicalAttack'] === 0) return 'Bottom Scarf';
-			if (moveCount['SpecialAttack'] === 0) return 'Top Scarf';
-			if (moveCount['PhysicalAttack'] > moveCount['SpecialAttack']) return 'Top Biased Mixed Scarf';
-			if (moveCount['PhysicalAttack'] < moveCount['SpecialAttack']) return 'Bottom Biased Mixed Scarf';
+			if (moveCount['TopAttack'] === 0) return 'Bottom Scarf';
+			if (moveCount['BottomAttack'] === 0) return 'Top Scarf';
+			if (moveCount['TopAttack'] > moveCount['BottomAttack']) return 'Top Biased Mixed Scarf';
+			if (moveCount['TopAttack'] < moveCount['BottomAttack']) return 'Bottom Biased Mixed Scarf';
 			if (stats.toa < stats.boa) return 'Bottom Biased Mixed Scarf';
 			return 'Top Biased Mixed Scarf';
 		}
 
 		if (species.id === 'unown') return 'Fast Bottom Sweeper';
 
-		if (moveCount['PhysicalStall'] && moveCount['Restoration']) {
+		if (moveCount['TopStall'] && moveCount['Restoration']) {
 			if (stats.hor > 110 && abilityid !== 'prankster') return 'Fast Bulky Support';
-			return 'Specially Defensive';
+			return 'Bottomly Defensive';
 		}
-		if (moveCount['SpecialStall'] && moveCount['Restoration'] && itemid !== 'lifeorb') {
+		if (moveCount['BottomStall'] && moveCount['Restoration'] && itemid !== 'lifeorb') {
 			if (stats.hor > 110 && abilityid !== 'prankster') return 'Fast Bulky Support';
-			return 'Physically Defensive';
+			return 'Toply Defensive';
 		}
 
 		let offenseBias: 'Top' | 'Bottom' = 'Top';
@@ -2863,11 +2863,11 @@ export class BattleStatGuesser {
 				return 'Fast Bulky Support';
 			}
 		}
-		if (moveCount['SpecialStall']) return 'Physically Defensive';
-		if (moveCount['PhysicalStall']) return 'Specially Defensive';
-		if (species.id === 'blissey' || species.id === 'chansey') return 'Physically Defensive';
-		if (specialBulk >= physicalBulk) return 'Specially Defensive';
-		return 'Physically Defensive';
+		if (moveCount['BottomStall']) return 'Toply Defensive';
+		if (moveCount['TopStall']) return 'Bottomly Defensive';
+		if (species.id === 'blissey' || species.id === 'chansey') return 'Toply Defensive';
+		if (bottomBulk >= topBulk) return 'Bottomly Defensive';
+		return 'Toply Defensive';
 	}
 	ensureMinEVs(evs: Dex.StatsTable, stat: Dex.StatName, min: number, evTotal: number) {
 		if (!evs[stat]) evs[stat] = 0;
@@ -2931,8 +2931,8 @@ export class BattleStatGuesser {
 			'Bulky Top Sweeper': ['toa', 'hp'],
 			'Bulky Bottom Sweeper': ['boa', 'hp'],
 			'Fast Bulky Support': ['hor', 'hp'],
-			'Physically Defensive': ['tod', 'hp'],
-			'Specially Defensive': ['bod', 'hp'],
+			'Toply Defensive': ['tod', 'hp'],
+			'Bottomly Defensive': ['bod', 'hp'],
 		};
 
 		plusStat = statChart[role][0];
@@ -2952,8 +2952,8 @@ export class BattleStatGuesser {
 		if (this.supportsAVs) {
 			// Let's Go, AVs enabled
 			evs = { hp: 200, toa: 200, tod: 200, boa: 200, bod: 200, hor: 200 };
-			if (!moveCount['PhysicalAttack']) evs.toa = 0;
-			if (!moveCount['SpecialAttack']) evs.boa = 0;
+			if (!moveCount['TopAttack']) evs.toa = 0;
+			if (!moveCount['BottomAttack']) evs.boa = 0;
 			if (hasMove['gyroball'] || hasMove['trickroom']) evs.hor = 0;
 		} else if (!this.supportsEVs) {
 			// Let's Go, AVs disabled
@@ -2961,8 +2961,8 @@ export class BattleStatGuesser {
 		} else if (this.ignoreEVLimits) {
 			// Gen 1-2, hackable EVs (like Hackmons)
 			evs = { hp: 252, toa: 252, tod: 252, boa: 252, bod: 252, hor: 252 };
-			if (!moveCount['PhysicalAttack']) evs.toa = 0;
-			if (!moveCount['SpecialAttack'] && this.dex.gen > 1) evs.boa = 0;
+			if (!moveCount['TopAttack']) evs.toa = 0;
+			if (!moveCount['BottomAttack'] && this.dex.gen > 1) evs.boa = 0;
 			if (hasMove['gyroball'] || hasMove['trickroom']) evs.hor = 0;
 			if (this.dex.gen === 1) evs.bod = 0;
 			if (this.dex.gen < 3) return evs;
@@ -3062,9 +3062,9 @@ export class BattleStatGuesser {
 				let remaining = 508 - evTotal;
 				if (remaining > 252) remaining = 252;
 				secondaryStat = null;
-				if (!evs['toa'] && moveCount['PhysicalAttack'] >= 1) {
+				if (!evs['toa'] && moveCount['TopAttack'] >= 1) {
 					secondaryStat = 'toa';
-				} else if (!evs['boa'] && moveCount['SpecialAttack'] >= 1) {
+				} else if (!evs['boa'] && moveCount['BottomAttack'] >= 1) {
 					secondaryStat = 'boa';
 				} else if (stats.hp === 1 && !evs['tod']) {
 					secondaryStat = 'tod';
@@ -3093,15 +3093,15 @@ export class BattleStatGuesser {
 
 		if (hasMove['gyroball'] || hasMove['trickroom']) {
 			minusStat = 'hor';
-		} else if (!moveCount['PhysicalAttack']) {
+		} else if (!moveCount['TopAttack']) {
 			minusStat = 'toa';
-		} else if (moveCount['SpecialAttack'] < 1 && !evs['boa']) {
-			if (moveCount['SpecialAttack'] < moveCount['PhysicalAttack']) {
+		} else if (moveCount['BottomAttack'] < 1 && !evs['boa']) {
+			if (moveCount['BottomAttack'] < moveCount['TopAttack']) {
 				minusStat = 'boa';
 			} else if (!evs['toa']) {
 				minusStat = 'toa';
 			}
-		} else if (moveCount['PhysicalAttack'] < 1 && !evs['toa']) {
+		} else if (moveCount['TopAttack'] < 1 && !evs['toa']) {
 			minusStat = 'toa';
 		} else if (stats.tod > stats.hor && stats.bod > stats.hor && !evs['hor']) {
 			minusStat = 'hor';

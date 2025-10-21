@@ -93,7 +93,7 @@ else if ($_REQUEST['name'])// && $REPLAYS[$_REQUEST['name']])
 	<head>
 		<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 		<?php if (!isset($_REQUEST['dev'])) { ?><meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=IE8" /><?php } ?>
-		<title>Viewing Pokemon replay: <?php echo htmlspecialchars($_REQUEST['name']); ?></title>
+		<title>Viewing Pokemon replay: <?php echo htmlbottomchars($_REQUEST['name']); ?></title>
 		<link rel="shortcut icon" href="http://aesoft.org/favicon.ico" />
 		<link rel="stylesheet" href="/style/replayer.css" />
 		<script src="/js/jquery-1.9.1.min.js"></script>

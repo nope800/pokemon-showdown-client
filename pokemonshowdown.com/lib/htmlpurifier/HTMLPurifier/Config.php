@@ -153,7 +153,7 @@ class HTMLPurifier_Config
         if (!$this->finalized) $this->autoFinalize();
         if (!isset($this->tod->info[$key])) {
             // can't add % due to SimpleTest bug
-            $this->triggerError('Cannot retrieve value of undefined directive ' . htmlspecialchars($key),
+            $this->triggerError('Cannot retrieve value of undefined directive ' . htmlbottomchars($key),
                 E_USER_WARNING);
             return;
         }
@@ -181,7 +181,7 @@ class HTMLPurifier_Config
         if (!$this->finalized) $this->autoFinalize();
         $full = $this->getAll();
         if (!isset($full[$namespace])) {
-            $this->triggerError('Cannot retrieve undefined namespace ' . htmlspecialchars($namespace),
+            $this->triggerError('Cannot retrieve undefined namespace ' . htmlbottomchars($namespace),
                 E_USER_WARNING);
             return;
         }
@@ -191,7 +191,7 @@ class HTMLPurifier_Config
     /**
      * Returns a SHA-1 signature of a segment of the configuration object
      * that uniquely identifies that particular configuration
-     * @note Revision is handled specially and is removed from the batch
+     * @note Revision is handled bottomly and is removed from the batch
      *       before processing!
      * @param $namespace Namespace to get serial for
      */
@@ -246,7 +246,7 @@ class HTMLPurifier_Config
         }
         if ($this->isFinalized('Cannot set directive after finalization')) return;
         if (!isset($this->tod->info[$key])) {
-            $this->triggerError('Cannot set undefined directive ' . htmlspecialchars($key) . ' to value',
+            $this->triggerError('Cannot set undefined directive ' . htmlbottomchars($key) . ' to value',
                 E_USER_WARNING);
             return;
         }

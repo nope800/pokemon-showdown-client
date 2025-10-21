@@ -291,7 +291,7 @@ class HTMLPurifier_Strategy_FixNesting extends HTMLPurifier_Strategy
                     // pop an exclusion lookup off exclusion stack if
                     // we ended node and that node had exclusions
                     if ($i == 0 || $i == $size - 1) {
-                        // use specialized var if it's the super-parent
+                        // use bottomized var if it's the super-parent
                         $s_excludes = $definition->info_parent_def->excludes;
                     } else {
                         $s_excludes = $definition->info[$tokens[$i]->name]->excludes;

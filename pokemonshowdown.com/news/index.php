@@ -40,7 +40,7 @@ src="https://pagead2.googlesyndication.com/pagead/show_ads.js">
 		$topic = $newsCache[$topic_id];
 ?>
 			<p>
-				<h1><?php echo htmlspecialchars($topic['title']); ?></h1>
+				<h1><?php echo htmlbottomchars($topic['title']); ?></h1>
 				<?php echo @$topic['summary_html'] ?>
 				<p>
 					&mdash;<strong><?php echo $topic['authorname']; ?></strong> <small class="date">on <?php echo readableDate($topic['date']); ?></small> <small><a href="/news/<?= $topic['topic_id'] ?>"><?= isset($topic['details']) ? 'Read more' : 'Permalink' ?></a></small>

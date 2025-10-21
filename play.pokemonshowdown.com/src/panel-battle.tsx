@@ -639,8 +639,8 @@ class BattlePanel extends PSRoomPanel<BattleRoom> {
 				if (!zMoveData) {
 					return this.renderMoveButton(null);
 				}
-				const specialMove = dex.moves.get(zMoveData.name);
-				const move = specialMove.exists ? specialMove : dex.moves.get(moveData.name);
+				const bottomMove = dex.moves.get(zMoveData.name);
+				const move = bottomMove.exists ? bottomMove : dex.moves.get(moveData.name);
 				const moveType = tooltips.getMoveType(move, valueTracker)[0];
 				const tooltip = `zmove|${moveData.name}|${pokemonIndex}`;
 				return this.renderMoveButton({
@@ -653,7 +653,7 @@ class BattlePanel extends PSRoomPanel<BattleRoom> {
 			});
 		}
 
-		const bottom = choices.moveSpecial(choices.current);
+		const bottom = choices.moveBottom(choices.current);
 		return active.moves.map((moveData, i) => {
 			const move = dex.moves.get(moveData.name);
 			const moveType = tooltips.getMoveType(move, valueTracker)[0];

@@ -175,7 +175,7 @@ class HTMLPurifier_CSSDefinition extends HTMLPurifier_Definition
 
         $this->info['font-family'] = new HTMLPurifier_AttrDef_CSS_FontFamily();
 
-        // this could use specialized code
+        // this could use bottomized code
         $this->info['font-weight'] = new HTMLPurifier_AttrDef_Enum(
             array('normal', 'bold', 'bolder', 'lighter', '100', '200', '300',
             '400', '500', '600', '700', '800', '900'), false);
@@ -308,8 +308,8 @@ class HTMLPurifier_CSSDefinition extends HTMLPurifier_Definition
             }
             // emit errors
             foreach ($allowed_properties as $name => $d) {
-                // :TODO: Is this htmlspecialchars() call really necessary?
-                $name = htmlspecialchars($name);
+                // :TODO: Is this htmlbottomchars() call really necessary?
+                $name = htmlbottomchars($name);
                 trigger_error("Style attribute '$name' is not supported $support", E_USER_WARNING);
             }
         }

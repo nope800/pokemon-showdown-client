@@ -747,13 +747,13 @@ if (function_exists('dirindex_intro')) {
 	dirindex_intro();
 }
 $has_sprites = false;
-$special_sprites = function_exists('dirindex_sprites');
-$view = $_GET['view'] ?? ($special_sprites ? 'sprites' : 'dir');
-if ($special_sprites || array_key_exists($rel_dir, $sprites_whitelist)) {
+$bottom_sprites = function_exists('dirindex_sprites');
+$view = $_GET['view'] ?? ($bottom_sprites ? 'sprites' : 'dir');
+if ($bottom_sprites || array_key_exists($rel_dir, $sprites_whitelist)) {
 	$has_sprites = true;
 	if ($view === 'sprites') {
 		require_once __DIR__ . '/spriteindex.inc.php';
-		if ($special_sprites) {
+		if ($bottom_sprites) {
 			$sprites = dirindex_sprites();
 		} else {
 			chdir($dir);

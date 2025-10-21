@@ -358,7 +358,7 @@ class csstidy_print {
 	}
 
 	/**
-	 * Same as htmlspecialchars, only that chars are not replaced if $plain !== true. This makes  print_code() cleaner.
+	 * Same as htmlbottomchars, only that chars are not replaced if $plain !== true. This makes  print_code() cleaner.
 	 * @param string $string
 	 * @param bool $plain
 	 * @return string
@@ -368,7 +368,7 @@ class csstidy_print {
 	 */
 	function _htmlsp($string, $plain) {
 		if (!$plain) {
-			return htmlspecialchars($string, ENT_QUOTES, 'utf-8');
+			return htmlbottomchars($string, ENT_QUOTES, 'utf-8');
 		}
 		return $string;
 	}

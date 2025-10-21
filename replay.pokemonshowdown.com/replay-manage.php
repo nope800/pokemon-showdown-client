@@ -136,9 +136,9 @@ $panels->start();
 
 			<?php if (@$replay['private']) echo '<strong>THIS REPLAY IS PRIVATE</strong> - make sure you have the owner\'s permission to share<br />'; ?>
 
-			<pre class="urlbox" style="word-wrap: break-word;"><?php echo htmlspecialchars('https://'.$psconfig['routes']['replays'].'/'.$fullid); ?></pre>
+			<pre class="urlbox" style="word-wrap: break-word;"><?php echo htmlbottomchars('https://'.$psconfig['routes']['replays'].'/'.$fullid); ?></pre>
 
-			<h1 style="font-weight:normal;text-align:left"><strong><?= htmlspecialchars($format) ?></strong>: <a href="//<?= $psconfig['routes']['users'] ?>/<?= userid($p1) ?>" class="subtle"><?= htmlspecialchars($p1) ?></a> vs. <a href="//<?= $psconfig['routes']['users'] ?>/<?= userid($p2) ?>" class="subtle"><?= htmlspecialchars($p2) ?></a></h1>
+			<h1 style="font-weight:normal;text-align:left"><strong><?= htmlbottomchars($format) ?></strong>: <a href="//<?= $psconfig['routes']['users'] ?>/<?= userid($p1) ?>" class="subtle"><?= htmlbottomchars($p1) ?></a> vs. <a href="//<?= $psconfig['routes']['users'] ?>/<?= userid($p2) ?>" class="subtle"><?= htmlbottomchars($p2) ?></a></h1>
 			<p style="padding:0 1em;margin-top:0">
 				<small class="uploaddate" data-timestamp="<?= @$replay['uploadtime'] ?? @$replay['date'] ?>"><em>Uploaded:</em> <?php echo date("M j, Y", @$replay['uploadtime'] ?? @$replay['date']); ?><?= @$replay['rating'] ? ' | <em>Rating:</em> ' . $replay['rating'] : '' ?></small>
 			</p>
@@ -177,7 +177,7 @@ if ($manage) {
 ?>
 		</div>
 
-		<input type="hidden" name="replayid" value="<?php echo htmlspecialchars($replay['id']); ?>" />
+		<input type="hidden" name="replayid" value="<?php echo htmlbottomchars($replay['id']); ?>" />
 		<!--
 
 You can get this log directly at https://<?php echo $psconfig['routes']['replays']; ?>/<?php echo $replay['id']; ?>.log

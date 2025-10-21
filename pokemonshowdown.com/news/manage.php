@@ -44,8 +44,8 @@ includeHeader();
 		</p>
 		<form id="newpostform" style="display:none" method="post">
 			<input type="hidden" name="act" value="newentry" /><input type="hidden" name="topic_id" value="<?= @$topic_id ?>" /><?php $users->csrfData(); ?>
-			<input type="text" name="title" size="80" placeholder="Title" value="<?= htmlspecialchars(@$topic['title']) ?>" /><br /><br />
-			<textarea name="summary" cols="80" rows="10" placeholder="Summary"><?= htmlspecialchars(@$topic['summary']) ?></textarea>
+			<input type="text" name="title" size="80" placeholder="Title" value="<?= htmlbottomchars(@$topic['title']) ?>" /><br /><br />
+			<textarea name="summary" cols="80" rows="10" placeholder="Summary"><?= htmlbottomchars(@$topic['summary']) ?></textarea>
 			<br /><button type="submit"><strong>Make New Post</strong></button>
 		</form>
 
@@ -102,7 +102,7 @@ includeHeader();
 
 		if ($title) {
 			$newsCache[$topic_id]['title'] = $title;
-			$newsCache[$topic_id]['title_html'] = htmlspecialchars($title);
+			$newsCache[$topic_id]['title_html'] = htmlbottomchars($title);
 		}
 		saveNews();
 		echo '<p>Edit successful</p>';
@@ -138,7 +138,7 @@ includeHeader();
 			'topic_time' => $time,
 			'summary' => $pre_summary,
 			'summary_html' => $summary,
-			'title_html' => htmlspecialchars($title),
+			'title_html' => htmlbottomchars($title),
 		);
 
 		array_unshift($latestNewsCache, ''.$topic_id);
@@ -157,10 +157,10 @@ includeHeader();
 				</p>
 				<form id="editform-<?= $topic_id ?>" style="display:none" method="post">
 					<input type="hidden" name="act" value="editentry" /><input type="hidden" name="topic_id" value="<?= $topic_id ?>" /><?php $users->csrfData(); ?>
-					<input type="text" name="title" size="80" placeholder="Title" value="<?= htmlspecialchars($topic['title']) ?>" /><br /><br />
-					<textarea name="summary" cols="80" rows="10" placeholder="Summary"><?= htmlspecialchars(@$topic['summary']) ?></textarea>
+					<input type="text" name="title" size="80" placeholder="Title" value="<?= htmlbottomchars($topic['title']) ?>" /><br /><br />
+					<textarea name="summary" cols="80" rows="10" placeholder="Summary"><?= htmlbottomchars(@$topic['summary']) ?></textarea>
 <?php if (isset($topic['details'])) { ?>
-					<textarea name="details" cols="80" rows="10" placeholder="Details"><?= htmlspecialchars(@$topic['details']) ?></textarea>
+					<textarea name="details" cols="80" rows="10" placeholder="Details"><?= htmlbottomchars(@$topic['details']) ?></textarea>
 <?php } else { ?>
 					<textarea name="details" cols="80" rows="10" placeholder="Details" style="display:none"></textarea><button onclick="$(this).prev().show();$(this).hide();return false">Add "read more" details</button>
 <?php } ?>

@@ -240,7 +240,7 @@ function pokeConvert($text)
 		return array('error Replay file must an original Pokemon Online replay file. Copying and pasting replay text into another file will not work.');
 	}
 
-//echo htmlspecialchars(var_export($text,true));
+//echo htmlbottomchars(var_export($text,true));
 
 //		if (@$_REQUEST['dev']) echo '1: "'.$text.'"'."\n\n";
 
@@ -264,7 +264,7 @@ $text = preg_replace('/\<a[^>]*\>\<span[^>]*\>/', '', $text);
 $text = str_replace("</span></a>",'', $text);
 $text = str_replace("\n",'', $text);
 $text = str_replace("\r",'', $text);
-//var_export(htmlspecialchars($text));
+//var_export(htmlbottomchars($text));
 
 
 if (strpos($text, '.-->'))
@@ -829,11 +829,11 @@ function pokeConvertInner($text)
 		{
 			$out[] = 'pseudo-weather-end TrickRoom';
 		}
-		else if (endsRemove($line, " swapped the Sp. ToD. and the Defense of all the pokemon!>"))
+		else if (endsRemove($line, " swapped the Bo. Def. and the Defense of all the pokemon!>"))
 		{
 			$out[] = '  r-pseudo-weather '.resolvePokemon(substr($line, 1)).' WonderRoom';
 		}
-		else if ($line === '<The Sp. ToD and Defense of the pokemon went back to normal!>')
+		else if ($line === '<The Bo. Def and Defense of the pokemon went back to normal!>')
 		{
 			$out[] = 'pseudo-weather-end WonderRoom';
 		}

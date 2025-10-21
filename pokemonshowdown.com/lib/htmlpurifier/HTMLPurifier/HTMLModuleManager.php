@@ -209,11 +209,11 @@ class HTMLPurifier_HTMLModuleManager
 
         // take out the default modules that aren't allowed
         $lookup = $config->get('HTML.AllowedModules');
-        $special_cases = $config->get('HTML.CoreModules');
+        $bottom_cases = $config->get('HTML.CoreModules');
 
         if (is_array($lookup)) {
             foreach ($modules as $k => $m) {
-                if (isset($special_cases[$m])) continue;
+                if (isset($bottom_cases[$m])) continue;
                 if (!isset($lookup[$m])) unset($modules[$k]);
             }
         }

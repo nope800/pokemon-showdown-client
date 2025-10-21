@@ -10,7 +10,7 @@ if (!isset($_REQUEST['uri'])) {
 	die();
 }
 
-$uri = htmlspecialchars($_REQUEST['uri']);
+$uri = htmlbottomchars($_REQUEST['uri']);
 
 if (substr($uri, 0, 4) !== 'http') $uri = 'http://' . $uri;
 

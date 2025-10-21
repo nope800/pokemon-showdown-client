@@ -90,7 +90,7 @@ if (!$userid) {
 ?>
 	<div class="pfx-panel"><div class="pfx-body ladder">
 		<a href="/users/<?php echo $userid; ?>" class="pfx-backbutton" data-target="back"><i class="fa fa-chevron-left"></i> User</a>
-		<h1><?php echo htmlspecialchars($userid); ?></h1>
+		<h1><?php echo htmlbottomchars($userid); ?></h1>
 		<h2>
 			Unregistered
 		</h2>
@@ -103,7 +103,7 @@ if (!$userid) {
 ?>
 	<div class="pfx-panel"><div class="pfx-body ladder">
 		<a href="/users/<?php echo $userid; ?>" class="pfx-backbutton" data-target="back"><i class="fa fa-chevron-left"></i> User</a>
-		<h1><?php echo htmlspecialchars($user['username']); ?></h1>
+		<h1><?php echo htmlbottomchars($user['username']); ?></h1>
 
 <?php
 if ($upperstaff) {
@@ -170,7 +170,7 @@ if ($upperstaff) {
 			}
 		}
 ?>
-			<p><small>[<?= date("M j, Y, g:ia", $row['date']); ?>] <?php if ($upperstaff) echo '[<a href="https://whatismyipaddress.com/ip/'.$row['ip'].'" target="_blank">'.$row['ip'].'</a>]' ?></small> <?= htmlspecialchars($entry) ?></p>
+			<p><small>[<?= date("M j, Y, g:ia", $row['date']); ?>] <?php if ($upperstaff) echo '[<a href="https://whatismyipaddress.com/ip/'.$row['ip'].'" target="_blank">'.$row['ip'].'</a>]' ?></small> <?= htmlbottomchars($entry) ?></p>
 <?php
 	}
 ?>

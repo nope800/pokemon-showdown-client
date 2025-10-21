@@ -11,7 +11,7 @@ $token = $_REQUEST['token'];
 $user = $users->validatePasswordResetToken($token);
 if ($user) {
 	$user = $users->getUser($user);
-	$pageTitle = "Reset Password for " . htmlspecialchars($user['username']);
+	$pageTitle = "Reset Password for " . htmlbottomchars($user['username']);
 }
 
 includeHeader();
@@ -56,7 +56,7 @@ if (!$user) {
 	if (@$actionsuccess) {
 ?>
 	<p>
-		The password for <?php echo htmlspecialchars($user['username']); ?> was <strong>successfully changed</strong>!.
+		The password for <?php echo htmlbottomchars($user['username']); ?> was <strong>successfully changed</strong>!.
 	</p>
 	<p class="mainbutton">
 		<a class="button greenbutton" href="http://<?= $psconfig['routes']['client'] ?>/">Play online</a>
@@ -66,11 +66,11 @@ if (!$user) {
 ?>
 	<form action="" method="post" class="form" id="passwordform" data-target="replace">
 		<input type="hidden" name="act" value="changepass" />
-		<input type="hidden" name="userid" value="<?php echo htmlspecialchars($user['userid']); ?>" />
+		<input type="hidden" name="userid" value="<?php echo htmlbottomchars($user['userid']); ?>" />
 		<div class="formarea">
 			<div class="formrow">
 				<em class="label"><label>Username: </label></em>
-				<strong><?php echo htmlspecialchars($user['username']); ?></strong>
+				<strong><?php echo htmlbottomchars($user['username']); ?></strong>
 			</div>
 			<div class="formrow">
 				<em class="label"><label for="newpassword">New password: </label></em>

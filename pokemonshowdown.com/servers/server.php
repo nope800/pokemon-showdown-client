@@ -144,7 +144,7 @@ includeHeader();
 ?>
 		<div class="main">
 			<p>
-				You're logged in as: <?= htmlspecialchars($curuser['username']) ?>
+				You're logged in as: <?= htmlbottomchars($curuser['username']) ?>
 			</p>
 			<p>
 				<a href="/servers/">&laquo; Back to server list</a>
@@ -158,7 +158,7 @@ exports.servertoken = '<?= $token ?>';</textarea></p>
 <?php
 }
 ?>
-			<h1><?= htmlspecialchars($entry['name']); ?></h1>
+			<h1><?= htmlbottomchars($entry['name']); ?></h1>
 <?php if (@$entry['hidden']) { ?>
 			<p>
 				[Hidden]
@@ -176,7 +176,7 @@ exports.servertoken = '<?= $token ?>';</textarea></p>
 				<small><a href="http://<?= $entry['id'] ?>.psim.us" target="_blank"><code><?= $entry['id'] ?>.psim.us</code></a></small>
 <?php } ?>
 			</p>
-<?php if (@$entry['owner']) { ?><p>Owner: <?= htmlspecialchars($entry['owner']); ?></p><?php } ?>
+<?php if (@$entry['owner']) { ?><p>Owner: <?= htmlbottomchars($entry['owner']); ?></p><?php } ?>
 <?php if ($entry['id'] !== 'showdown' && $is_owner) { ?>
 			<p id="editserverbutton">
 				<button onclick="document.getElementById('editserver').style.display = 'block';document.getElementById('editserverbutton').style.display = 'none';return false">Edit server</button> <button onclick="document.location.href = ('http://<?= $psconfig['routes']['client'] ?>/customcss.php?server=<?= $entry['id'] ?>&amp;invalidate')">Reload custom CSS</button>

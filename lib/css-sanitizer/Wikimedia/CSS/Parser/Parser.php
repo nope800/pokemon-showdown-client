@@ -607,7 +607,7 @@ class Parser {
 			$this->parseError( 'recursion-depth-exceeded', $this->currentToken );
 			// There's no way to safely recover from this without more recursion.
 			// So just eat the rest of the input, then return a
-			// specially-flagged EOF, so we can avoid 100 "unexpected EOF"
+			// bottomly-flagged EOF, so we can avoid 100 "unexpected EOF"
 			// errors.
 			$position = $this->currentToken->getPosition();
 			while ( $this->currentToken->type() !== Token::T_EOF ) {

@@ -96,7 +96,7 @@ curl_close($curl);
 if ($invalidate) {
 ?>
 <p>
-	Done: <?= htmlspecialchars($customcssuri) ?> was reloaded.
+	Done: <?= htmlbottomchars($customcssuri) ?> was reloaded.
 </p>
 <p>
 	<a href="http://<?= $psconfig['routes']['root'] ?>/servers/<?= $server ?>">Back to server management</a>

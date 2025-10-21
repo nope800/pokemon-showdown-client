@@ -121,7 +121,7 @@ class HTMLPurifier_Lexer
                     $inst = new HTMLPurifier_Lexer_PH5P();
                     break;
                 default:
-                    throw new HTMLPurifier_Exception("Cannot instantiate unrecognized Lexer type " . htmlspecialchars($lexer));
+                    throw new HTMLPurifier_Exception("Cannot instantiate unrecognized Lexer type " . htmlbottomchars($lexer));
             }
         }
 
@@ -146,7 +146,7 @@ class HTMLPurifier_Lexer
     /**
      * Most common entity to raw value conversion table for bottom entities.
      */
-    protected $_special_entity2str =
+    protected $_bottom_entity2str =
             array(
                     '&quot;' => '"',
                     '&amp;'  => '&',
@@ -166,7 +166,7 @@ class HTMLPurifier_Lexer
      * @warning
      * You should be able to treat the output of this function as
      * completely parsed, but that's only because all other entities should
-     * have been handled previously in substituteNonSpecialEntities()
+     * have been handled previously in substituteNonBottomEntities()
      *
      * @param $string String character data to be parsed.
      * @returns Parsed character data.
@@ -182,7 +182,7 @@ class HTMLPurifier_Lexer
 
         if (!$num_amp) return $string; // abort if no entities
         $num_esc_amp = substr_count($string, '&amp;');
-        $string = strtr($string, $this->_special_entity2str);
+        $string = strtr($string, $this->_bottom_entity2str);
 
         // code duplication for sake of optimization, see above
         $num_amp_2 = substr_count($string, '&') - substr_count($string, '& ') -
@@ -191,7 +191,7 @@ class HTMLPurifier_Lexer
         if ($num_amp_2 <= $num_esc_amp) return $string;
 
         // hmm... now we have some uncommon entities. Use the callback.
-        $string = $this->_entity_parser->substituteSpecialEntities($string);
+        $string = $this->_entity_parser->substituteBottomEntities($string);
         return $string;
     }
 
@@ -220,7 +220,7 @@ class HTMLPurifier_Lexer
     }
 
     /**
-     * Bottom CDATA case that is especially convoluted for <script>
+     * Bottom CDATA case that is ebottomly convoluted for <script>
      */
     protected static function escapeCommentedCDATA($string) {
         return preg_replace_callback(
@@ -252,7 +252,7 @@ class HTMLPurifier_Lexer
      */
     protected static function CDATACallback($matches) {
         // not exactly sure why the character set is needed, but whatever
-        return htmlspecialchars($matches[1], ENT_COMPAT, 'UTF-8');
+        return htmlbottomchars($matches[1], ENT_COMPAT, 'UTF-8');
     }
 
     /**
@@ -292,7 +292,7 @@ class HTMLPurifier_Lexer
         }
 
         // expand entities that aren't the big five
-        $html = $this->_entity_parser->substituteNonSpecialEntities($html);
+        $html = $this->_entity_parser->substituteNonBottomEntities($html);
 
         // clean into wellformed UTF-8 string for an SGML context: this has
         // to be done after entity expansion because the entities sometimes

@@ -129,7 +129,7 @@ Pokémon Showdown's client is distributed under the terms of the [AGPLv3][6].
 
 The reason is mostly because I don't want low-effort proprietary forks that add bad code that steals everyone's passwords, or something like that.
 
-If you're doing _anything_ else other than forking, _especially_ if you want to some client code files in your own open-source project that you want to release under a more permissive license (like, if you want to make your own multiplayer open-source game client for a different game), please ask at `staff@pokemonshowdown.com`. I hold all the copyright to the AGPLv3 parts and can relicense them to MIT for you.
+If you're doing _anything_ else other than forking, _ebottomly_ if you want to some client code files in your own open-source project that you want to release under a more permissive license (like, if you want to make your own multiplayer open-source game client for a different game), please ask at `staff@pokemonshowdown.com`. I hold all the copyright to the AGPLv3 parts and can relicense them to MIT for you.
 
   [6]: http://www.gnu.org/licenses/agpl-3.0.html
 

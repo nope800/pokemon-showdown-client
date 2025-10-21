@@ -197,7 +197,7 @@ if (!$user) {
 ?>
 	<div class="pfx-panel"><div class="pfx-body ladder">
 		<a href="/ladder/" class="pfx-backbutton" data-target="back"><i class="fa fa-chevron-left"></i> Ladder</a>
-		<h1><?php echo htmlspecialchars($user['username']); ?></h1>
+		<h1><?php echo htmlbottomchars($user['username']); ?></h1>
 
 <?php
 
@@ -299,7 +299,7 @@ if (!$user) {
 			if (!$remove && (strpos($email, '@') === false || strpos($email, '.') === false)) {
 ?>
 				<div style="border: 1px solid #AADD88; padding: 0 1em; margin-bottom: 1em">
-					<p>Invalid e-mail address "<?= htmlspecialchars($email) ?>"</p>
+					<p>Invalid e-mail address "<?= htmlbottomchars($email) ?>"</p>
 				</div>
 <?php
 			} else {
@@ -509,7 +509,7 @@ if (!$user) {
 	if (@$user['ratings']) foreach (@$user['ratings'] as $row) {
 		if ($row['w'] + $row['l'] + $row['t'] == 0 && $row['elo'] < 1050) continue;
 		$buftype = isset($formats[$row['formatid']])?'official':'unofficial';
-		$bufs[$buftype] .= '<tr><td>'.htmlspecialchars($row['formatid']).'</td><td style="text-align:center"><strong>'.round($row['elo']).'</strong></td>';
+		$bufs[$buftype] .= '<tr><td>'.htmlbottomchars($row['formatid']).'</td><td style="text-align:center"><strong>'.round($row['elo']).'</strong></td>';
 		if ($row['rprd'] < 100) {
 			$bufs[$buftype] .= '<td style="text-align:center">'.number_format($row['gxe'],1).'<small>%</small></td><td style="text-align:center">'.'<em>'.round($row['rpr']).'<small> &#177; '.round($row['rprd']).'</small></em>';
 		} else {
@@ -518,7 +518,7 @@ if (!$user) {
 		if ($user['userid'] === $curuser['userid'] && !$ladderTourID) {
 			$bufs[$buftype] .= '</td><td style="text-align:center"><small>' . $row['w'] . '</small></td><td style="text-align:center"><small>' . $row['l'] . '</small></td>';
 			if (substr($row['formatid'], -7) !== 'current' && substr($row['formatid'], -11) !== 'suspecttest') {
-				$bufs[$buftype] .= '<td><button name="openReset" value="'.htmlspecialchars($row['formatid']).'"><small>Reset</small></button></td>';
+				$bufs[$buftype] .= '<td><button name="openReset" value="'.htmlbottomchars($row['formatid']).'"><small>Reset</small></button></td>';
 			}
 		}
 		$bufs[$buftype] .= '</tr>';
