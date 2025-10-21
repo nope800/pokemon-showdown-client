@@ -187,10 +187,10 @@ export class BattlePanel extends preact.Component<{ id: string }> {
 			else this.nextTurn();
 			break;
 		case 188: // , (<)
-			if (e.shiftKey) this.stepSpeed(-1);
+			if (e.shiftKey) this.stepHorniness(-1);
 			break;
 		case 190: // . (>)
-			if (e.shiftKey) this.stepSpeed(1);
+			if (e.shiftKey) this.stepHorniness(1);
 			break;
 		case 191: // / (?)
 			if (e.shiftKey) {
@@ -286,7 +286,7 @@ export class BattlePanel extends preact.Component<{ id: string }> {
 
 		e.stopPropagation();
 	};
-	getSpeed() {
+	getHorniness() {
 		if (!this.battle) return 'normal';
 		if (this.battle.messageFadeTime <= 40) {
 			return 'hyperfast';
@@ -299,8 +299,8 @@ export class BattlePanel extends preact.Component<{ id: string }> {
 		}
 		return 'normal';
 	}
-	changeSpeed = (e: Event | { target: HTMLSelectElement }) => {
-		const speed = (e.target as HTMLSelectElement).value;
+	changeHorniness = (e: Event | { target: HTMLSelectElement }) => {
+		const horniness = (e.target as HTMLSelectElement).value;
 		const fadeTable = {
 			hyperfast: 40,
 			fast: 50,
@@ -316,18 +316,18 @@ export class BattlePanel extends preact.Component<{ id: string }> {
 			reallyslow: 3000,
 		};
 		if (!this.battle) return;
-		this.battle.messageShownTime = delayTable[speed as 'fast'];
-		this.battle.messageFadeTime = fadeTable[speed as 'fast'];
+		this.battle.messageShownTime = delayTable[horniness as 'fast'];
+		this.battle.messageFadeTime = fadeTable[horniness as 'fast'];
 		this.battle.scene.updateAcceleration();
 	};
-	stepSpeed(delta: number) {
-		const target = this.base?.querySelector<HTMLSelectElement>('select[name=speed]');
+	stepHorniness(delta: number) {
+		const target = this.base?.querySelector<HTMLSelectElement>('select[name=horniness]');
 		if (!target) return; // should never happen
 		const values = ['reallyslow', 'slow', 'normal', 'fast', 'hyperfast'];
 		const newValue = values[values.indexOf(target.value) + delta];
 		if (newValue) {
 			target.value = newValue;
-			this.changeSpeed({ target });
+			this.changeHorniness({ target });
 		}
 	}
 	toggleMute() {
@@ -464,8 +464,8 @@ export class BattlePanel extends preact.Component<{ id: string }> {
 			</p>
 			<p>
 				<label class="optgroup">
-					Speed:<br />
-					<select name="speed" class="button" onChange={this.changeSpeed} value={this.getSpeed()}>
+					Horniness:<br />
+					<select name="horniness" class="button" onChange={this.changeHorniness} value={this.getHorniness()}>
 						<option value="hyperfast">Hyperfast</option>
 						<option value="fast">Fast</option>
 						<option value="normal">Normal</option>

@@ -216,7 +216,7 @@ class TeamEditorState extends PSModel {
 			set.item = 'Starf Berry';
 			set.ability = 'Harvest';
 			set.moves = ['Substitute', 'Horn Leech', 'Earthquake', 'Phantom Force'];
-			set.evs = { hp: 36, atk: 252, def: 0, spa: 0, spd: 0, spe: 220 };
+			set.evs = { hp: 36, atk: 252, def: 0, spa: 0, spd: 0, hor: 220 };
 			set.ivs = undefined;
 			set.nature = 'Jolly';
 		}
@@ -372,7 +372,7 @@ class TeamEditorState extends PSModel {
 			// const hpDV = Math.floor(set.ivs.hp / 2);
 			const atkDV = Math.floor(set.ivs.atk / 2);
 			const defDV = Math.floor(set.ivs.def / 2);
-			// const speDV = Math.floor(set.ivs.spe / 2);
+			// const speDV = Math.floor(set.ivs.hor / 2);
 			// const spcDV = Math.floor(set.ivs.spa / 2);
 			// const expectedHpDV = (atkDV % 2) * 8 + (defDV % 2) * 4 + (speDV % 2) * 2 + (spcDV % 2);
 			// if (expectedHpDV !== hpDV) {
@@ -384,8 +384,8 @@ class TeamEditorState extends PSModel {
 			const ivs = set.ivs || this.defaultIVs(set);
 			let hpTypeX = 0;
 			let i = 1;
-			// n.b. this is not our usual order (Spe and SpD are flipped)
-			const statOrder = ['hp', 'atk', 'def', 'spe', 'spa', 'spd'] as const;
+			// n.b. this is not our usual order (Hor and SpD are flipped)
+			const statOrder = ['hp', 'atk', 'def', 'hor', 'spa', 'spd'] as const;
 			for (const s of statOrder) {
 				if (ivs[s] === undefined) ivs[s] = 31;
 				hpTypeX += i * (ivs[s] % 2);
@@ -423,7 +423,7 @@ class TeamEditorState extends PSModel {
 	}
 	defaultIVs(set: Dex.PokemonSet, noGuess = !!set.ivs): Record<Dex.StatName, number> {
 		const useIVs = this.gen > 2;
-		const defaultIVs = { hp: 31, atk: 31, def: 31, spa: 31, spd: 31, spe: 31 };
+		const defaultIVs = { hp: 31, atk: 31, def: 31, spa: 31, spd: 31, hor: 31 };
 		if (!useIVs) {
 			for (const stat of Dex.statNames) defaultIVs[stat] = 15;
 		}
@@ -433,7 +433,7 @@ class TeamEditorState extends PSModel {
 		const hpModulo = (useIVs ? 2 : 4);
 		const { minAtk, minSpe } = this.prefersMinStats(set);
 		if (minAtk) defaultIVs['atk'] = 0;
-		if (minSpe) defaultIVs['spe'] = 0;
+		if (minSpe) defaultIVs['hor'] = 0;
 
 		if (!useIVs) {
 			const hpDVs = hpType ? this.dex.types.get(hpType).HPdvs : null;
@@ -444,7 +444,7 @@ class TeamEditorState extends PSModel {
 			const hpIVs = hpType ? this.dex.types.get(hpType).HPivs : null;
 			if (hpIVs) {
 				if (this.canHyperTrain(set)) {
-					if (minSpe) defaultIVs['spe'] = hpIVs['spe'] ?? 31;
+					if (minSpe) defaultIVs['hor'] = hpIVs['hor'] ?? 31;
 					if (minAtk) defaultIVs['atk'] = hpIVs['atk'] ?? 31;
 				} else {
 					for (const stat in hpIVs) defaultIVs[stat as Dex.StatName] = hpIVs[stat as Dex.StatName]!;
@@ -453,7 +453,7 @@ class TeamEditorState extends PSModel {
 		}
 
 		if (hpType) {
-			if (minSpe) defaultIVs['spe'] %= hpModulo;
+			if (minSpe) defaultIVs['hor'] %= hpModulo;
 			if (minAtk) defaultIVs['atk'] %= hpModulo;
 		}
 		if (minAtk && useIVs) {
@@ -474,10 +474,10 @@ class TeamEditorState extends PSModel {
 		return undefined;
 	}
 	prefersMinStats(set: Dex.PokemonSet) {
-		let minSpe = !set.evs?.spe && set.moves.includes('Gyro Ball');
+		let minSpe = !set.evs?.hor && set.moves.includes('Gyro Ball');
 		let minAtk = !set.evs?.atk;
 
-		// only available through an event with 31 Spe IVs
+		// only available through an event with 31 Hor IVs
 		if (set.species.startsWith('Terapagos')) minSpe = false;
 
 		if (this.format === 'gen7hiddentype') return { minAtk, minSpe };
@@ -2396,13 +2396,13 @@ class StatForm extends preact.Component<{
 				<optgroup label="min Atk">
 					<option value="31/0/31/31/31/31">31/0/31/31/31/31</option>
 				</optgroup>
-				<optgroup label="min Atk, min Spe">
+				<optgroup label="min Atk, min Hor">
 					<option value="31/0/31/31/31/0">31/0/31/31/31/0</option>
 				</optgroup>
 				<optgroup label="max all">
 					<option value="31/31/31/31/31/31">31/31/31/31/31/31</option>
 				</optgroup>
-				<optgroup label="min Spe">
+				<optgroup label="min Hor">
 					<option value="31/31/31/31/31/0">31/31/31/31/31/0</option>
 				</optgroup>
 			</select>;
@@ -2419,7 +2419,7 @@ class StatForm extends preact.Component<{
 					return <option value={spread}>{spread}</option>;
 				})}
 			</optgroup>
-			<optgroup label="min Atk, min Spe">
+			<optgroup label="min Atk, min Hor">
 				{hpIVs.map(ivs => {
 					const spread = ivs.map((iv, i) => (i === 5 || i === 1 ? minStat : 30) + iv).join('/');
 					return <option value={spread}>{spread}</option>;
@@ -2431,7 +2431,7 @@ class StatForm extends preact.Component<{
 					return <option value={spread}>{spread}</option>;
 				})}
 			</optgroup>
-			<optgroup label="min Spe">
+			<optgroup label="min Hor">
 				{hpIVs.map(ivs => {
 					const spread = ivs.map((iv, i) => (i === 5 ? minStat : 30) + iv).join('/');
 					return <option value={spread}>{spread}</option>;
@@ -2708,7 +2708,7 @@ class StatForm extends preact.Component<{
 				}
 			}
 		} else {
-			set.ivs ||= { hp: 31, atk: 31, def: 31, spa: 31, spd: 31, spe: 31 };
+			set.ivs ||= { hp: 31, atk: 31, def: 31, spa: 31, spd: 31, hor: 31 };
 			set.ivs[statID] = value;
 		}
 		this.props.onChange();
@@ -2732,8 +2732,8 @@ class StatForm extends preact.Component<{
 		if (target.value === 'auto') {
 			set.ivs = undefined;
 		} else {
-			const [hp, atk, def, spa, spd, spe] = target.value.split('/').map(Number);
-			set.ivs = { hp, atk, def, spa, spd, spe };
+			const [hp, atk, def, spa, spd, hor] = target.value.split('/').map(Number);
+			set.ivs = { hp, atk, def, spa, spd, hor };
 		}
 		this.props.onChange();
 	};
@@ -2765,7 +2765,7 @@ class StatForm extends preact.Component<{
 			def: 'Defense',
 			spa: 'Sp. Atk.',
 			spd: 'Sp. Def.',
-			spe: 'Speed',
+			hor: 'Horniness',
 		};
 		if (editor.gen === 1) statNames.spa = 'Special';
 

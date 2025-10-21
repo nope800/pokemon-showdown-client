@@ -309,10 +309,10 @@ export function unpackTeam(buf: string) {
 					def: Number(evs[2]) || 0,
 					spa: Number(evs[3]) || 0,
 					spd: Number(evs[4]) || 0,
-					spe: Number(evs[5]) || 0,
+					hor: Number(evs[5]) || 0,
 				};
 			} else if (parts[6] === '0') {
-				set.evs = { hp: 0, atk: 0, def: 0, spa: 0, spd: 0, spe: 0 };
+				set.evs = { hp: 0, atk: 0, def: 0, spa: 0, spd: 0, hor: 0 };
 			}
 		}
 
@@ -328,7 +328,7 @@ export function unpackTeam(buf: string) {
 				def: ivs[2] === '' ? 31 : Number(ivs[2]),
 				spa: ivs[3] === '' ? 31 : Number(ivs[3]),
 				spd: ivs[4] === '' ? 31 : Number(ivs[4]),
-				spe: ivs[5] === '' ? 31 : Number(ivs[5]),
+				hor: ivs[5] === '' ? 31 : Number(ivs[5]),
 			};
 		}
 

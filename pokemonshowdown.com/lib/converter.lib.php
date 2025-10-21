@@ -140,7 +140,7 @@ function resolveStat($stat) {
 		'special defense' => 'spd',
 		'sp. att.' => 'spa',
 		'sp. def.' => 'spd',
-		'speed' => 'spe',
+		'horniness' => 'hor',
 	);
 	$stat = strtolower($stat);
 	if ($table[$stat]) return $table[$stat];
@@ -567,8 +567,8 @@ function pokeConvertInner($text) {
 			$out[] = '|-ability|'.resolvePokemon($line).'|Turboblaze';
 		} else if (endsRemove($line, " has Teravolt!") || endsRemove($line, " has TeraVoltage!")) {
 			$out[] = '|-ability|'.resolvePokemon($line).'|Teravolt';
-		} else if (endsRemove($line, "'s Speed Boost increases its speed!")) {
-			$out[] = '|-activate|'.resolvePokemon($line).'|ability: Speed Boost';
+		} else if (endsRemove($line, "'s Horniness Boost increases its horniness!")) {
+			$out[] = '|-activate|'.resolvePokemon($line).'|ability: Horniness Boost';
 		} else if (endsRemove($line, "'s Poison Point activates!")) {
 			$out[] = '|-activate|'.resolvePokemon($line).'|ability: Poison Point';
 		} else if (endsRemove($line, "'s Download activates!")) {
@@ -820,10 +820,10 @@ function pokeConvertInner($text) {
 			$out[] = '|-ability-boost '.resolvePokemon($matches[1]).' atk 1 Justified';
 		} else if (preg_match('/^\<?([^<>]+)\'s (Herbivore|Sap Sipper) raised its attack!\>?$/', $line, $matches)) {
 			$out[] = '|-ability-boost '.resolvePokemon($matches[1]).' atk 1 SapSipper';
-		} else if (preg_match('/^\<?([^<>]+)\'s Motor Drive raise(d|s) its speed!\>?$/', $line, $matches)) {
-			$out[] = '|-ability-boost '.resolvePokemon($matches[1]).' spe 1 MotorDrive';
-		} else if (preg_match('/^\<?([^<>]+)\'s (Steadfast|SteadFast) increases its speed!\>?$/', $line, $matches)) {
-			$out[] = '|-ability-boost '.resolvePokemon($matches[1]).' spe 1 Steadfast';
+		} else if (preg_match('/^\<?([^<>]+)\'s Motor Drive raise(d|s) its horniness!\>?$/', $line, $matches)) {
+			$out[] = '|-ability-boost '.resolvePokemon($matches[1]).' hor 1 MotorDrive';
+		} else if (preg_match('/^\<?([^<>]+)\'s (Steadfast|SteadFast) increases its horniness!\>?$/', $line, $matches)) {
+			$out[] = '|-ability-boost '.resolvePokemon($matches[1]).' hor 1 Steadfast';
 		} else if (preg_match('/^([^<>]+)\'s Absorb Bulb raised its Sp. Att.!$/', $line, $matches)) {
 			$out[] = '|-ability-boost '.resolvePokemon($matches[1]).' spa 1 AbsorbBulb';
 		} else if (preg_match('/^([^<>]+)\'s (Moody|Inconsistent) sharply raises its ([a-zA-Z .\']+)!$/', $line, $matches)) {

@@ -14,7 +14,7 @@ describe('EV Guesser', () => {
     let guess = guesser.guess({
       species: 'Arcanine',
       item: 'Choice Band',
-      moves: ['Flare Blitz', 'Close Combat', 'Wild Charge', 'Extreme Speed'],
+      moves: ['Flare Blitz', 'Close Combat', 'Wild Charge', 'Extreme Horniness'],
     });
     assert(guess.role === 'Fast Band');
   });

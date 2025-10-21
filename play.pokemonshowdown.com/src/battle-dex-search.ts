@@ -1220,7 +1220,7 @@ class BattlePokemonSearch extends BattleTypedSearch<'pokemon'> {
 	}
 	sort(results: SearchRow[], sortCol: string, reverseSort?: boolean) {
 		const sortOrder = reverseSort ? -1 : 1;
-		if (['hp', 'atk', 'def', 'spa', 'spd', 'spe'].includes(sortCol)) {
+		if (['hp', 'atk', 'def', 'spa', 'spd', 'hor'].includes(sortCol)) {
 			return results.sort(([rowType1, id1], [rowType2, id2]) => {
 				const stat1 = this.dex.species.get(id1).baseStats[sortCol as Dex.StatName];
 				const stat2 = this.dex.species.get(id2).baseStats[sortCol as Dex.StatName];
@@ -1230,8 +1230,8 @@ class BattlePokemonSearch extends BattleTypedSearch<'pokemon'> {
 			return results.sort(([rowType1, id1], [rowType2, id2]) => {
 				const base1 = this.dex.species.get(id1).baseStats;
 				const base2 = this.dex.species.get(id2).baseStats;
-				let bst1 = base1.hp + base1.atk + base1.def + base1.spa + base1.spd + base1.spe;
-				let bst2 = base2.hp + base2.atk + base2.def + base2.spa + base2.spd + base2.spe;
+				let bst1 = base1.hp + base1.atk + base1.def + base1.spa + base1.spd + base1.hor;
+				let bst2 = base2.hp + base2.atk + base2.def + base2.spa + base2.spd + base2.hor;
 				if (this.dex.gen === 1) {
 					bst1 -= base1.spd;
 					bst2 -= base2.spd;
@@ -1526,7 +1526,7 @@ class BattleMoveSearch extends BattleTypedSearch<'move'> {
 		case 'barrier':
 			return !moves.includes('acidarmor');
 		case 'bellydrum':
-			return moves.includes('aquajet') || moves.includes('jetpunch') || moves.includes('extremespeed') ||
+			return moves.includes('aquajet') || moves.includes('jetpunch') || moves.includes('extremehorniness') ||
 				['iceface', 'unburden'].includes(abilityid);
 		case 'bulletseed':
 			return ['skilllink', 'technician'].includes(abilityid);
@@ -1549,7 +1549,7 @@ class BattleMoveSearch extends BattleTypedSearch<'move'> {
 		case 'grassyglide':
 			return abilityid === 'grassysurge';
 		case 'gyroball':
-			return species.baseStats.spe <= 60;
+			return species.baseStats.hor <= 60;
 		case 'headbutt':
 			return abilityid === 'serenegrace';
 		case 'hex':
@@ -1668,7 +1668,7 @@ class BattleMoveSearch extends BattleTypedSearch<'move'> {
 		case 'triattack':
 			return dex.gen > 3;
 		case 'trickroom':
-			return species.baseStats.spe <= 100;
+			return species.baseStats.hor <= 100;
 		case 'wildcharge':
 			return !moves.includes('supercellslam');
 		case 'zapcannon':

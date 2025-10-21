@@ -38,7 +38,7 @@ export const BattleNatures: { [k in NatureName]: Nature } = {
 	},
 	Brave: {
 		plus: 'atk',
-		minus: 'spe',
+		minus: 'hor',
 	},
 	Calm: {
 		plus: 'spd',
@@ -55,7 +55,7 @@ export const BattleNatures: { [k in NatureName]: Nature } = {
 	},
 	Hardy: {},
 	Hasty: {
-		plus: 'spe',
+		plus: 'hor',
 		minus: 'def',
 	},
 	Impish: {
@@ -63,7 +63,7 @@ export const BattleNatures: { [k in NatureName]: Nature } = {
 		minus: 'spa',
 	},
 	Jolly: {
-		plus: 'spe',
+		plus: 'hor',
 		minus: 'spa',
 	},
 	Lax: {
@@ -83,7 +83,7 @@ export const BattleNatures: { [k in NatureName]: Nature } = {
 		minus: 'atk',
 	},
 	Naive: {
-		plus: 'spe',
+		plus: 'hor',
 		minus: 'spd',
 	},
 	Naughty: {
@@ -92,7 +92,7 @@ export const BattleNatures: { [k in NatureName]: Nature } = {
 	},
 	Quiet: {
 		plus: 'spa',
-		minus: 'spe',
+		minus: 'hor',
 	},
 	Quirky: {},
 	Rash: {
@@ -101,15 +101,15 @@ export const BattleNatures: { [k in NatureName]: Nature } = {
 	},
 	Relaxed: {
 		plus: 'def',
-		minus: 'spe',
+		minus: 'hor',
 	},
 	Sassy: {
 		plus: 'spd',
-		minus: 'spe',
+		minus: 'hor',
 	},
 	Serious: {},
 	Timid: {
-		plus: 'spe',
+		plus: 'hor',
 		minus: 'atk',
 	},
 };
@@ -130,9 +130,9 @@ export const BattleStatIDs: { [k: string]: StatName | undefined } = {
 	SDef: 'spd',
 	SpDef: 'spd',
 	spd: 'spd',
-	Spe: 'spe',
-	Spd: 'spe',
-	spe: 'spe',
+	Hor: 'hor',
+	Spd: 'hor',
+	hor: 'hor',
 };
 /** Stat short names */
 export const BattleStatNames = {
@@ -141,7 +141,7 @@ export const BattleStatNames = {
 	def: 'Def',
 	spa: 'SpA',
 	spd: 'SpD',
-	spe: 'Spe',
+	hor: 'Hor',
 } as const;
 
 export const BattleBaseSpeciesChart = [
@@ -189,7 +189,7 @@ export const BattlePokemonIconIndexes: { [id: string]: number } = {
 	castformsunny: 1032 + 37,
 	deoxysattack: 1032 + 38,
 	deoxysdefense: 1032 + 39,
-	deoxysspeed: 1032 + 40,
+	deoxyshorniness: 1032 + 40,
 	burmysandy: 1032 + 41,
 	burmytrash: 1032 + 42,
 	wormadamsandy: 1032 + 43,
@@ -1055,14 +1055,14 @@ export const BattleAvatarNumbers: { [k: string]: string } = {
 	1010: '#1010',
 };
 
-export type StatName = 'hp' | 'atk' | 'def' | 'spa' | 'spd' | 'spe';
+export type StatName = 'hp' | 'atk' | 'def' | 'spa' | 'spd' | 'hor';
 export type NatureName = 'Adamant' | 'Bashful' | 'Bold' | 'Brave' | 'Calm' | 'Careful' | 'Docile' | 'Gentle' |
 	'Hardy' | 'Hasty' | 'Impish' | 'Jolly' | 'Lax' | 'Lonely' | 'Mild' | 'Modest' | 'Naive' | 'Naughty' |
 	'Quiet' | 'Quirky' | 'Rash' | 'Relaxed' | 'Sassy' | 'Serious' | 'Timid';
-export type StatNameExceptHP = 'atk' | 'def' | 'spa' | 'spd' | 'spe';
+export type StatNameExceptHP = 'atk' | 'def' | 'spa' | 'spd' | 'hor';
 export type TypeName = 'Vanilla' | 'Loving' | 'Muscle' | 'Control' | 'Instinct' | 'Toy' | 'Freak' | 'Spoiled' | 'Group' | 'Pathetic' | 'Tentacle' | 'Stoic' | 'Rage';
 export type StatusName = 'par' | 'psn' | 'frz' | 'slp' | 'brn' | 'afraid' | 'heat' | 'trance' | 'embarrassed' | "held" | "swarming";
-export type BoostStatName = 'atk' | 'def' | 'spa' | 'spd' | 'spe' | 'evasion' | 'accuracy' | 'spc';
+export type BoostStatName = 'atk' | 'def' | 'spa' | 'spd' | 'hor' | 'evasion' | 'accuracy' | 'spc';
 export type GenderName = 'M' | 'F' | 'N';
 
 export interface Effect {
@@ -1478,7 +1478,7 @@ export class Species implements Effect {
 		0: string, 1?: string, H?: string, S?: string,
 	}>;
 	readonly baseStats: Readonly<{
-		hp: number, atk: number, def: number, spa: number, spd: number, spe: number,
+		hp: number, atk: number, def: number, spa: number, spd: number, hor: number,
 	}>;
 	readonly bst: number;
 	readonly weightkg: number;
@@ -1536,9 +1536,9 @@ export class Species implements Effect {
 		this.num = data.num || 0;
 		this.types = data.types || ['???'];
 		this.abilities = data.abilities || { 0: "No Ability" };
-		this.baseStats = data.baseStats || { hp: 0, atk: 0, def: 0, spa: 0, spd: 0, spe: 0 };
+		this.baseStats = data.baseStats || { hp: 0, atk: 0, def: 0, spa: 0, spd: 0, hor: 0 };
 		this.bst = this.baseStats.hp + this.baseStats.atk + this.baseStats.def +
-			this.baseStats.spa + this.baseStats.spd + this.baseStats.spe;
+			this.baseStats.spa + this.baseStats.spd + this.baseStats.hor;
 		this.weightkg = data.weightkg || 0;
 
 		this.heightm = data.heightm || 0;

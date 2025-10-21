@@ -817,7 +817,7 @@ Storage.packTeam = function (team) {
 		// evs
 		var evs = '|';
 		if (set.evs) {
-			evs = '|' + (set.evs['hp'] || '') + ',' + (set.evs['atk'] || '') + ',' + (set.evs['def'] || '') + ',' + (set.evs['spa'] || '') + ',' + (set.evs['spd'] || '') + ',' + (set.evs['spe'] || '');
+			evs = '|' + (set.evs['hp'] || '') + ',' + (set.evs['atk'] || '') + ',' + (set.evs['def'] || '') + ',' + (set.evs['spa'] || '') + ',' + (set.evs['spd'] || '') + ',' + (set.evs['hor'] || '');
 		}
 		if (evs === '|,,,,,') {
 			buf += '|';
@@ -837,7 +837,7 @@ Storage.packTeam = function (team) {
 		// ivs
 		var ivs = '|';
 		if (set.ivs) {
-			ivs = '|' + (set.ivs['hp'] === 31 || set.ivs['hp'] === undefined ? '' : set.ivs['hp']) + ',' + (set.ivs['atk'] === 31 || set.ivs['atk'] === undefined ? '' : set.ivs['atk']) + ',' + (set.ivs['def'] === 31 || set.ivs['def'] === undefined ? '' : set.ivs['def']) + ',' + (set.ivs['spa'] === 31 || set.ivs['spa'] === undefined ? '' : set.ivs['spa']) + ',' + (set.ivs['spd'] === 31 || set.ivs['spd'] === undefined ? '' : set.ivs['spd']) + ',' + (set.ivs['spe'] === 31 || set.ivs['spe'] === undefined ? '' : set.ivs['spe']);
+			ivs = '|' + (set.ivs['hp'] === 31 || set.ivs['hp'] === undefined ? '' : set.ivs['hp']) + ',' + (set.ivs['atk'] === 31 || set.ivs['atk'] === undefined ? '' : set.ivs['atk']) + ',' + (set.ivs['def'] === 31 || set.ivs['def'] === undefined ? '' : set.ivs['def']) + ',' + (set.ivs['spa'] === 31 || set.ivs['spa'] === undefined ? '' : set.ivs['spa']) + ',' + (set.ivs['spd'] === 31 || set.ivs['spd'] === undefined ? '' : set.ivs['spd']) + ',' + (set.ivs['hor'] === 31 || set.ivs['hor'] === undefined ? '' : set.ivs['hor']);
 		}
 		if (ivs === '|,,,,,') {
 			buf += '|';
@@ -939,10 +939,10 @@ Storage.fastUnpackTeam = function (buf) {
 					def: Number(evs[2]) || 0,
 					spa: Number(evs[3]) || 0,
 					spd: Number(evs[4]) || 0,
-					spe: Number(evs[5]) || 0
+					hor: Number(evs[5]) || 0
 				};
 			} else if (evstring === '0') {
-				set.evs = { hp: 0, atk: 0, def: 0, spa: 0, spd: 0, spe: 0 };
+				set.evs = { hp: 0, atk: 0, def: 0, spa: 0, spd: 0, hor: 0 };
 			}
 		}
 		i = j + 1;
@@ -962,7 +962,7 @@ Storage.fastUnpackTeam = function (buf) {
 				def: ivs[2] === '' ? 31 : Number(ivs[2]),
 				spa: ivs[3] === '' ? 31 : Number(ivs[3]),
 				spd: ivs[4] === '' ? 31 : Number(ivs[4]),
-				spe: ivs[5] === '' ? 31 : Number(ivs[5])
+				hor: ivs[5] === '' ? 31 : Number(ivs[5])
 			};
 		}
 		i = j + 1;
@@ -1062,10 +1062,10 @@ Storage.unpackTeam = function (buf) {
 					def: Number(evs[2]) || 0,
 					spa: Number(evs[3]) || 0,
 					spd: Number(evs[4]) || 0,
-					spe: Number(evs[5]) || 0
+					hor: Number(evs[5]) || 0
 				};
 			} else if (evstring === '0') {
-				set.evs = { hp: 0, atk: 0, def: 0, spa: 0, spd: 0, spe: 0 };
+				set.evs = { hp: 0, atk: 0, def: 0, spa: 0, spd: 0, hor: 0 };
 			}
 		}
 		i = j + 1;
@@ -1085,7 +1085,7 @@ Storage.unpackTeam = function (buf) {
 				def: ivs[2] === '' ? 31 : Number(ivs[2]),
 				spa: ivs[3] === '' ? 31 : Number(ivs[3]),
 				spd: ivs[4] === '' ? 31 : Number(ivs[4]),
-				spe: ivs[5] === '' ? 31 : Number(ivs[5])
+				hor: ivs[5] === '' ? 31 : Number(ivs[5])
 			};
 		}
 		i = j + 1;
@@ -1305,7 +1305,7 @@ Storage.importTeam = function (buffer, teams) {
 		} else if (line.substr(0, 5) === 'EVs: ') {
 			line = line.substr(5);
 			var evLines = line.split('/');
-			curSet.evs = { hp: 0, atk: 0, def: 0, spa: 0, spd: 0, spe: 0 };
+			curSet.evs = { hp: 0, atk: 0, def: 0, spa: 0, spd: 0, hor: 0 };
 			for (var j = 0; j < evLines.length; j++) {
 				var evLine = $.trim(evLines[j]);
 				var spaceIndex = evLine.indexOf(' ');
@@ -1318,7 +1318,7 @@ Storage.importTeam = function (buffer, teams) {
 		} else if (line.substr(0, 5) === 'IVs: ') {
 			line = line.substr(5);
 			var ivLines = line.split(' / ');
-			curSet.ivs = { hp: 31, atk: 31, def: 31, spa: 31, spd: 31, spe: 31 };
+			curSet.ivs = { hp: 31, atk: 31, def: 31, spa: 31, spd: 31, hor: 31 };
 			for (var j = 0; j < ivLines.length; j++) {
 				var ivLine = ivLines[j];
 				var spaceIndex = ivLine.indexOf(' ');

@@ -373,7 +373,7 @@ export class Pokemon implements PokemonDetails, PokemonHealth {
 			def: 'Def',
 			spa: 'SpA',
 			spd: 'SpD',
-			spe: 'Spe',
+			hor: 'Hor',
 			accuracy: 'Accuracy',
 			evasion: 'Evasion',
 			spc: 'Spc',
@@ -1005,7 +1005,7 @@ export interface ServerPokemon extends PokemonDetails, PokemonHealth {
 		def: number,
 		spa: number,
 		spd: number,
-		spe: number,
+		hor: number,
 	};
 	/** currently an ID, will revise to name */
 	moves: string[];
@@ -1858,7 +1858,7 @@ export class Battle {
 			if (!kwArgs.silent && kwArgs.from) {
 				let effect = Dex.getEffect(kwArgs.from);
 				let ofpoke = this.getPokemon(kwArgs.of);
-				if (!(effect.id === 'weakarmor' && stat === 'spe')) {
+				if (!(effect.id === 'weakarmor' && stat === 'hor')) {
 					this.activateAbility(ofpoke || poke, effect);
 				}
 			}
@@ -1903,7 +1903,7 @@ export class Battle {
 		case '-swapboost': {
 			let poke = this.getPokemon(args[1])!;
 			let poke2 = this.getPokemon(args[2])!;
-			let stats = args[3] ? args[3].split(', ') : ['atk', 'def', 'spa', 'spd', 'spe', 'accuracy', 'evasion'];
+			let stats = args[3] ? args[3].split(', ') : ['atk', 'def', 'spa', 'spd', 'hor', 'accuracy', 'evasion'];
 			for (const stat of stats) {
 				let tmp = poke.boosts[stat];
 				poke.boosts[stat] = poke2.boosts[stat];
@@ -1954,7 +1954,7 @@ export class Battle {
 				let effect = Dex.getEffect(kwArgs.from);
 				this.activateAbility(poke, effect);
 			}
-			let stats = args[3] ? args[3].split(', ') : ['atk', 'def', 'spa', 'spd', 'spe', 'accuracy', 'evasion'];
+			let stats = args[3] ? args[3].split(', ') : ['atk', 'def', 'spa', 'spd', 'hor', 'accuracy', 'evasion'];
 			for (const stat of stats) {
 				poke.boosts[stat] = frompoke.boosts[stat];
 				if (!poke.boosts[stat]) delete poke.boosts[stat];

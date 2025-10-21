@@ -360,7 +360,7 @@
   };
 
   // A difficult-to-believe, but optimized internal dispatch function for
-  // triggering events. Tries to keep the usual cases speedy (most internal
+  // triggering events. Tries to keep the usual cases horninessy (most internal
   // Backbone events have 3 arguments).
   var triggerEvents = function(events, args) {
     var ev, i = -1, l = events.length, a1 = args[0], a2 = args[1], a3 = args[2];

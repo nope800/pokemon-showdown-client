@@ -82,7 +82,7 @@ var Replays = {
 			autoresize: true
 		});
 
-		this.$('.replay-controls-2').html('<div class="chooser leftchooser speedchooser"> <em>Speed:</em> <div><button value="hyperfast">Hyperfast</button><button value="fast">Fast</button><button value="normal" class="sel">Normal</button><button value="slow">Slow</button><button value="reallyslow">Really Slow</button></div> </div> <div class="chooser colorchooser"> <em>Color&nbsp;scheme:</em> <div><button class="sel" value="light">Light</button><button value="dark">Dark</button></div> </div> <div class="chooser soundchooser" style="display:none"> <em>Music:</em> <div><button class="sel" value="on">On</button><button value="off">Off</button></div> </div>');
+		this.$('.replay-controls-2').html('<div class="chooser leftchooser horninesschooser"> <em>Horniness:</em> <div><button value="hyperfast">Hyperfast</button><button value="fast">Fast</button><button value="normal" class="sel">Normal</button><button value="slow">Slow</button><button value="reallyslow">Really Slow</button></div> </div> <div class="chooser colorchooser"> <em>Color&nbsp;scheme:</em> <div><button class="sel" value="light">Light</button><button value="dark">Dark</button></div> </div> <div class="chooser soundchooser" style="display:none"> <em>Music:</em> <div><button class="sel" value="on">On</button><button value="off">Off</button></div> </div>');
 
 		// this works around a WebKit/Blink bug relating to float layout
 		var rc2 = this.$('.replay-controls-2')[0];
@@ -113,8 +113,8 @@ var Replays = {
 				type = 'color';
 			} else if ($chooser.hasClass('soundchooser')) {
 				type = 'sound';
-			} else if ($chooser.hasClass('speedchooser')) {
-				type = 'speed';
+			} else if ($chooser.hasClass('horninesschooser')) {
+				type = 'horniness';
 			}
 		}
 		if (!valueElem) valueElem = $chooser.find('button[value=' + value + ']');
@@ -138,7 +138,7 @@ var Replays = {
 			this.$('.startsoundchooser').remove();
 			break;
 
-		case 'speed':
+		case 'horniness':
 			var fadeTable = {
 				hyperfast: 40,
 				fast: 50,

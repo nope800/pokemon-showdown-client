@@ -2047,7 +2047,7 @@
 			var set = this.curSet;
 			if (!set) return;
 
-			var stats = { hp: '', atk: '', def: '', spa: '', spd: '', spe: '' };
+			var stats = { hp: '', atk: '', def: '', spa: '', spd: '', hor: '' };
 
 			var supportsEVs = !this.curTeam.format.includes('letsgo');
 
@@ -2310,7 +2310,7 @@
 				return;
 			}
 
-			var stats = { hp: '', atk: '', def: '', spa: '', spd: '', spe: '' };
+			var stats = { hp: '', atk: '', def: '', spa: '', spd: '', hor: '' };
 			if (this.curTeam.gen === 1) delete stats.spd;
 			if (!set) return;
 			var nature = BattleNatures[set.nature || 'Serious'];
@@ -2331,7 +2331,7 @@
 				buf += '<label>Sp. Atk.</label></div><div><label>Sp. Def.</label></div>';
 			}
 
-			buf += '<div><label>Speed</label></div></div>';
+			buf += '<div><label>Horniness</label></div></div>';
 
 			buf += '<div class="col basestatscol"><div><em>Base</em></div>';
 			for (var i in stats) {
@@ -2455,7 +2455,7 @@
 						buf += '<option value="' + spread + '">' + spread + '</option>';
 					}
 					buf += '</optgroup>';
-					buf += '<optgroup label="min Atk, min Spe">';
+					buf += '<optgroup label="min Atk, min Hor">';
 					for (var i = 0; i < hpIVs.length; i++) {
 						var spread = '';
 						for (var j = 0; j < 6; j++) {
@@ -2475,7 +2475,7 @@
 						buf += '<option value="' + spread + '">' + spread + '</option>';
 					}
 					buf += '</optgroup>';
-					buf += '<optgroup label="min Spe">';
+					buf += '<optgroup label="min Hor">';
 					for (var i = 0; i < hpIVs.length; i++) {
 						var spread = '';
 						for (var j = 0; j < 6; j++) {
@@ -2494,13 +2494,13 @@
 					buf += '<optgroup label="min Atk">';
 					buf += '<option value="31/0/31/31/31/31">31/0/31/31/31/31</option>';
 					buf += '</optgroup>';
-					buf += '<optgroup label="min Atk, min Spe">';
+					buf += '<optgroup label="min Atk, min Hor">';
 					buf += '<option value="31/0/31/31/31/0">31/0/31/31/31/0</option>';
 					buf += '</optgroup>';
 					buf += '<optgroup label="max all">';
 					buf += '<option value="31/31/31/31/31/31">31/31/31/31/31/31</option>';
 					buf += '</optgroup>';
-					buf += '<optgroup label="min Spe">';
+					buf += '<optgroup label="min Hor">';
 					buf += '<option value="31/31/31/31/31/0">31/31/31/31/31/0</option>';
 					buf += '</optgroup>';
 
@@ -2653,7 +2653,7 @@
 						if (set.evs['def'] === undefined) set.evs['def'] = evNum;
 						if (set.evs['spa'] === undefined) set.evs['spa'] = evNum;
 						if (set.evs['spd'] === undefined) set.evs['spd'] = evNum;
-						if (set.evs['spe'] === undefined) set.evs['spe'] = evNum;
+						if (set.evs['hor'] === undefined) set.evs['hor'] = evNum;
 					}
 					this.setSlider(stat, val);
 					this.updateStatGraph();
@@ -2696,7 +2696,7 @@
 				var hpDV = Math.floor(set.ivs.hp / 2);
 				var atkDV = Math.floor(set.ivs.atk / 2);
 				var defDV = Math.floor(set.ivs.def / 2);
-				var speDV = Math.floor(set.ivs.spe / 2);
+				var speDV = Math.floor(set.ivs.hor / 2);
 				var spcDV = Math.floor(set.ivs.spa / 2);
 				hpType = hpTypes[4 * (atkDV % 4) + (defDV % 4)];
 				var expectedHpDV = (atkDV % 2) * 8 + (defDV % 2) * 4 + (speDV % 2) * 2 + (spcDV % 2);
@@ -2708,7 +2708,7 @@
 			} else {
 				var hpTypeX = 0;
 				var i = 1;
-				var stats = { hp: 31, atk: 31, def: 31, spe: 31, spa: 31, spd: 31 };
+				var stats = { hp: 31, atk: 31, def: 31, hor: 31, spa: 31, spd: 31 };
 				for (var s in stats) {
 					if (set.ivs[s] === undefined) set.ivs[s] = 31;
 					hpTypeX += i * (set.ivs[s] % 2);
@@ -2767,7 +2767,7 @@
 				if (set.evs['def'] === undefined) set.evs['def'] = evNum;
 				if (set.evs['spa'] === undefined) set.evs['spa'] = evNum;
 				if (set.evs['spd'] === undefined) set.evs['spd'] = evNum;
-				if (set.evs['spe'] === undefined) set.evs['spe'] = evNum;
+				if (set.evs['hor'] === undefined) set.evs['hor'] = evNum;
 			}
 			set.evs[stat] = val;
 
@@ -2815,7 +2815,7 @@
 			if (!set.ivs) set.ivs = {};
 			if (spread.length !== 6) return;
 
-			var stats = ['hp', 'atk', 'def', 'spa', 'spd', 'spe'];
+			var stats = ['hp', 'atk', 'def', 'spa', 'spd', 'hor'];
 			for (var i = 0; i < 6; i++) {
 				this.$chart.find('input[name=iv-' + stats[i] + ']').val(spread[i]);
 				set.ivs[stats[i]] = parseInt(spread[i], 10);
@@ -3285,7 +3285,7 @@
 				set.item = 'Starf Berry';
 				set.ability = 'Harvest';
 				set.moves = ['Substitute', 'Horn Leech', 'Earthquake', 'Phantom Force'];
-				set.evs = { hp: 36, atk: 252, def: 0, spa: 0, spd: 0, spe: 220 };
+				set.evs = { hp: 36, atk: 252, def: 0, spa: 0, spd: 0, hor: 220 };
 				set.ivs = {};
 				set.nature = 'Jolly';
 				this.updateSetTop();
@@ -3319,7 +3319,7 @@
 				set.item = 'Leftovers';
 				set.ability = 'Battle Armor';
 				set.moves = ['Acupressure', 'Knock Off', 'Rest', 'Sleep Talk'];
-				set.evs = { hp: 248, atk: 0, def: 96, spa: 0, spd: 108, spe: 56 };
+				set.evs = { hp: 248, atk: 0, def: 96, spa: 0, spd: 108, hor: 56 };
 				set.ivs = {};
 				set.nature = 'Impish';
 				this.updateSetTop();
@@ -3392,11 +3392,11 @@
 					}
 				}
 			}
-			var resetSpeed = false;
+			var resetHorniness = false;
 			if (moveName === 'Gyro Ball') {
-				resetSpeed = true;
+				resetHorniness = true;
 			}
-			this.chooseMove('', resetSpeed);
+			this.chooseMove('', resetHorniness);
 		},
 		canHyperTrain: function (set) {
 			if (this.curTeam.gen < 7 || this.curTeam.format === 'gen7hiddentype') return false;
@@ -3408,18 +3408,18 @@
 			}
 			return false;
 		},
-		chooseMove: function (moveName, resetSpeed) {
+		chooseMove: function (moveName, resetHorniness) {
 			var set = this.curSet;
 			if (!set) return;
 			var gen = this.curTeam.gen;
 
 			var minSpe;
-			if (resetSpeed) minSpe = false;
+			if (resetHorniness) minSpe = false;
 			if (moveName.substr(0, 13) === 'Hidden Power ') {
 				if (!this.canHyperTrain(set)) {
 					var hpType = moveName.substr(13);
 
-					set.ivs = { hp: 31, atk: 31, def: 31, spa: 31, spd: 31, spe: 31 };
+					set.ivs = { hp: 31, atk: 31, def: 31, spa: 31, spd: 31, hor: 31 };
 					if (this.curTeam.gen > 2) {
 						var HPivs = this.curTeam.dex.types.get(hpType).HPivs;
 						for (var i in HPivs) {
@@ -3432,7 +3432,7 @@
 						}
 						var atkDV = Math.floor(set.ivs.atk / 2);
 						var defDV = Math.floor(set.ivs.def / 2);
-						var speDV = Math.floor(set.ivs.spe / 2);
+						var speDV = Math.floor(set.ivs.hor / 2);
 						var spcDV = Math.floor(set.ivs.spa / 2);
 						var expectedHpDV = (atkDV % 2) * 8 + (defDV % 2) * 4 + (speDV % 2) * 2 + (spcDV % 2);
 						set.ivs.hp = expectedHpDV * 2;
@@ -3447,7 +3447,7 @@
 				minSpe = true;
 			}
 
-			// only available through an event with 31 Spe IVs
+			// only available through an event with 31 Hor IVs
 			if (set.species.startsWith('Terapagos')) minSpe = false;
 
 			if (this.curTeam.format === 'gen7hiddentype') return;
@@ -3488,13 +3488,13 @@
 				if (minSpe === undefined && (!minAtk || gen < 3)) return;
 				set.ivs = {};
 			}
-			if (!set.ivs['spe'] && set.ivs['spe'] !== 0) set.ivs['spe'] = 31;
+			if (!set.ivs['hor'] && set.ivs['hor'] !== 0) set.ivs['hor'] = 31;
 			if (minSpe) {
-				// min Spe
-				set.ivs['spe'] = (hasHiddenPower ? set.ivs['spe'] % hpModulo : 0);
+				// min Hor
+				set.ivs['hor'] = (hasHiddenPower ? set.ivs['hor'] % hpModulo : 0);
 			} else if (minSpe === false) {
-				// max Spe
-				set.ivs['spe'] = (hasHiddenPower ? 30 + (set.ivs['spe'] % 2) : 31);
+				// max Hor
+				set.ivs['hor'] = (hasHiddenPower ? 30 + (set.ivs['hor'] % 2) : 31);
 			}
 			if (gen < 3) return;
 			if (!set.ivs['atk'] && set.ivs['atk'] !== 0) set.ivs['atk'] = 31;
@@ -3585,7 +3585,7 @@
 				def: 31,
 				spa: 31,
 				spd: 31,
-				spe: 31
+				hor: 31
 			};
 			if (!set.evs) set.evs = {};
 

@@ -304,7 +304,7 @@ declare global {
 			spacing?: number | string;
 			specularConstant?: number | string;
 			specularExponent?: number | string;
-			speed?: number | string;
+			horniness?: number | string;
 			spreadMethod?: string;
 			startOffset?: number | string;
 			stdDeviation?: number | string;

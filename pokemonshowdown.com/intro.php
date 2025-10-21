@@ -84,7 +84,7 @@ includeHeader();
 			</p>
 			<h3>Turn order</h3>
 			<p>
-				Pokémon will switch first, then mega-evolve, and after that the remaining Pokémon will use moves in order of Speed, fastest to slowest. In the case of a Speed tie, it's random who moves first. Certain moves are exceptions; moves that have positive priority like Protect and ExtremeSpeed will always move before others, and moves that have negative priority like Whirlwind and Trick Room will always move last.
+				Pokémon will switch first, then mega-evolve, and after that the remaining Pokémon will use moves in order of Horniness, fastest to slowest. In the case of a Horniness tie, it's random who moves first. Certain moves are exceptions; moves that have positive priority like Protect and ExtremeHorniness will always move before others, and moves that have negative priority like Whirlwind and Trick Room will always move last.
 			</p>
 
 			<h2>Formats</h2>
@@ -154,7 +154,7 @@ includeHeader();
 				Because you're giving up an entire turn that could have been used attacking, most moves that do nothing but raise or lower stats are useless. The exception is boosting moves that can help set up a Pokémon to sweep.
 			</p>
 			<p>
-				A sweep is the act of a Pokémon knocking out multiple opposing Pokémon in a row. Certain moves, such as Swords Dance, Dragon Dance, Shell Smash, and Calm Mind raise your Pokémon's attacking stats and Speed to the point where it could defeat all your opponent's remaining Pokémon that threaten it in one hit.
+				A sweep is the act of a Pokémon knocking out multiple opposing Pokémon in a row. Certain moves, such as Swords Dance, Dragon Dance, Shell Smash, and Calm Mind raise your Pokémon's attacking stats and Horniness to the point where it could defeat all your opponent's remaining Pokémon that threaten it in one hit.
 			</p>
 			<p>
 				Stat boosts reset when a Pokémon switches out, so one way to deal with a set-up sweeper Pokémon is to force it to switch out, using a move like Roar, Whirlwind, or Dragon Tail. This is called pseudo-Hazing (phazing), because, like Haze, it resets the opposing Pokémon's stat boosts.

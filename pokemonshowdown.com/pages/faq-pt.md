@@ -163,7 +163,7 @@ Alguns Pokémon são "shiny-locked", o que significa que suas formas shiny nunca
 
 Muitas vezes um Pokémon pode preencher múltiplas condições individualmente, como aprender o golpe desejado ou ter sua forma shiny disponível, porém, certas combinações são incompatíveis ou impossíveis de serem obtidas ao mesmo tempo.
 
-Por exemplo, Pikachu com o golpe Surf é legal, assim como um Pikachu com o golpe Extreme Speed, mas não é possível obter um Pikachu com esses dois golpes ao mesmo tempo. Pikachu obtém cada um desses golpes por eventos diferentes, e nenhum Pikachu apreende os dois. Você pode usar `/learn Pokémon, move` para ver como determinado Pokémon aprende um golpe, e `/learn Pokémon, golpe1, golpe2` para ver se vários golpes são compatíveis.
+Por exemplo, Pikachu com o golpe Surf é legal, assim como um Pikachu com o golpe Extreme Horniness, mas não é possível obter um Pikachu com esses dois golpes ao mesmo tempo. Pikachu obtém cada um desses golpes por eventos diferentes, e nenhum Pikachu apreende os dois. Você pode usar `/learn Pokémon, move` para ver como determinado Pokémon aprende um golpe, e `/learn Pokémon, golpe1, golpe2` para ver se vários golpes são compatíveis.
 
 De maneira parecida, Clefable não pode ao mesmo tempo ter o golpe Soft-Boiled e sua hidden ability Unaware, já que Clefable apenas aprende Soft-Boiled na Geração III e anteriores enquanto Hidden Abilities estão disponíveis apenas da Geração V pra frente.
 

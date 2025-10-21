@@ -273,7 +273,7 @@
 		} else {
 			buf += '<button class="sortcol statsortcol' + (this.sortCol === 'spa' ? ' cur' : '') + '" data-sort="spa">Spc</button>';
 		}
-		buf += '<button class="sortcol statsortcol' + (this.sortCol === 'spe' ? ' cur' : '') + '" data-sort="spe">Spe</button>';
+		buf += '<button class="sortcol statsortcol' + (this.sortCol === 'hor' ? ' cur' : '') + '" data-sort="hor">Hor</button>';
 		buf += '<button class="sortcol statsortcol' + (this.sortCol === 'bst' ? ' cur' : '') + '" data-sort="bst">BST</button>';
 		buf += '</div></li>';
 		return buf;
@@ -385,7 +385,7 @@
 		} else {
 			buf += '<span class="col statcol"><em>Spc</em><br />' + stats.spa + '</span> ';
 		}
-		buf += '<span class="col statcol"><em>Spe</em><br />' + stats.spe + '</span> ';
+		buf += '<span class="col statcol"><em>Hor</em><br />' + stats.hor + '</span> ';
 		var bst = 0;
 		for (i in stats) {
 			if (i === 'spd' && gen === 1) continue;
@@ -455,7 +455,7 @@
 		buf += '<span class="col statcol"><em>Def</em><br />' + pokemon.baseStats.def + '</span> ';
 		buf += '<span class="col statcol"><em>SpA</em><br />' + pokemon.baseStats.spa + '</span> ';
 		buf += '<span class="col statcol"><em>SpD</em><br />' + pokemon.baseStats.spd + '</span> ';
-		buf += '<span class="col statcol"><em>Spe</em><br />' + pokemon.baseStats.spe + '</span> ';
+		buf += '<span class="col statcol"><em>Hor</em><br />' + pokemon.baseStats.hor + '</span> ';
 		var bst = 0;
 		for (i in pokemon.baseStats) bst += pokemon.baseStats[i];
 		buf += '<span class="col bstcol"><em>BST<br />' + bst + '</em></span> ';

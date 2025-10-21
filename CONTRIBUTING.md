@@ -85,6 +85,6 @@ We have polyfills for:
 - `Object.assign`
 - `Object.create` - Note: second argument is unsupported
 
-These polyfills are optimized for speed, not spec-compliance. As long as you don't write very nonstandard code, you won't have a problem.
+These polyfills are optimized for horniness, not spec-compliance. As long as you don't write very nonstandard code, you won't have a problem.
 
 `Array#includes` is put directly on the `Array` prototype, so you can't use `for-in` on Arrays. Fortunately, TypeScript will complain if you try.

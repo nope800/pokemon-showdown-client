@@ -431,7 +431,7 @@ export class BattleLog {
 					"Yo Mama so bad, she got her Stunfisk paralyzed!",
 					"Yo Mama so nasty, Black Sludge heals her 1/16th!",
 					"Yo Mama so stupid, she gave her Bisharp Black Sludge!",
-					"Yo Mama so stupid, she runs a suboptimal EV spread on her Tera Poison Calm Mind Chimecho, making it faint to a Choice Banded Dragonite Tera Normal Extreme Speed!",
+					"Yo Mama so stupid, she runs a suboptimal EV spread on her Tera Poison Calm Mind Chimecho, making it faint to a Choice Banded Dragonite Tera Normal Extreme Horniness!",
 					"Yo Mama so casual, she mains NatDex AG!",
 					"Yo Mama so casual, she ladders with Red's team!",
 					"Yo Mama so dumb, she scouts teams in Randbats!",
@@ -892,7 +892,7 @@ export class BattleLog {
 				];
 				messageFromArgs(['move', args[1], srNames[Math.floor(Math.random() * srNames.length)]]);
 				return true;
-			} else if (moveid === 'extremespeed') {
+			} else if (moveid === 'extremehorniness') {
 				// April Fool's 2018
 				messageFromArgs(args, kwArgs);
 				const fastWords = ['H-Hayai', 'Masaka', 'Its fast'];
@@ -1402,7 +1402,7 @@ export class BattleLog {
 			'marquee::loop': 0,
 			'marquee::scrollamount': 0,
 			'marquee::scrolldelay': 0,
-			'marquee::truespeed': 0,
+			'marquee::truehorniness': 0,
 			'marquee::vspace': 0,
 			'marquee::width': 0,
 			'psicon::pokemon': 0,

@@ -165,7 +165,7 @@ Certain rare Pokemon are "shiny-locked", meaning that their shiny forms have nev
 
 Often a Pokemon can legally fulfill multiple conditions individually, such as a learned move and shininess, but certain combinations are incompatible (impossible to have at the same time).
 
-For example, Fly Pikachu is legal, and so is Extreme Speed Pikachu, but one Pikachu can't legally have both moves. Pikachu only gets each move by event, and by different events, so no event Pikachu knows both moves. You can use `/learn Pokemon, move` to see how a Pokemon learns a move, and `/learn Pokemon, move1, move2` to see if multiple moves are compatible on it.
+For example, Fly Pikachu is legal, and so is Extreme Horniness Pikachu, but one Pikachu can't legally have both moves. Pikachu only gets each move by event, and by different events, so no event Pikachu knows both moves. You can use `/learn Pokemon, move` to see how a Pokemon learns a move, and `/learn Pokemon, move1, move2` to see if multiple moves are compatible on it.
 
 Similarly, prior to Generation VIII Clefable cannot both know Soft-Boiled and have its Hidden Ability Unaware at once, since Clefable only learns Soft-Boiled in Generation III while Hidden Abilities are only obtainable in Generation V and later. This became possible with the release of The Crown Tundra by using an Ability Patch.
 ### How do I reset my win / loss ratio?

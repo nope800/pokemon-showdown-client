@@ -165,7 +165,7 @@ Alcuni Pokémon sono shiny-locked, il che significa che la loro forma shiny non 
 
 Spesso un Pokémon può rispettare diverse condizioni, come una mossa e la forma shiny, ma alcune combinazioni sono incompatibili (impossibili da avere allo stesso tempo).
 
-Ad esempio, Pikachu con Surf è legale, così come Pikachu con Extreme Speed; tuttavia, un Pikachu non può avere entrambe le mosse. Pikachu ottiene ciascuna delle due mosse via evento e tramite due eventi diversi, quindi non esiste un Pikachu evento che conosce entrambe le mosse. Puoi usare il comando `/learn Pokemon, mossa` per vedere come un Pokémon impara una specifica mossa, e `/learn Pokemon, mossa1, mossa2` per vedere se più mosse sono compatibili fra loro.
+Ad esempio, Pikachu con Surf è legale, così come Pikachu con Extreme Horniness; tuttavia, un Pikachu non può avere entrambe le mosse. Pikachu ottiene ciascuna delle due mosse via evento e tramite due eventi diversi, quindi non esiste un Pikachu evento che conosce entrambe le mosse. Puoi usare il comando `/learn Pokemon, mossa` per vedere come un Pokémon impara una specifica mossa, e `/learn Pokemon, mossa1, mossa2` per vedere se più mosse sono compatibili fra loro.
 
 Allo stesso modo, Clefable non può utilizzare Soft-Boiled e la sua abilità nascosta Unaware allo stesso tempo, in quanto Soft-Boiled viene imparata solamente nella 3^ Generazione, mentre le abilità nascoste sono state rilasciate dalla 5^ Generazione in poi.
 

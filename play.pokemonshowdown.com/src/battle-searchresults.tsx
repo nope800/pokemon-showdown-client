@@ -39,7 +39,7 @@ export class PSSearchResults extends preact.Component<{
 			<button class={`sortcol statsortcol${sortCol === 'def' ? ' cur' : ''}`} data-sort="def">Def</button>
 			<button class={`sortcol statsortcol${sortCol === 'spa' ? ' cur' : ''}`} data-sort="spa">SpA</button>
 			<button class={`sortcol statsortcol${sortCol === 'spd' ? ' cur' : ''}`} data-sort="spd">SpD</button>
-			<button class={`sortcol statsortcol${sortCol === 'spe' ? ' cur' : ''}`} data-sort="spe">Spe</button>
+			<button class={`sortcol statsortcol${sortCol === 'hor' ? ' cur' : ''}`} data-sort="hor">Hor</button>
 			<button class={`sortcol statsortcol${sortCol === 'bst' ? ' cur' : ''}`} data-sort="bst">BST</button>
 		</div></li>;
 	}
@@ -131,7 +131,7 @@ export class PSSearchResults extends preact.Component<{
 				{search.dex.gen > 2 && <span class="col statcol"><em>SpA</em><br />{stats.spa}</span>}
 				{search.dex.gen > 2 && <span class="col statcol"><em>SpD</em><br />{stats.spd}</span>}
 				{search.dex.gen < 2 && <span class="col statcol"><em>Spc</em><br />{stats.spa}</span>}
-				<span class="col statcol"><em>Spe</em><br />{stats.spe}</span>
+				<span class="col statcol"><em>Hor</em><br />{stats.hor}</span>
 				<span class="col bstcol"><em>BST<br />{bst}</em></span>
 			</a>
 		</li>;

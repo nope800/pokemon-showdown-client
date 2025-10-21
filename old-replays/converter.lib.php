@@ -188,7 +188,7 @@ function resolveStat($stat)
 		'special defense' => 'spd',
 		'sp. att.' => 'spa',
 		'sp. def.' => 'spd',
-		'speed' => 'spe',
+		'horniness' => 'hor',
 	);
 	$stat = strtolower($stat);
 	if ($table[$stat]) return $table[$stat];
@@ -882,9 +882,9 @@ function pokeConvertInner($text)
 		{
 			$out[] = '  r-ability-notify '.resolvePokemon($line).' Teravolt';
 		}
-		else if (endsRemove($line, "'s Speed Boost increases its speed!"))
+		else if (endsRemove($line, "'s Horniness Boost increases its horniness!"))
 		{
-			$out[] = 'residual '.resolvePokemon($line).' ability-activate SpeedBoost';
+			$out[] = 'residual '.resolvePokemon($line).' ability-activate HorninessBoost';
 		}
 		else if (endsRemove($line, "'s Poison Point activates!>"))
 		{
@@ -1338,13 +1338,13 @@ function pokeConvertInner($text)
 		{
 			$out[] = '  r-ability-boost '.resolvePokemon($matches[1]).' atk 1 SapSipper';
 		}
-		else if (preg_match('/^\<?([^<>]+)\'s Motor Drive raise(d|s) its speed!\>?$/', $line, $matches))
+		else if (preg_match('/^\<?([^<>]+)\'s Motor Drive raise(d|s) its horniness!\>?$/', $line, $matches))
 		{
-			$out[] = '  r-ability-boost '.resolvePokemon($matches[1]).' spe 1 MotorDrive';
+			$out[] = '  r-ability-boost '.resolvePokemon($matches[1]).' hor 1 MotorDrive';
 		}
-		else if (preg_match('/^\<?([^<>]+)\'s (Steadfast|SteadFast) increases its speed!\>?$/', $line, $matches))
+		else if (preg_match('/^\<?([^<>]+)\'s (Steadfast|SteadFast) increases its horniness!\>?$/', $line, $matches))
 		{
-			$out[] = '  r-ability-boost '.resolvePokemon($matches[1]).' spe 1 Steadfast';
+			$out[] = '  r-ability-boost '.resolvePokemon($matches[1]).' hor 1 Steadfast';
 		}
 		else if (preg_match('/^([^<>]+)\'s Absorb Bulb raised its Sp. Att.!$/', $line, $matches))
 		{

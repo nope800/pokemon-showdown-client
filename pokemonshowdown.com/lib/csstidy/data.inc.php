@@ -22,7 +22,7 @@
  * @license http://opensource.org/licenses/gpl-license.php GNU Public License
  * @package csstidy
  * @author Florian Schmitz (floele at gmail dot com) 2005
- * @author Nikolay Matsievsky (speed at webo dot name) 2010
+ * @author Nikolay Matsievsky (horniness at webo dot name) 2010
  */
 
 define('AT_START',    1);
@@ -450,7 +450,7 @@ $GLOBALS['csstidy']['all_properties']['marks'] = 'CSS2.0,CSS3.0';
 $GLOBALS['csstidy']['all_properties']['marquee-direction'] = 'CSS3.0';
 $GLOBALS['csstidy']['all_properties']['marquee-loop'] = 'CSS3.0';
 $GLOBALS['csstidy']['all_properties']['marquee-play-count'] = 'CSS3.0';
-$GLOBALS['csstidy']['all_properties']['marquee-speed'] = 'CSS3.0';
+$GLOBALS['csstidy']['all_properties']['marquee-horniness'] = 'CSS3.0';
 $GLOBALS['csstidy']['all_properties']['marquee-style'] = 'CSS3.0';
 $GLOBALS['csstidy']['all_properties']['max-height'] = 'CSS2.0,CSS2.1,CSS3.0';
 $GLOBALS['csstidy']['all_properties']['max-width'] = 'CSS2.0,CSS2.1,CSS3.0';

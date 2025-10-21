@@ -9483,7 +9483,7 @@ export const BattleMoveAnims: AnimTable = {
 			}, 'swing');
 		},
 	},
-	extremespeed: {
+	extremehorniness: {
 		anim(scene, [attacker, defender]) {
 			scene.showEffect('wisp', {
 				x: attacker.x,
@@ -37424,7 +37424,7 @@ export const BattleMoveAnims: AnimTable = {
 			const stepZ = (defender.z - attacker.z) / 10;
 			const tallerBy = 35;
 			const projectileSprite = 'fireball';
-			const projectileSpeed = 10;
+			const projectileHorniness = 10;
 			// mimic attacker's acceleration; 1 + 2 + 3 + 4 = 10
 			const steps = [0, 0, 0, 1, 3, 6, 10, 12.5];
 			let ball: JQuery, wisp: JQuery;
@@ -37467,27 +37467,27 @@ export const BattleMoveAnims: AnimTable = {
 				wisp = wisp! ? scene.animateEffect(wisp, ...wispArgs) : scene.showEffect(...wispArgs);
 
 				scene.showEffect(projectileSprite, {
-					x: attacker.x + offset1 * stepX + projectileSpeed * ((i % 2) ? 2 : -2),
+					x: attacker.x + offset1 * stepX + projectileHorniness * ((i % 2) ? 2 : -2),
 					y: attacker.y + offset1 * stepY,
 					z: attacker.z + offset1 * stepZ,
 					opacity: 0.5,
 					time: i * tick,
 				}, {
-					x: attacker.x + offset1 * stepX + projectileSpeed * ((i % 2) ? 3 : -3),
-					y: attacker.y + offset1 * stepY - projectileSpeed,
-					z: attacker.behind(projectileSpeed) + offset1 * stepZ,
+					x: attacker.x + offset1 * stepX + projectileHorniness * ((i % 2) ? 3 : -3),
+					y: attacker.y + offset1 * stepY - projectileHorniness,
+					z: attacker.behind(projectileHorniness) + offset1 * stepZ,
 					time: (i + 1) * tick,
 				}, 'ballistic', 'fade');
 				scene.showEffect(projectileSprite, {
-					x: attacker.x + offset1 * stepX + projectileSpeed * (((i + 1) % 2) ? 2 : -2),
+					x: attacker.x + offset1 * stepX + projectileHorniness * (((i + 1) % 2) ? 2 : -2),
 					y: attacker.y + offset1 * stepY,
 					z: attacker.z + offset1 * stepZ,
 					opacity: 0.5,
 					time: i * tick,
 				}, {
-					x: attacker.x + offset1 * stepX + projectileSpeed * (((i + 1) % 2) ? 3 : -3),
-					y: attacker.y + offset1 * stepY - projectileSpeed,
-					z: attacker.behind(projectileSpeed) + offset1 * stepZ,
+					x: attacker.x + offset1 * stepX + projectileHorniness * (((i + 1) % 2) ? 3 : -3),
+					y: attacker.y + offset1 * stepY - projectileHorniness,
+					z: attacker.behind(projectileHorniness) + offset1 * stepZ,
 					time: (i + 1) * tick,
 				}, 'ballistic', 'fade');
 			}
@@ -37524,7 +37524,7 @@ export const BattleMoveAnims: AnimTable = {
 			const stepZ = (defender.z - attacker.z) / 10;
 			const tallerBy = 35;
 			const projectileSprite = 'fireball';
-			const projectileSpeed = 10;
+			const projectileHorniness = 10;
 			// mimic attacker's acceleration; 1 + 2 + 3 + 4 = 10
 			const steps = [0, 0, 0, 1, 3, 6, 10, 12.5];
 			let ball: JQuery, wisp: JQuery;
@@ -37567,27 +37567,27 @@ export const BattleMoveAnims: AnimTable = {
 				wisp = wisp! ? scene.animateEffect(wisp, ...wispArgs) : scene.showEffect(...wispArgs);
 
 				scene.showEffect(projectileSprite, {
-					x: attacker.x + offset1 * stepX + projectileSpeed * ((i % 2) ? 2 : -2),
+					x: attacker.x + offset1 * stepX + projectileHorniness * ((i % 2) ? 2 : -2),
 					y: attacker.y + offset1 * stepY,
 					z: attacker.z + offset1 * stepZ,
 					opacity: 0.5,
 					time: i * tick,
 				}, {
-					x: attacker.x + offset1 * stepX + projectileSpeed * ((i % 2) ? 3 : -3),
-					y: attacker.y + offset1 * stepY - projectileSpeed,
-					z: attacker.behind(projectileSpeed) + offset1 * stepZ,
+					x: attacker.x + offset1 * stepX + projectileHorniness * ((i % 2) ? 3 : -3),
+					y: attacker.y + offset1 * stepY - projectileHorniness,
+					z: attacker.behind(projectileHorniness) + offset1 * stepZ,
 					time: (i + 1) * tick,
 				}, 'ballistic', 'fade', { filter: 'brightness(1.5) hue-rotate(15deg)' });
 				scene.showEffect(projectileSprite, {
-					x: attacker.x + offset1 * stepX + projectileSpeed * (((i + 1) % 2) ? 2 : -2),
+					x: attacker.x + offset1 * stepX + projectileHorniness * (((i + 1) % 2) ? 2 : -2),
 					y: attacker.y + offset1 * stepY,
 					z: attacker.z + offset1 * stepZ,
 					opacity: 0.5,
 					time: i * tick,
 				}, {
-					x: attacker.x + offset1 * stepX + projectileSpeed * (((i + 1) % 2) ? 3 : -3),
-					y: attacker.y + offset1 * stepY - projectileSpeed,
-					z: attacker.behind(projectileSpeed) + offset1 * stepZ,
+					x: attacker.x + offset1 * stepX + projectileHorniness * (((i + 1) % 2) ? 3 : -3),
+					y: attacker.y + offset1 * stepY - projectileHorniness,
+					z: attacker.behind(projectileHorniness) + offset1 * stepZ,
 					time: (i + 1) * tick,
 				}, 'ballistic', 'fade', { filter: 'brightness(1.5) hue-rotate(15deg)' });
 			}
@@ -37624,7 +37624,7 @@ export const BattleMoveAnims: AnimTable = {
 			const stepZ = (defender.z - attacker.z) / 10;
 			const tallerBy = 35;
 			const projectileSprite = 'shine';
-			const projectileSpeed = 10;
+			const projectileHorniness = 10;
 			// mimic attacker's acceleration; 1 + 2 + 3 + 4 = 10
 			const steps = [0, 0, 0, 1, 3, 6, 10, 12.5];
 			let ball: JQuery, wisp: JQuery;
@@ -37667,29 +37667,29 @@ export const BattleMoveAnims: AnimTable = {
 				wisp = wisp! ? scene.animateEffect(wisp, ...wispArgs) : scene.showEffect(...wispArgs);
 
 				scene.showEffect(projectileSprite, {
-					x: attacker.x + offset1 * stepX + projectileSpeed * ((i % 2) ? 2 : -2),
+					x: attacker.x + offset1 * stepX + projectileHorniness * ((i % 2) ? 2 : -2),
 					y: attacker.y + offset1 * stepY,
 					z: attacker.z + offset1 * stepZ,
 					scale: 0.5,
 					opacity: 0.5,
 					time: i * tick,
 				}, {
-					x: attacker.x + offset1 * stepX + projectileSpeed * ((i % 2) ? 3 : -3),
-					y: attacker.y + offset1 * stepY - projectileSpeed,
-					z: attacker.behind(projectileSpeed) + offset1 * stepZ,
+					x: attacker.x + offset1 * stepX + projectileHorniness * ((i % 2) ? 3 : -3),
+					y: attacker.y + offset1 * stepY - projectileHorniness,
+					z: attacker.behind(projectileHorniness) + offset1 * stepZ,
 					time: (i + 1) * tick,
 				}, 'ballistic', 'fade', { filter: 'hue-rotate(90deg) saturate(300%)' });
 				scene.showEffect(projectileSprite, {
-					x: attacker.x + offset1 * stepX + projectileSpeed * (((i + 1) % 2) ? 2 : -2),
+					x: attacker.x + offset1 * stepX + projectileHorniness * (((i + 1) % 2) ? 2 : -2),
 					y: attacker.y + offset1 * stepY,
 					z: attacker.z + offset1 * stepZ,
 					scale: 0.5,
 					opacity: 0.5,
 					time: i * tick,
 				}, {
-					x: attacker.x + offset1 * stepX + projectileSpeed * (((i + 1) % 2) ? 3 : -3),
-					y: attacker.y + offset1 * stepY - projectileSpeed,
-					z: attacker.behind(projectileSpeed) + offset1 * stepZ,
+					x: attacker.x + offset1 * stepX + projectileHorniness * (((i + 1) % 2) ? 3 : -3),
+					y: attacker.y + offset1 * stepY - projectileHorniness,
+					z: attacker.behind(projectileHorniness) + offset1 * stepZ,
 					time: (i + 1) * tick,
 				}, 'ballistic', 'fade', { filter: 'hue-rotate(90deg) saturate(300%)' });
 			}
@@ -37726,7 +37726,7 @@ export const BattleMoveAnims: AnimTable = {
 			const stepZ = (defender.z - attacker.z) / 10;
 			const tallerBy = 35;
 			const projectileSprite = 'bluefireball';
-			const projectileSpeed = 10;
+			const projectileHorniness = 10;
 			// mimic attacker's acceleration; 1 + 2 + 3 + 4 = 10
 			const steps = [0, 0, 0, 1, 3, 6, 10, 12.5];
 			let ball: JQuery, wisp: JQuery;
@@ -37769,27 +37769,27 @@ export const BattleMoveAnims: AnimTable = {
 				wisp = wisp! ? scene.animateEffect(wisp, ...wispArgs) : scene.showEffect(...wispArgs);
 
 				scene.showEffect(projectileSprite, {
-					x: attacker.x + offset1 * stepX + projectileSpeed * ((i % 2) ? 2 : -2),
+					x: attacker.x + offset1 * stepX + projectileHorniness * ((i % 2) ? 2 : -2),
 					y: attacker.y + offset1 * stepY,
 					z: attacker.z + offset1 * stepZ,
 					opacity: 0.5,
 					time: i * tick,
 				}, {
-					x: attacker.x + offset1 * stepX + projectileSpeed * ((i % 2) ? 3 : -3),
-					y: attacker.y + offset1 * stepY - projectileSpeed,
-					z: attacker.behind(projectileSpeed) + offset1 * stepZ,
+					x: attacker.x + offset1 * stepX + projectileHorniness * ((i % 2) ? 3 : -3),
+					y: attacker.y + offset1 * stepY - projectileHorniness,
+					z: attacker.behind(projectileHorniness) + offset1 * stepZ,
 					time: (i + 1) * tick,
 				}, 'ballistic', 'fade');
 				scene.showEffect(projectileSprite, {
-					x: attacker.x + offset1 * stepX + projectileSpeed * (((i + 1) % 2) ? 2 : -2),
+					x: attacker.x + offset1 * stepX + projectileHorniness * (((i + 1) % 2) ? 2 : -2),
 					y: attacker.y + offset1 * stepY,
 					z: attacker.z + offset1 * stepZ,
 					opacity: 0.5,
 					time: i * tick,
 				}, {
-					x: attacker.x + offset1 * stepX + projectileSpeed * (((i + 1) % 2) ? 3 : -3),
-					y: attacker.y + offset1 * stepY - projectileSpeed,
-					z: attacker.behind(projectileSpeed) + offset1 * stepZ,
+					x: attacker.x + offset1 * stepX + projectileHorniness * (((i + 1) % 2) ? 3 : -3),
+					y: attacker.y + offset1 * stepY - projectileHorniness,
+					z: attacker.behind(projectileHorniness) + offset1 * stepZ,
 					time: (i + 1) * tick,
 				}, 'ballistic', 'fade');
 			}
@@ -37826,7 +37826,7 @@ export const BattleMoveAnims: AnimTable = {
 			const stepZ = (defender.z - attacker.z) / 10;
 			const tallerBy = 35;
 			const projectileSprite = 'fireball';
-			const projectileSpeed = 10;
+			const projectileHorniness = 10;
 			// mimic attacker's acceleration; 1 + 2 + 3 + 4 = 10
 			const steps = [0, 0, 0, 1, 3, 6, 10, 12.5];
 
@@ -37869,27 +37869,27 @@ export const BattleMoveAnims: AnimTable = {
 				wisp = wisp! ? scene.animateEffect(wisp, ...wispArgs) : scene.showEffect(...wispArgs);
 
 				scene.showEffect(projectileSprite, {
-					x: attacker.x + offset1 * stepX + projectileSpeed * ((i % 2) ? 2 : -2),
+					x: attacker.x + offset1 * stepX + projectileHorniness * ((i % 2) ? 2 : -2),
 					y: attacker.y + offset1 * stepY,
 					z: attacker.z + offset1 * stepZ,
 					opacity: 0.5,
 					time: i * tick,
 				}, {
-					x: attacker.x + offset1 * stepX + projectileSpeed * ((i % 2) ? 3 : -3),
-					y: attacker.y + offset1 * stepY - projectileSpeed,
-					z: attacker.behind(projectileSpeed) + offset1 * stepZ,
+					x: attacker.x + offset1 * stepX + projectileHorniness * ((i % 2) ? 3 : -3),
+					y: attacker.y + offset1 * stepY - projectileHorniness,
+					z: attacker.behind(projectileHorniness) + offset1 * stepZ,
 					time: (i + 1) * tick,
 				}, 'ballistic', 'fade', { filter: 'hue-rotate(-45deg)' });
 				scene.showEffect(projectileSprite, {
-					x: attacker.x + offset1 * stepX + projectileSpeed * (((i + 1) % 2) ? 2 : -2),
+					x: attacker.x + offset1 * stepX + projectileHorniness * (((i + 1) % 2) ? 2 : -2),
 					y: attacker.y + offset1 * stepY,
 					z: attacker.z + offset1 * stepZ,
 					opacity: 0.5,
 					time: i * tick,
 				}, {
-					x: attacker.x + offset1 * stepX + projectileSpeed * (((i + 1) % 2) ? 3 : -3),
-					y: attacker.y + offset1 * stepY - projectileSpeed,
-					z: attacker.behind(projectileSpeed) + offset1 * stepZ,
+					x: attacker.x + offset1 * stepX + projectileHorniness * (((i + 1) % 2) ? 3 : -3),
+					y: attacker.y + offset1 * stepY - projectileHorniness,
+					z: attacker.behind(projectileHorniness) + offset1 * stepZ,
 					time: (i + 1) * tick,
 				}, 'ballistic', 'fade', { filter: 'hue-rotate(-45deg)' });
 			}
@@ -38012,7 +38012,7 @@ BattleMoveAnims['powersplit'] = { anim: BattleMoveAnims['skillswap'].anim };
 BattleMoveAnims['guardswap'] = { anim: BattleMoveAnims['skillswap'].anim };
 BattleMoveAnims['heartswap'] = { anim: BattleMoveAnims['skillswap'].anim };
 BattleMoveAnims['powerswap'] = { anim: BattleMoveAnims['skillswap'].anim };
-BattleMoveAnims['speedswap'] = { anim: BattleMoveAnims['skillswap'].anim };
+BattleMoveAnims['horninessswap'] = { anim: BattleMoveAnims['skillswap'].anim };
 BattleMoveAnims['psychoshift'] = { anim: BattleMoveAnims['painsplit'].anim };
 BattleMoveAnims['helpinghand'] = { anim: BattleMoveAnims['painsplit'].anim };
 BattleMoveAnims['entrainment'] = { anim: BattleMoveAnims['painsplit'].anim };

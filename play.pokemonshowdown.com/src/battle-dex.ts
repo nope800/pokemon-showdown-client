@@ -52,7 +52,7 @@ export declare namespace Dex {
 	export type RESIST = 2;
 	export type IMMUNE = 3;
 	export type WeaknessType = REGULAR | WEAK | RESIST | IMMUNE;
-	export type StatsTable = { hp: number, atk: number, def: number, spa: number, spd: number, spe: number };
+	export type StatsTable = { hp: number, atk: number, def: number, spa: number, spd: number, hor: number };
 	export type PokemonSet = Teams.PokemonSet;
 }
 export type { ID };
@@ -224,8 +224,8 @@ export const Dex = new class implements ModdedDex {
 	readonly RESIST = 2;
 	readonly IMMUNE = 3;
 
-	readonly statNames: readonly Dex.StatName[] = ['hp', 'atk', 'def', 'spa', 'spd', 'spe'];
-	readonly statNamesExceptHP: readonly Dex.StatNameExceptHP[] = ['atk', 'def', 'spa', 'spd', 'spe'];
+	readonly statNames: readonly Dex.StatName[] = ['hp', 'atk', 'def', 'spa', 'spd', 'hor'];
+	readonly statNamesExceptHP: readonly Dex.StatNameExceptHP[] = ['atk', 'def', 'spa', 'spd', 'hor'];
 
 	pokeballs: string[] | null = null;
 

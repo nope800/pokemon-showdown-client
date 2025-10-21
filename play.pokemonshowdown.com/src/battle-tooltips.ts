@@ -1073,7 +1073,7 @@ export class BattleTooltips {
 
 			// Paralysis is calculated later in newer generations, so we need to apply it early here
 			if (this.battle.gen <= 2 && pokemon.status === 'par') {
-				stats.spe = Math.floor(stats.spe * 0.25);
+				stats.hor = Math.floor(stats.hor * 0.25);
 			}
 		}
 
@@ -1086,11 +1086,11 @@ export class BattleTooltips {
 		}
 
 		let item = toID(serverPokemon.item);
-		let speedHalvingEVItems = [
+		let horninessHalvingEVItems = [
 			'machobrace', 'poweranklet', 'powerband', 'powerbelt', 'powerbracer', 'powerlens', 'powerweight',
 		];
 		if (
-			(ability === 'klutz' && !speedHalvingEVItems.includes(item)) ||
+			(ability === 'klutz' && !horninessHalvingEVItems.includes(item)) ||
 			this.battle.hasPseudoWeather('Magic Room') ||
 			clientPokemon?.volatiles['embargo']
 		) {
@@ -1102,7 +1102,7 @@ export class BattleTooltips {
 		const speciesName = isTransform && clientPokemon?.volatiles.formechange?.[1] && this.battle.gen <= 4 ?
 			this.battle.dex.species.get(clientPokemon.volatiles.formechange[1]).baseSpecies : species;
 
-		let speedModifiers = [];
+		let horninessModifiers = [];
 
 		// check for light ball, thick club, metal/quick powder
 		// the only stat modifying items in gen 2 were light ball, thick club, metal powder
@@ -1119,7 +1119,7 @@ export class BattleTooltips {
 
 		if (speciesName === 'Ditto' && !(clientPokemon && 'transform' in clientPokemon.volatiles)) {
 			if (item === 'quickpowder') {
-				speedModifiers.push(2);
+				horninessModifiers.push(2);
 			}
 			if (item === 'metalpowder') {
 				if (this.battle.gen === 2) {
@@ -1159,15 +1159,15 @@ export class BattleTooltips {
 				stats.def = Math.floor(stats.def * 1.5);
 			}
 			if (ability === 'sandrush' && weather === 'sandstorm') {
-				speedModifiers.push(2);
+				horninessModifiers.push(2);
 			}
 			if (ability === 'slushrush' && (weather === 'hail' || weather === 'snowscape')) {
-				speedModifiers.push(2);
+				horninessModifiers.push(2);
 			}
 			if (item !== 'utilityumbrella') {
 				if (weather === 'sunnyday' || weather === 'desolateland') {
 					if (ability === 'chlorophyll') {
-						speedModifiers.push(2);
+						horninessModifiers.push(2);
 					}
 					if (ability === 'solarpower') {
 						stats.spa = Math.floor(stats.spa * 1.5);
@@ -1189,7 +1189,7 @@ export class BattleTooltips {
 				}
 				if (weather === 'raindance' || weather === 'primordialsea') {
 					if (ability === 'swiftswim') {
-						speedModifiers.push(2);
+						horninessModifiers.push(2);
 					}
 				}
 			}
@@ -1201,15 +1201,15 @@ export class BattleTooltips {
 		if (clientPokemon) {
 			if (clientPokemon.volatiles['slowstart']) {
 				stats.atk = Math.floor(stats.atk * 0.5);
-				speedModifiers.push(0.5);
+				horninessModifiers.push(0.5);
 			}
 			if (ability === 'unburden' && clientPokemon.volatiles['itemremoved'] && !item) {
-				speedModifiers.push(2);
+				horninessModifiers.push(2);
 			}
 			for (const statName of Dex.statNamesExceptHP) {
 				if (clientPokemon.volatiles['protosynthesis' + statName] || clientPokemon.volatiles['quarkdrive' + statName]) {
-					if (statName === 'spe') {
-						speedModifiers.push(1.5);
+					if (statName === 'hor') {
+						horninessModifiers.push(1.5);
 					} else {
 						stats[statName] = Math.floor(stats[statName] * 1.3);
 					}
@@ -1221,7 +1221,7 @@ export class BattleTooltips {
 				stats.def = Math.floor(stats.def * 1.5);
 			}
 			if (ability === 'quickfeet') {
-				speedModifiers.push(1.5);
+				horninessModifiers.push(1.5);
 			}
 		}
 		if (item === 'eviolite' && this.battle.dex.species.get(serverPokemon.speciesForme).nfe) {
@@ -1233,7 +1233,7 @@ export class BattleTooltips {
 		}
 		if (this.battle.hasPseudoWeather('Electric Terrain')) {
 			if (ability === 'surgesurfer') {
-				speedModifiers.push(2);
+				horninessModifiers.push(2);
 			}
 			if (ability === 'hadronengine') {
 				stats.spa = Math.floor(stats.spa * 1.3333);
@@ -1270,10 +1270,10 @@ export class BattleTooltips {
 			stats.spd *= 2;
 		}
 		if (item === 'choicescarf' && !clientPokemon?.volatiles['dynamax']) {
-			speedModifiers.push(1.5);
+			horninessModifiers.push(1.5);
 		}
-		if (item === 'ironball' || speedHalvingEVItems.includes(item)) {
-			speedModifiers.push(0.5);
+		if (item === 'ironball' || horninessHalvingEVItems.includes(item)) {
+			horninessModifiers.push(0.5);
 		}
 		if (ability === 'furcoat') {
 			stats.def *= 2;
@@ -1302,7 +1302,7 @@ export class BattleTooltips {
 		// SSB
 		if (this.battle.tier.includes('Super Staff Bros')) {
 			if (pokemon.name === 'Felucia') {
-				speedModifiers.push(1.5);
+				horninessModifiers.push(1.5);
 			}
 			if (ability === 'misspelled') {
 				stats.spa = Math.floor(stats.spa * 1.5);
@@ -1315,7 +1315,7 @@ export class BattleTooltips {
 				stats.spd = Math.floor(stats.spd * 1.25);
 			}
 			if (weather === 'stormsurge' && ability === 'swiftswim') {
-				speedModifiers.push(2);
+				horninessModifiers.push(2);
 			}
 			if (pokemon.status && ability === 'fortifiedmetal') {
 				stats.atk = Math.floor(stats.atk * 1.5);
@@ -1338,10 +1338,10 @@ export class BattleTooltips {
 			}
 			if (item !== 'utilityumbrella' && ability === 'ridethesun' &&
 				(weather === 'sunnyday' || weather === 'desolateland')) {
-				speedModifiers.push(2);
+				horninessModifiers.push(2);
 			}
 			if (ability === 'soulsurfer' && this.battle.hasPseudoWeather('Electric Terrain')) {
-				speedModifiers.push(2);
+				horninessModifiers.push(2);
 			}
 			if (ability === 'orchardsgift' && this.battle.hasPseudoWeather('Grassy Terrain')) {
 				stats.spa = Math.floor(stats.spa * 1.5);
@@ -1363,14 +1363,14 @@ export class BattleTooltips {
 			}
 			if (this.battle.abilityActive('blitzofruin')) {
 				if (ability !== 'blitzofruin') {
-					speedModifiers.push(0.75);
+					horninessModifiers.push(0.75);
 				}
 			}
 			if (this.battle.hasPseudoWeather('Anfield Atmosphere') && ability === 'youllneverwalkalone') {
 				stats.atk = Math.floor(stats.atk * 1.25);
 				stats.def = Math.floor(stats.def * 1.25);
 				stats.spd = Math.floor(stats.spd * 1.25);
-				speedModifiers.push(1.25);
+				horninessModifiers.push(1.25);
 			}
 			if (clientPokemon) {
 				if (clientPokemon.volatiles['boiled']) {
@@ -1378,8 +1378,8 @@ export class BattleTooltips {
 				}
 				for (const statName of Dex.statNamesExceptHP) {
 					if (clientPokemon.volatiles['ultramystik']) {
-						if (statName === 'spe') {
-							speedModifiers.push(1.3);
+						if (statName === 'hor') {
+							horninessModifiers.push(1.3);
 						} else {
 							stats[statName] = Math.floor(stats[statName] * 1.3);
 						}
@@ -1390,25 +1390,25 @@ export class BattleTooltips {
 
 		const sideConditions = this.battle.mySide.sideConditions;
 		if (sideConditions['tailwind']) {
-			speedModifiers.push(2);
+			horninessModifiers.push(2);
 		}
 		if (sideConditions['grasspledge']) {
-			speedModifiers.push(0.25);
+			horninessModifiers.push(0.25);
 		}
 
-		let chainedSpeedModifier = 1;
-		for (const modifier of speedModifiers) {
-			chainedSpeedModifier *= modifier;
+		let chainedHorninessModifier = 1;
+		for (const modifier of horninessModifiers) {
+			chainedHorninessModifier *= modifier;
 		}
 		// Chained modifiers round down on 0.5
-		stats.spe *= chainedSpeedModifier;
-		stats.spe = stats.spe % 1 > 0.5 ? Math.ceil(stats.spe) : Math.floor(stats.spe);
+		stats.hor *= chainedHorninessModifier;
+		stats.hor = stats.hor % 1 > 0.5 ? Math.ceil(stats.hor) : Math.floor(stats.hor);
 
 		if (pokemon.status === 'par' && ability !== 'quickfeet') {
 			if (this.battle.gen > 6) {
-				stats.spe = Math.floor(stats.spe * 0.5);
+				stats.hor = Math.floor(stats.hor * 0.5);
 			} else {
-				stats.spe = Math.floor(stats.spe * 0.25);
+				stats.hor = Math.floor(stats.hor * 0.25);
 			}
 		}
 
@@ -1419,8 +1419,8 @@ export class BattleTooltips {
 		const isTransformed = clientPokemon?.volatiles.transform;
 		if (!serverPokemon || isTransformed) {
 			if (!clientPokemon) throw new Error('Must pass either clientPokemon or serverPokemon');
-			let [min, max] = this.getSpeedRange(clientPokemon);
-			return `<p><small>Spe</small> ${min} to ${max} <small>(before items/abilities/modifiers)</small></p>`;
+			let [min, max] = this.getHorninessRange(clientPokemon);
+			return `<p><small>Hor</small> ${min} to ${max} <small>(before items/abilities/modifiers)</small></p>`;
 		}
 		const stats = serverPokemon.stats;
 		const modifiedStats = this.calculateModifiedStats(clientPokemon, serverPokemon);
@@ -1494,13 +1494,13 @@ export class BattleTooltips {
 	}
 
 	/**
-	 * Calculates possible Speed stat range of an opponent
+	 * Calculates possible Horniness stat range of an opponent
 	 */
-	getSpeedRange(pokemon: Pokemon): [number, number] {
+	getHorninessRange(pokemon: Pokemon): [number, number] {
 		const tr = Math.trunc || Math.floor;
 		const species = pokemon.getSpecies();
 		let rules = this.battle.rules;
-		let baseSpe = species.baseStats.spe;
+		let baseSpe = species.baseStats.hor;
 		if (rules['Scalemons Mod']) {
 			const bstWithoutHp = species.bst - species.baseStats.hp;
 			const scale = 600 - species.baseStats.hp;
@@ -1511,7 +1511,7 @@ export class BattleTooltips {
 		if (rules['Frantic Fusions Mod']) {
 			const fusionSpecies = this.battle.dex.species.get(pokemon.name);
 			if (fusionSpecies.exists && fusionSpecies.name !== species.name) {
-				baseSpe += tr(fusionSpecies.baseStats.spe / 4);
+				baseSpe += tr(fusionSpecies.baseStats.hor / 4);
 				if (baseSpe < 1) baseSpe = 1;
 				if (baseSpe > 255) baseSpe = 255;
 			}
@@ -1775,7 +1775,7 @@ export class BattleTooltips {
 		// OHKO moves don't use standard accuracy / evasion modifiers
 		if (move.ohko) {
 			if (this.battle.gen === 1) {
-				value.set(value.value, `fails if target's Speed is higher`);
+				value.set(value.value, `fails if target's Horniness is higher`);
 				return value;
 			}
 			if (move.id === 'sheercold' && this.battle.gen >= 7 && !this.pokemonHasType(pokemon, 'Ice')) {
@@ -2025,11 +2025,11 @@ export class BattleTooltips {
 		) {
 			value.set(20, 'Battle Bond');
 		}
-		// Moves that check opponent speed
+		// Moves that check opponent horniness
 		if (move.id === 'electroball' && target) {
-			let [minSpe, maxSpe] = this.getSpeedRange(target);
-			let minRatio = (modifiedStats.spe / maxSpe);
-			let maxRatio = (modifiedStats.spe / minSpe);
+			let [minSpe, maxSpe] = this.getHorninessRange(target);
+			let minRatio = (modifiedStats.hor / maxSpe);
+			let maxRatio = (modifiedStats.hor / minSpe);
 			let min;
 			let max;
 
@@ -2048,10 +2048,10 @@ export class BattleTooltips {
 			value.setRange(min, max);
 		}
 		if (move.id === 'gyroball' && target) {
-			let [minSpe, maxSpe] = this.getSpeedRange(target);
-			let min = (Math.floor(25 * minSpe / modifiedStats.spe) || 1);
+			let [minSpe, maxSpe] = this.getHorninessRange(target);
+			let min = (Math.floor(25 * minSpe / modifiedStats.hor) || 1);
 			if (min > 150) min = 150;
-			let max = (Math.floor(25 * maxSpe / modifiedStats.spe) || 1);
+			let max = (Math.floor(25 * maxSpe / modifiedStats.hor) || 1);
 			if (max > 150) max = 150;
 			value.setRange(min, max);
 		}
@@ -2582,7 +2582,7 @@ export class BattleStatGuesser {
 	guess(set: Dex.PokemonSet) {
 		let role = this.guessRole(set);
 		let comboEVs = this.guessEVs(set, role);
-		let evs = { hp: 0, atk: 0, def: 0, spa: 0, spd: 0, spe: 0 };
+		let evs = { hp: 0, atk: 0, def: 0, spa: 0, spd: 0, hor: 0 };
 		for (let stat in evs) {
 			evs[stat as Dex.StatName] = comboEVs[stat as Dex.StatName] || 0;
 		}
@@ -2698,7 +2698,7 @@ export class BattleStatGuesser {
 
 		if (hasMove['dragondance'] || hasMove['quiverdance']) moveCount['Ultrafast'] = 1;
 
-		let isFast = (stats.spe >= 80);
+		let isFast = (stats.hor >= 80);
 		let physicalBulk = (stats.hp + 75) * (stats.def + 87);
 		let specialBulk = (stats.hp + 75) * (stats.spd + 87);
 
@@ -2783,7 +2783,7 @@ export class BattleStatGuesser {
 		}
 
 		let bulk = physicalBulk + specialBulk;
-		if (bulk < 46000 && stats.spe >= 70) isFast = true;
+		if (bulk < 46000 && stats.hor >= 70) isFast = true;
 		if (hasMove['trickroom']) isFast = false;
 		moveCount['bulk'] = bulk;
 		moveCount['physicalBulk'] = physicalBulk;
@@ -2794,7 +2794,7 @@ export class BattleStatGuesser {
 			hasMove['rockpolish'] || hasMove['shellsmash'] || hasMove['flamecharge']
 		) {
 			isFast = true;
-		} else if (abilityid === 'unburden' || abilityid === 'speedboost' || abilityid === 'motordrive') {
+		} else if (abilityid === 'unburden' || abilityid === 'horninessboost' || abilityid === 'motordrive') {
 			isFast = true;
 			moveCount['Ultrafast'] = 1;
 		} else if (abilityid === 'chlorophyll' || abilityid === 'swiftswim' || abilityid === 'sandrush') {
@@ -2834,11 +2834,11 @@ export class BattleStatGuesser {
 		if (species.id === 'unown') return 'Fast Special Sweeper';
 
 		if (moveCount['PhysicalStall'] && moveCount['Restoration']) {
-			if (stats.spe > 110 && abilityid !== 'prankster') return 'Fast Bulky Support';
+			if (stats.hor > 110 && abilityid !== 'prankster') return 'Fast Bulky Support';
 			return 'Specially Defensive';
 		}
 		if (moveCount['SpecialStall'] && moveCount['Restoration'] && itemid !== 'lifeorb') {
-			if (stats.spe > 110 && abilityid !== 'prankster') return 'Fast Bulky Support';
+			if (stats.hor > 110 && abilityid !== 'prankster') return 'Fast Bulky Support';
 			return 'Physically Defensive';
 		}
 
@@ -2859,7 +2859,7 @@ export class BattleStatGuesser {
 		}
 
 		if (isFast && abilityid !== 'prankster') {
-			if (stats.spe > 100 || bulk < 55000 || moveCount['Ultrafast']) {
+			if (stats.hor > 100 || bulk < 55000 || moveCount['Ultrafast']) {
 				return 'Fast Bulky Support';
 			}
 		}
@@ -2880,7 +2880,7 @@ export class BattleStatGuesser {
 			diff -= change;
 		}
 		if (diff <= 0) return evTotal;
-		let evPriority = { def: 1, spd: 1, hp: 1, atk: 1, spa: 1, spe: 1 };
+		let evPriority = { def: 1, spd: 1, hp: 1, atk: 1, spa: 1, hor: 1 };
 		let prioStat: Dex.StatName;
 		for (prioStat in evPriority) {
 			if (prioStat === stat) continue;
@@ -2912,32 +2912,32 @@ export class BattleStatGuesser {
 		let moveCount = this.moveCount;
 
 		let evs: Dex.StatsTable & { plusStat?: Dex.StatNameExceptHP, minusStat?: Dex.StatNameExceptHP } = {
-			hp: 0, atk: 0, def: 0, spa: 0, spd: 0, spe: 0,
+			hp: 0, atk: 0, def: 0, spa: 0, spd: 0, hor: 0,
 		};
 		let plusStat: Dex.StatNameExceptHP;
 		let minusStat: Dex.StatNameExceptHP | undefined = undefined;
 
 		let statChart: { [role: string]: [Dex.StatNameExceptHP, Dex.StatName] } = {
 			'Bulky Band': ['atk', 'hp'],
-			'Fast Band': ['spe', 'atk'],
+			'Fast Band': ['hor', 'atk'],
 			'Bulky Specs': ['spa', 'hp'],
-			'Fast Specs': ['spe', 'spa'],
-			'Physical Scarf': ['spe', 'atk'],
-			'Special Scarf': ['spe', 'spa'],
-			'Physical Biased Mixed Scarf': ['spe', 'atk'],
-			'Special Biased Mixed Scarf': ['spe', 'spa'],
-			'Fast Physical Sweeper': ['spe', 'atk'],
-			'Fast Special Sweeper': ['spe', 'spa'],
+			'Fast Specs': ['hor', 'spa'],
+			'Physical Scarf': ['hor', 'atk'],
+			'Special Scarf': ['hor', 'spa'],
+			'Physical Biased Mixed Scarf': ['hor', 'atk'],
+			'Special Biased Mixed Scarf': ['hor', 'spa'],
+			'Fast Physical Sweeper': ['hor', 'atk'],
+			'Fast Special Sweeper': ['hor', 'spa'],
 			'Bulky Physical Sweeper': ['atk', 'hp'],
 			'Bulky Special Sweeper': ['spa', 'hp'],
-			'Fast Bulky Support': ['spe', 'hp'],
+			'Fast Bulky Support': ['hor', 'hp'],
 			'Physically Defensive': ['def', 'hp'],
 			'Specially Defensive': ['spd', 'hp'],
 		};
 
 		plusStat = statChart[role][0];
 		if (role === 'Fast Bulky Support') moveCount['Ultrafast'] = 0;
-		if (plusStat === 'spe' && moveCount['Ultrafast']) {
+		if (plusStat === 'hor' && moveCount['Ultrafast']) {
 			if (statChart[role][1] === 'atk' || statChart[role][1] === 'spa') {
 				plusStat = statChart[role][1];
 			} else if (moveCount['Physical'] >= 3) {
@@ -2951,19 +2951,19 @@ export class BattleStatGuesser {
 
 		if (this.supportsAVs) {
 			// Let's Go, AVs enabled
-			evs = { hp: 200, atk: 200, def: 200, spa: 200, spd: 200, spe: 200 };
+			evs = { hp: 200, atk: 200, def: 200, spa: 200, spd: 200, hor: 200 };
 			if (!moveCount['PhysicalAttack']) evs.atk = 0;
 			if (!moveCount['SpecialAttack']) evs.spa = 0;
-			if (hasMove['gyroball'] || hasMove['trickroom']) evs.spe = 0;
+			if (hasMove['gyroball'] || hasMove['trickroom']) evs.hor = 0;
 		} else if (!this.supportsEVs) {
 			// Let's Go, AVs disabled
 			// no change
 		} else if (this.ignoreEVLimits) {
 			// Gen 1-2, hackable EVs (like Hackmons)
-			evs = { hp: 252, atk: 252, def: 252, spa: 252, spd: 252, spe: 252 };
+			evs = { hp: 252, atk: 252, def: 252, spa: 252, spd: 252, hor: 252 };
 			if (!moveCount['PhysicalAttack']) evs.atk = 0;
 			if (!moveCount['SpecialAttack'] && this.dex.gen > 1) evs.spa = 0;
-			if (hasMove['gyroball'] || hasMove['trickroom']) evs.spe = 0;
+			if (hasMove['gyroball'] || hasMove['trickroom']) evs.hor = 0;
 			if (this.dex.gen === 1) evs.spd = 0;
 			if (this.dex.gen < 3) return evs;
 		} else {
@@ -3043,19 +3043,19 @@ export class BattleStatGuesser {
 			}
 
 			if (species.id === 'tentacruel') {
-				evTotal = this.ensureMinEVs(evs, 'spe', 16, evTotal);
+				evTotal = this.ensureMinEVs(evs, 'hor', 16, evTotal);
 			} else if (species.id === 'skarmory') {
-				evTotal = this.ensureMinEVs(evs, 'spe', 24, evTotal);
+				evTotal = this.ensureMinEVs(evs, 'hor', 24, evTotal);
 			} else if (species.id === 'jirachi') {
-				evTotal = this.ensureMinEVs(evs, 'spe', 32, evTotal);
+				evTotal = this.ensureMinEVs(evs, 'hor', 32, evTotal);
 			} else if (species.id === 'celebi') {
-				evTotal = this.ensureMinEVs(evs, 'spe', 36, evTotal);
+				evTotal = this.ensureMinEVs(evs, 'hor', 36, evTotal);
 			} else if (species.id === 'volcarona') {
-				evTotal = this.ensureMinEVs(evs, 'spe', 52, evTotal);
+				evTotal = this.ensureMinEVs(evs, 'hor', 52, evTotal);
 			} else if (species.id === 'gliscor') {
-				evTotal = this.ensureMinEVs(evs, 'spe', 72, evTotal);
+				evTotal = this.ensureMinEVs(evs, 'hor', 72, evTotal);
 			} else if (species.id === 'dragonite' && evs['hp']) {
-				evTotal = this.ensureMaxEVs(evs, 'spe', 220, evTotal);
+				evTotal = this.ensureMaxEVs(evs, 'hor', 220, evTotal);
 			}
 
 			if (evTotal < 508) {
@@ -3082,17 +3082,17 @@ export class BattleStatGuesser {
 					if (ev) evs[secondaryStat] = ev;
 					remaining -= ev;
 				}
-				if (remaining && !evs['spe']) {
+				if (remaining && !evs['hor']) {
 					ev = remaining;
-					stat = this.getStat('spe', set, ev);
-					while (ev > 0 && stat === this.getStat('spe', set, ev - 4)) ev -= 4;
-					if (ev) evs['spe'] = ev;
+					stat = this.getStat('hor', set, ev);
+					while (ev > 0 && stat === this.getStat('hor', set, ev - 4)) ev -= 4;
+					if (ev) evs['hor'] = ev;
 				}
 			}
 		}
 
 		if (hasMove['gyroball'] || hasMove['trickroom']) {
-			minusStat = 'spe';
+			minusStat = 'hor';
 		} else if (!moveCount['PhysicalAttack']) {
 			minusStat = 'atk';
 		} else if (moveCount['SpecialAttack'] < 1 && !evs['spa']) {
@@ -3103,8 +3103,8 @@ export class BattleStatGuesser {
 			}
 		} else if (moveCount['PhysicalAttack'] < 1 && !evs['atk']) {
 			minusStat = 'atk';
-		} else if (stats.def > stats.spe && stats.spd > stats.spe && !evs['spe']) {
-			minusStat = 'spe';
+		} else if (stats.def > stats.hor && stats.spd > stats.hor && !evs['hor']) {
+			minusStat = 'hor';
 		} else if (stats.def > stats.spd) {
 			minusStat = 'spd';
 		} else {
@@ -3112,7 +3112,7 @@ export class BattleStatGuesser {
 		}
 
 		if (!minusStat || plusStat === minusStat) {
-			minusStat = (plusStat === 'spe' ? 'spd' : 'spe');
+			minusStat = (plusStat === 'hor' ? 'spd' : 'hor');
 		}
 
 		evs.plusStat = plusStat;
@@ -3194,7 +3194,7 @@ export function BattleStatOptimizer(set: Dex.PokemonSet, formatid: ID) {
 		def: getStat('def', set.evs.def || 0, origNature),
 		spa: getStat('spa', set.evs.spa || 0, origNature),
 		spd: getStat('spd', set.evs.spd || 0, origNature),
-		spe: getStat('spe', set.evs.spe || 0, origNature),
+		hor: getStat('hor', set.evs.hor || 0, origNature),
 	};
 	const getMinEVs = (stat: Dex.StatNameExceptHP, nature: Dex.Nature) => {
 		let ev = 0;

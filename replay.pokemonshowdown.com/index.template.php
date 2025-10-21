@@ -273,7 +273,7 @@ https://replay.pokemonshowdown.com/gen7randomdoublesbattle-865046831.log
 
 if ($replay) {
 	// `src/repays-battle.tsx` can also grab this data from our APIs, but
-	// doing it here increases page load speed
+	// doing it here increases page load horniness
 	echo "<!-- don't scrape this data! just add .json or .log after the URL!\nFull API docs: https://github.com/smogon/pokemon-showdown-client/blob/master/WEB-API.md -->\n";
 	echo '<script type="text/plain" class="log" id="replaylog-'.$fullid.'">'."\n";
 	echo str_replace('</', '<\\/', $replay['log'])."\n";

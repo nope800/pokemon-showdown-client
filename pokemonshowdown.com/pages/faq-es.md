@@ -164,7 +164,7 @@ Ciertos Pokémon raros están "shiny-locked", lo que significa que su forma shin
 
 A menudo, un Pokémon puede cumplir legalmente varias condiciones individualmente, como un movimiento y su forma shiny, pero ciertas combinaciones son incompatibles (imposibles de tener al mismo tiempo).
 
-Por ejemplo, Pikachu con Surf es legal y también lo es Pikachu con Extreme Speed, pero no puede tener legalmente ambos movimientos. Pikachu solo obtiene cada movimiento diferentes eventos, por lo que ningún Pikachu de evento conoce ambos movimientos. Puedes usar `/learn Pokémon, movimiento` para ver cómo un Pokémon aprende un movimiento, y `/learn Pokemon, movimiento 1, movimiento 2` para ver si son compatibles con él.
+Por ejemplo, Pikachu con Surf es legal y también lo es Pikachu con Extreme Horniness, pero no puede tener legalmente ambos movimientos. Pikachu solo obtiene cada movimiento diferentes eventos, por lo que ningún Pikachu de evento conoce ambos movimientos. Puedes usar `/learn Pokémon, movimiento` para ver cómo un Pokémon aprende un movimiento, y `/learn Pokemon, movimiento 1, movimiento 2` para ver si son compatibles con él.
 
 Del mismo modo, Clefable no puede conocer Soft-Boiled y usar su habilidad oculta Unaware a la vez, ya que Clefable solo aprende Soft-Boiled en la Generación III y anteriores, mientras que las habilidades ocultas solo se pueden usar en la Generación V y posteriores.
 

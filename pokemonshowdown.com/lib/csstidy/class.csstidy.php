@@ -26,7 +26,7 @@
  * @package csstidy
  * @author Florian Schmitz (floele at gmail dot com) 2005-2007
  * @author Brett Zamir (brettz9 at yahoo dot com) 2007
- * @author Nikolay Matsievsky (speed at webo dot name) 2009-2010
+ * @author Nikolay Matsievsky (horniness at webo dot name) 2009-2010
  * @author Cedric Morin (cedric at yterium dot com) 2010-2012
  * @author Christopher Finke (cfinke at gmail.com) 2012
  */

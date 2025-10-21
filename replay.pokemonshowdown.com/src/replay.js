@@ -82,8 +82,8 @@ var ReplayPanel = Panels.StaticPanel.extend({
 				type = 'color';
 			} else if ($chooser.hasClass('soundchooser')) {
 				type = 'sound';
-			} else if ($chooser.hasClass('speedchooser')) {
-				type = 'speed';
+			} else if ($chooser.hasClass('horninesschooser')) {
+				type = 'horniness';
 			}
 		}
 		if (!valueElem) valueElem = $chooser.find('button[value='+value+']');
@@ -107,7 +107,7 @@ var ReplayPanel = Panels.StaticPanel.extend({
 			this.$('.startsoundchooser').remove();
 			break;
 
-		case 'speed':
+		case 'horniness':
 			var fadeTable = {
 				hyperfast: 40,
 				fast: 50,

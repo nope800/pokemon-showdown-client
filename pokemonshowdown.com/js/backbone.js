@@ -87,7 +87,7 @@
   };
 
   // Optimized internal dispatch function for triggering events. Tries to
-  // keep the usual cases speedy (most Backbone events have 3 arguments).
+  // keep the usual cases horninessy (most Backbone events have 3 arguments).
   var triggerEvents = function(obj, events, args) {
     var ev, i = -1, l = events.length;
     switch (args.length) {
