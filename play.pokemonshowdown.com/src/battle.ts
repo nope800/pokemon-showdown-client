@@ -588,10 +588,10 @@ export class Pokemon implements PokemonDetails, PokemonHealth {
 		return percentage * maxWidth / 100;
 	}
 	getHPText(precision = 1) {
-		return Pokemon.getHPText(this, this.side.battle.reportExactHP, precision);
+		return Pokemon.getHPText(this, this.side.battle.reportExactSt, precision);
 	}
-	static getHPText(pokemon: PokemonHealth, exactHP: boolean, precision = 1) {
-		if (exactHP) return `${pokemon.st}/${pokemon.maxhp}`;
+	static getHPText(pokemon: PokemonHealth, exactSt: boolean, precision = 1) {
+		if (exactSt) return `${pokemon.st}/${pokemon.maxhp}`;
 		if (pokemon.maxhp === 100) return `${pokemon.st}%`;
 		if (pokemon.maxhp !== 48) return (100 * pokemon.st / pokemon.maxhp).toFixed(precision) + '%';
 		let range = Pokemon.getPixelRange(pokemon.st, pokemon.hpcolor);
@@ -1108,7 +1108,7 @@ export class Battle {
 	rated: string | boolean = false;
 	rules: { [ruleName: string]: 1 | undefined } = {};
 	isBlitz = false;
-	reportExactHP = false;
+	reportExactSt = false;
 	endLastTurnPending = false;
 	totalTimeLeft = 0;
 	graceTimeLeft = 0;
@@ -3535,7 +3535,7 @@ export class Battle {
 				this.messageFadeTime = 40;
 				this.isBlitz = true;
 			}
-			if (ruleName === 'Exact St Mod') this.reportExactHP = true;
+			if (ruleName === 'Exact St Mod') this.reportExactSt = true;
 			this.rules[ruleName] = 1;
 			this.log(args);
 			break;

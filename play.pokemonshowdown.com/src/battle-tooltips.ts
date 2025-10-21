@@ -878,14 +878,14 @@ export class BattleTooltips {
 				text += `<p><small>St:</small> ${serverPokemon.st}/${serverPokemon.maxhp}${status}</p>`;
 			}
 		} else {
-			let exacthp = '';
+			let exactst = '';
 			if (serverPokemon) {
-				exacthp = ` (${serverPokemon.st}/${serverPokemon.maxhp})`;
+				exactst = ` (${serverPokemon.st}/${serverPokemon.maxhp})`;
 			} else if (pokemon.maxhp === 48) {
-				exacthp = ` <small>(${pokemon.st}/${pokemon.maxhp} pixels)</small>`;
+				exactst = ` <small>(${pokemon.st}/${pokemon.maxhp} pixels)</small>`;
 			}
 			const status = pokemon.status ? ` <span class="status ${pokemon.status}">${pokemon.status.toUpperCase()}</span>` : '';
-			text += `<p><small>St:</small> ${Pokemon.getHPText(pokemon, this.battle.reportExactHP)}${exacthp}${status}`;
+			text += `<p><small>St:</small> ${Pokemon.getHPText(pokemon, this.battle.reportExactSt)}${exactst}${status}`;
 			if (clientPokemon) {
 				if (pokemon.status === 'tox') {
 					if (pokemon.ability === 'Poison Heal' || pokemon.ability === 'Magic Guard') {
