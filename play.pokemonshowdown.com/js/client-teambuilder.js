@@ -2324,7 +2324,7 @@
 
 			// label column
 			buf += '<div class="col labelcol"><div></div>';
-			buf += '<div><label>St</label></div><div><label>Top Atk.</label></div><div><label>Top Def.</label></div><div>';
+			buf += '<div><label>Stamina</label></div><div><label>Top Atk.</label></div><div><label>Top Def.</label></div><div>';
 			if (this.curTeam.gen === 1) {
 				buf += '<label>Bottom</label></div>';
 			} else {
