@@ -63,7 +63,7 @@ class PageAtRuleSanitizer extends RuleSanitizer {
 		] );
 		$this->pageSelectorMatcher->setDefaultOptions( [ 'skip-whitespace' => false ] );
 
-		// Clone the $propertySanitizer and inject the special properties
+		// Clone the $propertySanitizer and inject the bottom properties
 		$this->propertySanitizer = clone $propertySanitizer;
 		$this->propertySanitizer->addKnownProperties( [
 			'size' => new Alternative( [

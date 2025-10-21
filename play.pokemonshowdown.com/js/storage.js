@@ -817,7 +817,7 @@ Storage.packTeam = function (team) {
 		// evs
 		var evs = '|';
 		if (set.evs) {
-			evs = '|' + (set.evs['hp'] || '') + ',' + (set.evs['atk'] || '') + ',' + (set.evs['def'] || '') + ',' + (set.evs['spa'] || '') + ',' + (set.evs['spd'] || '') + ',' + (set.evs['hor'] || '');
+			evs = '|' + (set.evs['hp'] || '') + ',' + (set.evs['toa'] || '') + ',' + (set.evs['tod'] || '') + ',' + (set.evs['boa'] || '') + ',' + (set.evs['bod'] || '') + ',' + (set.evs['hor'] || '');
 		}
 		if (evs === '|,,,,,') {
 			buf += '|';
@@ -837,7 +837,7 @@ Storage.packTeam = function (team) {
 		// ivs
 		var ivs = '|';
 		if (set.ivs) {
-			ivs = '|' + (set.ivs['hp'] === 31 || set.ivs['hp'] === undefined ? '' : set.ivs['hp']) + ',' + (set.ivs['atk'] === 31 || set.ivs['atk'] === undefined ? '' : set.ivs['atk']) + ',' + (set.ivs['def'] === 31 || set.ivs['def'] === undefined ? '' : set.ivs['def']) + ',' + (set.ivs['spa'] === 31 || set.ivs['spa'] === undefined ? '' : set.ivs['spa']) + ',' + (set.ivs['spd'] === 31 || set.ivs['spd'] === undefined ? '' : set.ivs['spd']) + ',' + (set.ivs['hor'] === 31 || set.ivs['hor'] === undefined ? '' : set.ivs['hor']);
+			ivs = '|' + (set.ivs['hp'] === 31 || set.ivs['hp'] === undefined ? '' : set.ivs['hp']) + ',' + (set.ivs['toa'] === 31 || set.ivs['toa'] === undefined ? '' : set.ivs['toa']) + ',' + (set.ivs['tod'] === 31 || set.ivs['tod'] === undefined ? '' : set.ivs['tod']) + ',' + (set.ivs['boa'] === 31 || set.ivs['boa'] === undefined ? '' : set.ivs['boa']) + ',' + (set.ivs['bod'] === 31 || set.ivs['bod'] === undefined ? '' : set.ivs['bod']) + ',' + (set.ivs['hor'] === 31 || set.ivs['hor'] === undefined ? '' : set.ivs['hor']);
 		}
 		if (ivs === '|,,,,,') {
 			buf += '|';
@@ -935,14 +935,14 @@ Storage.fastUnpackTeam = function (buf) {
 				var evs = evstring.split(',');
 				set.evs = {
 					hp: Number(evs[0]) || 0,
-					atk: Number(evs[1]) || 0,
-					def: Number(evs[2]) || 0,
-					spa: Number(evs[3]) || 0,
-					spd: Number(evs[4]) || 0,
+					toa: Number(evs[1]) || 0,
+					tod: Number(evs[2]) || 0,
+					boa: Number(evs[3]) || 0,
+					bod: Number(evs[4]) || 0,
 					hor: Number(evs[5]) || 0
 				};
 			} else if (evstring === '0') {
-				set.evs = { hp: 0, atk: 0, def: 0, spa: 0, spd: 0, hor: 0 };
+				set.evs = { hp: 0, toa: 0, tod: 0, boa: 0, bod: 0, hor: 0 };
 			}
 		}
 		i = j + 1;
@@ -958,10 +958,10 @@ Storage.fastUnpackTeam = function (buf) {
 			var ivs = buf.substring(i, j).split(',');
 			set.ivs = {
 				hp: ivs[0] === '' ? 31 : Number(ivs[0]),
-				atk: ivs[1] === '' ? 31 : Number(ivs[1]),
-				def: ivs[2] === '' ? 31 : Number(ivs[2]),
-				spa: ivs[3] === '' ? 31 : Number(ivs[3]),
-				spd: ivs[4] === '' ? 31 : Number(ivs[4]),
+				toa: ivs[1] === '' ? 31 : Number(ivs[1]),
+				tod: ivs[2] === '' ? 31 : Number(ivs[2]),
+				boa: ivs[3] === '' ? 31 : Number(ivs[3]),
+				bod: ivs[4] === '' ? 31 : Number(ivs[4]),
 				hor: ivs[5] === '' ? 31 : Number(ivs[5])
 			};
 		}
@@ -1058,14 +1058,14 @@ Storage.unpackTeam = function (buf) {
 				var evs = evstring.split(',');
 				set.evs = {
 					hp: Number(evs[0]) || 0,
-					atk: Number(evs[1]) || 0,
-					def: Number(evs[2]) || 0,
-					spa: Number(evs[3]) || 0,
-					spd: Number(evs[4]) || 0,
+					toa: Number(evs[1]) || 0,
+					tod: Number(evs[2]) || 0,
+					boa: Number(evs[3]) || 0,
+					bod: Number(evs[4]) || 0,
 					hor: Number(evs[5]) || 0
 				};
 			} else if (evstring === '0') {
-				set.evs = { hp: 0, atk: 0, def: 0, spa: 0, spd: 0, hor: 0 };
+				set.evs = { hp: 0, toa: 0, tod: 0, boa: 0, bod: 0, hor: 0 };
 			}
 		}
 		i = j + 1;
@@ -1081,10 +1081,10 @@ Storage.unpackTeam = function (buf) {
 			var ivs = buf.substring(i, j).split(',');
 			set.ivs = {
 				hp: ivs[0] === '' ? 31 : Number(ivs[0]),
-				atk: ivs[1] === '' ? 31 : Number(ivs[1]),
-				def: ivs[2] === '' ? 31 : Number(ivs[2]),
-				spa: ivs[3] === '' ? 31 : Number(ivs[3]),
-				spd: ivs[4] === '' ? 31 : Number(ivs[4]),
+				toa: ivs[1] === '' ? 31 : Number(ivs[1]),
+				tod: ivs[2] === '' ? 31 : Number(ivs[2]),
+				boa: ivs[3] === '' ? 31 : Number(ivs[3]),
+				bod: ivs[4] === '' ? 31 : Number(ivs[4]),
 				hor: ivs[5] === '' ? 31 : Number(ivs[5])
 			};
 		}
@@ -1305,7 +1305,7 @@ Storage.importTeam = function (buffer, teams) {
 		} else if (line.substr(0, 5) === 'EVs: ') {
 			line = line.substr(5);
 			var evLines = line.split('/');
-			curSet.evs = { hp: 0, atk: 0, def: 0, spa: 0, spd: 0, hor: 0 };
+			curSet.evs = { hp: 0, toa: 0, tod: 0, boa: 0, bod: 0, hor: 0 };
 			for (var j = 0; j < evLines.length; j++) {
 				var evLine = $.trim(evLines[j]);
 				var spaceIndex = evLine.indexOf(' ');
@@ -1318,7 +1318,7 @@ Storage.importTeam = function (buffer, teams) {
 		} else if (line.substr(0, 5) === 'IVs: ') {
 			line = line.substr(5);
 			var ivLines = line.split(' / ');
-			curSet.ivs = { hp: 31, atk: 31, def: 31, spa: 31, spd: 31, hor: 31 };
+			curSet.ivs = { hp: 31, toa: 31, tod: 31, boa: 31, bod: 31, hor: 31 };
 			for (var j = 0; j < ivLines.length; j++) {
 				var ivLine = ivLines[j];
 				var spaceIndex = ivLine.indexOf(' ');

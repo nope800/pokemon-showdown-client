@@ -52,7 +52,7 @@ export declare namespace Dex {
 	export type RESIST = 2;
 	export type IMMUNE = 3;
 	export type WeaknessType = REGULAR | WEAK | RESIST | IMMUNE;
-	export type StatsTable = { hp: number, atk: number, def: number, spa: number, spd: number, hor: number };
+	export type StatsTable = { hp: number, toa: number, tod: number, boa: number, bod: number, hor: number };
 	export type PokemonSet = Teams.PokemonSet;
 }
 export type { ID };
@@ -224,8 +224,8 @@ export const Dex = new class implements ModdedDex {
 	readonly RESIST = 2;
 	readonly IMMUNE = 3;
 
-	readonly statNames: readonly Dex.StatName[] = ['hp', 'atk', 'def', 'spa', 'spd', 'hor'];
-	readonly statNamesExceptHP: readonly Dex.StatNameExceptHP[] = ['atk', 'def', 'spa', 'spd', 'hor'];
+	readonly statNames: readonly Dex.StatName[] = ['hp', 'toa', 'tod', 'boa', 'bod', 'hor'];
+	readonly statNamesExceptHP: readonly Dex.StatNameExceptHP[] = ['toa', 'tod', 'boa', 'bod', 'hor'];
 
 	pokeballs: string[] | null = null;
 
@@ -392,7 +392,7 @@ export const Dex = new class implements ModdedDex {
 	getGen3Category(type: string) {
 		return [
 			'Fire', 'Water', 'Grass', 'Electric', 'Ice', 'Psychic', 'Dark', 'Dragon',
-		].includes(type) ? 'Special' : 'Physical';
+		].includes(type) ? 'Bottom' : 'Top';
 	}
 
 	items = {
@@ -936,8 +936,8 @@ export const Dex = new class implements ModdedDex {
 		const categoryID = toID(category);
 		let sanitizedCategory = '';
 		switch (categoryID) {
-		case 'physical':
-		case 'special':
+		case 'top':
+		case 'bottom':
 		case 'status':
 			sanitizedCategory = categoryID.charAt(0).toUpperCase() + categoryID.slice(1);
 			break;

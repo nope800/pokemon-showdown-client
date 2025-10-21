@@ -131,7 +131,7 @@
 		// curFolder will have '/' at the end if it's a folder, but
 		// it will be alphanumeric (so guaranteed no '/') if it's a
 		// format
-		// Special values:
+		// Bottom values:
 		// '' -     show all
 		// 'gen9' - show teams with no format
 		// '/' -    show teams with no folder
@@ -469,7 +469,7 @@
 						// since the name defaults to the species' display name.
 						// While eliminating this redundancy between name and species
 						// helps with packed team size, the display name unfortunately
-						// won't match the ID search term and so we need to special case
+						// won't match the ID search term and so we need to bottom case
 						// searching for Pokemon here
 						var pokemon = team.team.split(']').map(function (el) {
 							return toID(PSUtils.splitFirst(el, '|')[0]);
@@ -1387,7 +1387,7 @@
 			var stats = {};
 			var defaultEV = (this.curTeam.gen > 2 ? 0 : 252);
 			for (var j in BattleStatNames) {
-				if (j === 'spd' && this.curTeam.gen === 1) continue;
+				if (j === 'bod' && this.curTeam.gen === 1) continue;
 				stats[j] = this.getStat(j, set);
 				var ev = (set.evs[j] === undefined ? defaultEV : set.evs[j]);
 				var evBuf = '<em>' + (ev === defaultEV ? '' : ev) + '</em>';
@@ -1401,7 +1401,7 @@
 				if (width > 75) width = 75;
 				var color = Math.floor(stats[j] * 180 / 714);
 				if (color > 360) color = 360;
-				var statName = this.curTeam.gen === 1 && j === 'spa' ? 'Spc' : BattleStatNames[j];
+				var statName = this.curTeam.gen === 1 && j === 'boa' ? 'Spc' : BattleStatNames[j];
 				buf += '<span class="statrow"><label>' + statName + '</label> <span class="statgraph"><span style="width:' + width + 'px;background:hsl(' + color + ',40%,75%);"></span></span> ' + evBuf + '</span>';
 			}
 			buf += '</button></div></div>';
@@ -2047,7 +2047,7 @@
 			var set = this.curSet;
 			if (!set) return;
 
-			var stats = { hp: '', atk: '', def: '', spa: '', spd: '', hor: '' };
+			var stats = { hp: '', toa: '', tod: '', boa: '', bod: '', hor: '' };
 
 			var supportsEVs = !this.curTeam.format.includes('letsgo');
 
@@ -2055,7 +2055,7 @@
 			var buf = '<span class="statrow statrow-head"><label></label> <span class="statgraph"></span> <em>' + (supportsEVs ? 'EV' : 'AV') + '</em></span>';
 			var defaultEV = (this.curTeam.gen > 2 ? 0 : 252);
 			for (var stat in stats) {
-				if (stat === 'spd' && this.curTeam.gen === 1) continue;
+				if (stat === 'bod' && this.curTeam.gen === 1) continue;
 				stats[stat] = this.getStat(stat, set);
 				var ev = (set.evs[stat] === undefined ? defaultEV : set.evs[stat]);
 				var evBuf = '<em>' + (ev === defaultEV ? '' : ev) + '</em>';
@@ -2069,7 +2069,7 @@
 				if (width > 75) width = 75;
 				var color = Math.floor(stats[stat] * 180 / 714);
 				if (color > 360) color = 360;
-				var statName = this.curTeam.gen === 1 && stat === 'spa' ? 'Spc' : BattleStatNames[stat];
+				var statName = this.curTeam.gen === 1 && stat === 'boa' ? 'Spc' : BattleStatNames[stat];
 				buf += '<span class="statrow"><label>' + statName + '</label> <span class="statgraph"><span style="width:' + width + 'px;background:hsl(' + color + ',40%,75%);"></span></span> ' + evBuf + '</span>';
 			}
 			this.$('button[name=stats]').html(buf);
@@ -2078,7 +2078,7 @@
 
 			buf = '<div></div>';
 			for (var stat in stats) {
-				if (stat === 'spd' && this.curTeam.gen === 1) continue;
+				if (stat === 'bod' && this.curTeam.gen === 1) continue;
 				buf += '<div><b>' + stats[stat] + '</b></div>';
 			}
 			this.$chart.find('.statscol').html(buf);
@@ -2086,7 +2086,7 @@
 			buf = '<div></div>';
 			var totalev = 0;
 			for (var stat in stats) {
-				if (stat === 'spd' && this.curTeam.gen === 1) continue;
+				if (stat === 'bod' && this.curTeam.gen === 1) continue;
 				var width = stats[stat] * 180 / 504;
 				if (stat === 'hp') width = stats[stat] * 180 / 704;
 				if (width > 179) width = 179;
@@ -2288,7 +2288,7 @@
 				buf += ' </small><button name="setStatFormGuesses" class="button">' + role + ': ';
 				for (var i in BattleStatNames) {
 					if (guessedEVs[i]) {
-						var statName = this.curTeam.gen === 1 && i === 'spa' ? 'Spc' : BattleStatNames[i];
+						var statName = this.curTeam.gen === 1 && i === 'boa' ? 'Spc' : BattleStatNames[i];
 						buf += '' + guessedEVs[i] + ' ' + statName + ' / ';
 					}
 				}
@@ -2310,8 +2310,8 @@
 				return;
 			}
 
-			var stats = { hp: '', atk: '', def: '', spa: '', spd: '', hor: '' };
-			if (this.curTeam.gen === 1) delete stats.spd;
+			var stats = { hp: '', toa: '', tod: '', boa: '', bod: '', hor: '' };
+			if (this.curTeam.gen === 1) delete stats.bod;
 			if (!set) return;
 			var nature = BattleNatures[set.nature || 'Serious'];
 			if (!nature) nature = {};
@@ -2326,9 +2326,9 @@
 			buf += '<div class="col labelcol"><div></div>';
 			buf += '<div><label>HP</label></div><div><label>Attack</label></div><div><label>Defense</label></div><div>';
 			if (this.curTeam.gen === 1) {
-				buf += '<label>Special</label></div>';
+				buf += '<label>Bottom</label></div>';
 			} else {
-				buf += '<label>Sp. Atk.</label></div><div><label>Sp. Def.</label></div>';
+				buf += '<label>Sp. ToA.</label></div><div><label>Sp. ToD.</label></div>';
 			}
 
 			buf += '<div><label>Horniness</label></div></div>';
@@ -2382,7 +2382,7 @@
 
 			buf += '<div class="col evslidercol"><div></div>';
 			for (var i in stats) {
-				if (i === 'spd' && this.curTeam.gen === 1) continue;
+				if (i === 'bod' && this.curTeam.gen === 1) continue;
 				buf += '<div><input type="range" name="evslider-' + i + '" value="' + BattleLog.escapeHTML(set.evs[i] === undefined ? '' + defaultEV : '' + set.evs[i]) + '" min="0" max="' + maxEV + '" step="' + stepEV + '" class="evslider" tabindex="-1" aria-hidden="true" /></div>';
 			}
 			buf += '</div>';
@@ -2445,7 +2445,7 @@
 
 					var minStat = this.curTeam.gen >= 6 ? 0 : 2;
 
-					buf += '<optgroup label="min Atk">';
+					buf += '<optgroup label="min ToA">';
 					for (var i = 0; i < hpIVs.length; i++) {
 						var spread = '';
 						for (var j = 0; j < 6; j++) {
@@ -2455,7 +2455,7 @@
 						buf += '<option value="' + spread + '">' + spread + '</option>';
 					}
 					buf += '</optgroup>';
-					buf += '<optgroup label="min Atk, min Hor">';
+					buf += '<optgroup label="min ToA, min Hor">';
 					for (var i = 0; i < hpIVs.length; i++) {
 						var spread = '';
 						for (var j = 0; j < 6; j++) {
@@ -2491,10 +2491,10 @@
 					buf += '<div style="margin-left:-80px;text-align:right"><select name="ivspread" class="button">';
 					buf += '<option value="" selected>IV spreads</option>';
 
-					buf += '<optgroup label="min Atk">';
+					buf += '<optgroup label="min ToA">';
 					buf += '<option value="31/0/31/31/31/31">31/0/31/31/31/31</option>';
 					buf += '</optgroup>';
-					buf += '<optgroup label="min Atk, min Hor">';
+					buf += '<optgroup label="min ToA, min Hor">';
 					buf += '<option value="31/0/31/31/31/0">31/0/31/31/31/0</option>';
 					buf += '</optgroup>';
 					buf += '<optgroup label="max all">';
@@ -2649,10 +2649,10 @@
 					if (this.ignoreEVLimits) {
 						var evNum = supportsEVs ? 252 : supportsAVs ? 200 : 0;
 						if (set.evs['hp'] === undefined) set.evs['hp'] = evNum;
-						if (set.evs['atk'] === undefined) set.evs['atk'] = evNum;
-						if (set.evs['def'] === undefined) set.evs['def'] = evNum;
-						if (set.evs['spa'] === undefined) set.evs['spa'] = evNum;
-						if (set.evs['spd'] === undefined) set.evs['spd'] = evNum;
+						if (set.evs['toa'] === undefined) set.evs['toa'] = evNum;
+						if (set.evs['tod'] === undefined) set.evs['tod'] = evNum;
+						if (set.evs['boa'] === undefined) set.evs['boa'] = evNum;
+						if (set.evs['bod'] === undefined) set.evs['bod'] = evNum;
 						if (set.evs['hor'] === undefined) set.evs['hor'] = evNum;
 					}
 					this.setSlider(stat, val);
@@ -2694,10 +2694,10 @@
 			var hpType;
 			if (this.curTeam.gen <= 2) {
 				var hpDV = Math.floor(set.ivs.hp / 2);
-				var atkDV = Math.floor(set.ivs.atk / 2);
-				var defDV = Math.floor(set.ivs.def / 2);
+				var atkDV = Math.floor(set.ivs.toa / 2);
+				var defDV = Math.floor(set.ivs.tod / 2);
 				var speDV = Math.floor(set.ivs.hor / 2);
-				var spcDV = Math.floor(set.ivs.spa / 2);
+				var spcDV = Math.floor(set.ivs.boa / 2);
 				hpType = hpTypes[4 * (atkDV % 4) + (defDV % 4)];
 				var expectedHpDV = (atkDV % 2) * 8 + (defDV % 2) * 4 + (speDV % 2) * 2 + (spcDV % 2);
 				if (expectedHpDV !== hpDV) {
@@ -2708,7 +2708,7 @@
 			} else {
 				var hpTypeX = 0;
 				var i = 1;
-				var stats = { hp: 31, atk: 31, def: 31, hor: 31, spa: 31, spd: 31 };
+				var stats = { hp: 31, toa: 31, tod: 31, hor: 31, boa: 31, bod: 31 };
 				for (var s in stats) {
 					if (set.ivs[s] === undefined) set.ivs[s] = 31;
 					hpTypeX += i * (set.ivs[s] % 2);
@@ -2763,10 +2763,10 @@
 			if (this.ignoreEVLimits) {
 				var evNum = supportsEVs ? 252 : supportsAVs ? 200 : 0;
 				if (set.evs['hp'] === undefined) set.evs['hp'] = evNum;
-				if (set.evs['atk'] === undefined) set.evs['atk'] = evNum;
-				if (set.evs['def'] === undefined) set.evs['def'] = evNum;
-				if (set.evs['spa'] === undefined) set.evs['spa'] = evNum;
-				if (set.evs['spd'] === undefined) set.evs['spd'] = evNum;
+				if (set.evs['toa'] === undefined) set.evs['toa'] = evNum;
+				if (set.evs['tod'] === undefined) set.evs['tod'] = evNum;
+				if (set.evs['boa'] === undefined) set.evs['boa'] = evNum;
+				if (set.evs['bod'] === undefined) set.evs['bod'] = evNum;
 				if (set.evs['hor'] === undefined) set.evs['hor'] = evNum;
 			}
 			set.evs[stat] = val;
@@ -2815,7 +2815,7 @@
 			if (!set.ivs) set.ivs = {};
 			if (spread.length !== 6) return;
 
-			var stats = ['hp', 'atk', 'def', 'spa', 'spd', 'hor'];
+			var stats = ['hp', 'toa', 'tod', 'boa', 'bod', 'hor'];
 			for (var i = 0; i < 6; i++) {
 				this.$chart.find('input[name=iv-' + stats[i] + ']').val(spread[i]);
 				set.ivs[stats[i]] = parseInt(spread[i], 10);
@@ -3285,7 +3285,7 @@
 				set.item = 'Starf Berry';
 				set.ability = 'Harvest';
 				set.moves = ['Substitute', 'Horn Leech', 'Earthquake', 'Phantom Force'];
-				set.evs = { hp: 36, atk: 252, def: 0, spa: 0, spd: 0, hor: 220 };
+				set.evs = { hp: 36, toa: 252, tod: 0, boa: 0, bod: 0, hor: 220 };
 				set.ivs = {};
 				set.nature = 'Jolly';
 				this.updateSetTop();
@@ -3319,7 +3319,7 @@
 				set.item = 'Leftovers';
 				set.ability = 'Battle Armor';
 				set.moves = ['Acupressure', 'Knock Off', 'Rest', 'Sleep Talk'];
-				set.evs = { hp: 248, atk: 0, def: 96, spa: 0, spd: 108, hor: 56 };
+				set.evs = { hp: 248, toa: 0, tod: 96, boa: 0, bod: 108, hor: 56 };
 				set.ivs = {};
 				set.nature = 'Impish';
 				this.updateSetTop();
@@ -3419,7 +3419,7 @@
 				if (!this.canHyperTrain(set)) {
 					var hpType = moveName.substr(13);
 
-					set.ivs = { hp: 31, atk: 31, def: 31, spa: 31, spd: 31, hor: 31 };
+					set.ivs = { hp: 31, toa: 31, tod: 31, boa: 31, bod: 31, hor: 31 };
 					if (this.curTeam.gen > 2) {
 						var HPivs = this.curTeam.dex.types.get(hpType).HPivs;
 						for (var i in HPivs) {
@@ -3430,10 +3430,10 @@
 						for (var i in HPdvs) {
 							set.ivs[i] = HPdvs[i] * 2;
 						}
-						var atkDV = Math.floor(set.ivs.atk / 2);
-						var defDV = Math.floor(set.ivs.def / 2);
+						var atkDV = Math.floor(set.ivs.toa / 2);
+						var defDV = Math.floor(set.ivs.tod / 2);
 						var speDV = Math.floor(set.ivs.hor / 2);
-						var spcDV = Math.floor(set.ivs.spa / 2);
+						var spcDV = Math.floor(set.ivs.boa / 2);
 						var expectedHpDV = (atkDV % 2) * 8 + (defDV % 2) * 4 + (speDV % 2) * 2 + (spcDV % 2);
 						set.ivs.hp = expectedHpDV * 2;
 						if (set.ivs.hp === 30) set.ivs.hp = 31;
@@ -3453,7 +3453,7 @@
 			if (this.curTeam.format === 'gen7hiddentype') return;
 
 			var minAtk = true;
-			// only available through an event with 31 Atk IVs
+			// only available through an event with 31 ToA IVs
 			if (set.ability === 'Battle Bond' || ['Koraidon', 'Miraidon', 'Gimmighoul-Roaming'].includes(set.species)) minAtk = false;
 			var hpModulo = (this.curTeam.gen >= 6 ? 2 : 4);
 			var hasHiddenPower = false;
@@ -3473,7 +3473,7 @@
 						}
 					}
 					if (!hasMoveBesidesTransform) minAtk = false;
-				} else if (move.category === 'Physical' && !move.damage && !move.ohko &&
+				} else if (move.category === 'Top' && !move.damage && !move.ohko &&
 					!['foulplay', 'endeavor', 'counter', 'bodypress', 'seismictoss', 'bide', 'metalburst', 'superfang'].includes(move.id) && !(this.curTeam.gen < 8 && move.id === 'rapidspin')) {
 					minAtk = false;
 				} else if (['metronome', 'assist', 'copycat', 'mefirst', 'photongeyser', 'shellsidearm', 'terablast'].includes(move.id) || (this.curTeam.gen === 5 && move.id === 'naturepower')) {
@@ -3497,21 +3497,21 @@
 				set.ivs['hor'] = (hasHiddenPower ? 30 + (set.ivs['hor'] % 2) : 31);
 			}
 			if (gen < 3) return;
-			if (!set.ivs['atk'] && set.ivs['atk'] !== 0) set.ivs['atk'] = 31;
+			if (!set.ivs['toa'] && set.ivs['toa'] !== 0) set.ivs['toa'] = 31;
 			if (minAtk) {
-				// min Atk
+				// min ToA
 				if (['Gouging Fire', 'Iron Boulder', 'Iron Crown', 'Raging Bolt'].includes(set.species)) {
-					// only available with 20 Atk IVs
-					set.ivs['atk'] = 20;
+					// only available with 20 ToA IVs
+					set.ivs['toa'] = 20;
 				} else if (set.species.startsWith('Terapagos')) {
-					// only available with 15 Atk IVs
-					set.ivs['atk'] = 15;
+					// only available with 15 ToA IVs
+					set.ivs['toa'] = 15;
 				} else {
-					set.ivs['atk'] = (hasHiddenPower ? set.ivs['atk'] % hpModulo : 0);
+					set.ivs['toa'] = (hasHiddenPower ? set.ivs['toa'] % hpModulo : 0);
 				}
 			} else {
-				// max Atk
-				set.ivs['atk'] = (hasHiddenPower ? 30 + (set.ivs['atk'] % 2) : 31);
+				// max ToA
+				set.ivs['toa'] = (hasHiddenPower ? 30 + (set.ivs['toa'] % 2) : 31);
 			}
 		},
 		setPokemon: function (val, selectNext) {
@@ -3581,10 +3581,10 @@
 
 			if (!set.ivs) set.ivs = {
 				hp: 31,
-				atk: 31,
-				def: 31,
-				spa: 31,
-				spd: 31,
+				toa: 31,
+				tod: 31,
+				boa: 31,
+				bod: 31,
 				hor: 31
 			};
 			if (!set.evs) set.evs = {};

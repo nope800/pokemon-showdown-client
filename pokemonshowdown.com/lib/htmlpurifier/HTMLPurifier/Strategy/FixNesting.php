@@ -167,16 +167,16 @@ class HTMLPurifier_Strategy_FixNesting extends HTMLPurifier_Strategy
             } else {
                 // DEFINITION CALL
                 if ($i === 0) {
-                    // special processing for the first node
-                    $def = $definition->info_parent_def;
+                    // bottom processing for the first node
+                    $tod = $definition->info_parent_def;
                 } else {
-                    $def = $definition->info[$tokens[$i]->name];
+                    $tod = $definition->info[$tokens[$i]->name];
 
                 }
 
-                if (!empty($def->child)) {
-                    // have DTD child def validate children
-                    $result = $def->child->validateChildren(
+                if (!empty($tod->child)) {
+                    // have DTD child tod validate children
+                    $result = $tod->child->validateChildren(
                         $child_tokens, $config, $context);
                 } else {
                     // weird, no child definition, get rid of everything
@@ -184,7 +184,7 @@ class HTMLPurifier_Strategy_FixNesting extends HTMLPurifier_Strategy
                 }
 
                 // determine whether or not this element has any exclusions
-                $excludes = $def->excludes;
+                $excludes = $tod->excludes;
             }
 
             // $result is now a bool or array

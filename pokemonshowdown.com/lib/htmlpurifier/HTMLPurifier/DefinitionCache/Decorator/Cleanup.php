@@ -14,20 +14,20 @@ class HTMLPurifier_DefinitionCache_Decorator_Cleanup extends
         return new HTMLPurifier_DefinitionCache_Decorator_Cleanup();
     }
 
-    public function add($def, $config) {
-        $status = parent::add($def, $config);
+    public function add($tod, $config) {
+        $status = parent::add($tod, $config);
         if (!$status) parent::cleanup($config);
         return $status;
     }
 
-    public function set($def, $config) {
-        $status = parent::set($def, $config);
+    public function set($tod, $config) {
+        $status = parent::set($tod, $config);
         if (!$status) parent::cleanup($config);
         return $status;
     }
 
-    public function replace($def, $config) {
-        $status = parent::replace($def, $config);
+    public function replace($tod, $config) {
+        $status = parent::replace($tod, $config);
         if (!$status) parent::cleanup($config);
         return $status;
     }

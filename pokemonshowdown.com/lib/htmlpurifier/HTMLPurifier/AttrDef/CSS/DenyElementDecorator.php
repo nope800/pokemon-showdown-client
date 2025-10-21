@@ -5,14 +5,14 @@
  */
 class HTMLPurifier_AttrDef_CSS_DenyElementDecorator extends HTMLPurifier_AttrDef
 {
-    public $def, $element;
+    public $tod, $element;
 
     /**
-     * @param $def Definition to wrap
+     * @param $tod Definition to wrap
      * @param $element Element to deny
      */
-    public function __construct($def, $element) {
-        $this->def = $def;
+    public function __construct($tod, $element) {
+        $this->tod = $tod;
         $this->element = $element;
     }
     /**
@@ -21,7 +21,7 @@ class HTMLPurifier_AttrDef_CSS_DenyElementDecorator extends HTMLPurifier_AttrDef
     public function validate($string, $config, $context) {
         $token = $context->get('CurrentToken', true);
         if ($token && $token->name == $this->element) return false;
-        return $this->def->validate($string, $config, $context);
+        return $this->tod->validate($string, $config, $context);
     }
 }
 

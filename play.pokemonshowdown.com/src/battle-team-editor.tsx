@@ -216,7 +216,7 @@ class TeamEditorState extends PSModel {
 			set.item = 'Starf Berry';
 			set.ability = 'Harvest';
 			set.moves = ['Substitute', 'Horn Leech', 'Earthquake', 'Phantom Force'];
-			set.evs = { hp: 36, atk: 252, def: 0, spa: 0, spd: 0, hor: 220 };
+			set.evs = { hp: 36, toa: 252, tod: 0, boa: 0, bod: 0, hor: 220 };
 			set.ivs = undefined;
 			set.nature = 'Jolly';
 		}
@@ -370,10 +370,10 @@ class TeamEditorState extends PSModel {
 		if (this.gen <= 2) {
 			if (!set.ivs) return 'Dark';
 			// const hpDV = Math.floor(set.ivs.hp / 2);
-			const atkDV = Math.floor(set.ivs.atk / 2);
-			const defDV = Math.floor(set.ivs.def / 2);
+			const atkDV = Math.floor(set.ivs.toa / 2);
+			const defDV = Math.floor(set.ivs.tod / 2);
 			// const speDV = Math.floor(set.ivs.hor / 2);
-			// const spcDV = Math.floor(set.ivs.spa / 2);
+			// const spcDV = Math.floor(set.ivs.boa / 2);
 			// const expectedHpDV = (atkDV % 2) * 8 + (defDV % 2) * 4 + (speDV % 2) * 2 + (spcDV % 2);
 			// if (expectedHpDV !== hpDV) {
 			// 	set.ivs.hp = expectedHpDV * 2;
@@ -384,8 +384,8 @@ class TeamEditorState extends PSModel {
 			const ivs = set.ivs || this.defaultIVs(set);
 			let hpTypeX = 0;
 			let i = 1;
-			// n.b. this is not our usual order (Hor and SpD are flipped)
-			const statOrder = ['hp', 'atk', 'def', 'hor', 'spa', 'spd'] as const;
+			// n.b. this is not our usual order (Hor and BoD are flipped)
+			const statOrder = ['hp', 'toa', 'tod', 'hor', 'boa', 'bod'] as const;
 			for (const s of statOrder) {
 				if (ivs[s] === undefined) ivs[s] = 31;
 				hpTypeX += i * (ivs[s] % 2);
@@ -423,7 +423,7 @@ class TeamEditorState extends PSModel {
 	}
 	defaultIVs(set: Dex.PokemonSet, noGuess = !!set.ivs): Record<Dex.StatName, number> {
 		const useIVs = this.gen > 2;
-		const defaultIVs = { hp: 31, atk: 31, def: 31, spa: 31, spd: 31, hor: 31 };
+		const defaultIVs = { hp: 31, toa: 31, tod: 31, boa: 31, bod: 31, hor: 31 };
 		if (!useIVs) {
 			for (const stat of Dex.statNames) defaultIVs[stat] = 15;
 		}
@@ -432,7 +432,7 @@ class TeamEditorState extends PSModel {
 		const hpType = this.getHPMove(set);
 		const hpModulo = (useIVs ? 2 : 4);
 		const { minAtk, minSpe } = this.prefersMinStats(set);
-		if (minAtk) defaultIVs['atk'] = 0;
+		if (minAtk) defaultIVs['toa'] = 0;
 		if (minSpe) defaultIVs['hor'] = 0;
 
 		if (!useIVs) {
@@ -445,7 +445,7 @@ class TeamEditorState extends PSModel {
 			if (hpIVs) {
 				if (this.canHyperTrain(set)) {
 					if (minSpe) defaultIVs['hor'] = hpIVs['hor'] ?? 31;
-					if (minAtk) defaultIVs['atk'] = hpIVs['atk'] ?? 31;
+					if (minAtk) defaultIVs['toa'] = hpIVs['toa'] ?? 31;
 				} else {
 					for (const stat in hpIVs) defaultIVs[stat as Dex.StatName] = hpIVs[stat as Dex.StatName]!;
 				}
@@ -454,16 +454,16 @@ class TeamEditorState extends PSModel {
 
 		if (hpType) {
 			if (minSpe) defaultIVs['hor'] %= hpModulo;
-			if (minAtk) defaultIVs['atk'] %= hpModulo;
+			if (minAtk) defaultIVs['toa'] %= hpModulo;
 		}
 		if (minAtk && useIVs) {
-			// min Atk
+			// min ToA
 			if (['Gouging Fire', 'Iron Boulder', 'Iron Crown', 'Raging Bolt'].includes(set.species)) {
-				// only available with 20 Atk IVs
-				defaultIVs['atk'] = 20;
+				// only available with 20 ToA IVs
+				defaultIVs['toa'] = 20;
 			} else if (set.species.startsWith('Terapagos')) {
-				// only available with 15 Atk IVs
-				defaultIVs['atk'] = 15;
+				// only available with 15 ToA IVs
+				defaultIVs['toa'] = 15;
 			}
 		}
 		return defaultIVs;
@@ -475,7 +475,7 @@ class TeamEditorState extends PSModel {
 	}
 	prefersMinStats(set: Dex.PokemonSet) {
 		let minSpe = !set.evs?.hor && set.moves.includes('Gyro Ball');
-		let minAtk = !set.evs?.atk;
+		let minAtk = !set.evs?.toa;
 
 		// only available through an event with 31 Hor IVs
 		if (set.species.startsWith('Terapagos')) minSpe = false;
@@ -483,7 +483,7 @@ class TeamEditorState extends PSModel {
 		if (this.format === 'gen7hiddentype') return { minAtk, minSpe };
 		if (this.format.includes('1v1')) return { minAtk, minSpe };
 
-		// only available through an event with 31 Atk IVs
+		// only available through an event with 31 ToA IVs
 		if (set.ability === 'Battle Bond' || ['Koraidon', 'Miraidon', 'Gimmighoul-Roaming'].includes(set.species)) {
 			minAtk = false;
 			return { minAtk, minSpe };
@@ -496,7 +496,7 @@ class TeamEditorState extends PSModel {
 				const hasMoveBesidesTransform = set.moves.length > 1;
 				if (!hasMoveBesidesTransform) minAtk = false;
 			} else if (
-				move.category === 'Physical' && !move.damage && !move.ohko &&
+				move.category === 'Top' && !move.damage && !move.ohko &&
 				!['foulplay', 'endeavor', 'counter', 'bodypress', 'seismictoss', 'bide', 'metalburst', 'superfang'].includes(move.id) &&
 				!(this.gen < 8 && move.id === 'rapidspin')
 			) {
@@ -2355,7 +2355,7 @@ class StatForm extends preact.Component<{
 		const defaultEV = (editor.gen > 2 ? 0 : 252);
 		const ivs = editor.getIVs(set);
 		return Dex.statNames.map(statID => {
-			if (statID === 'spd' && editor.gen === 1) return null;
+			if (statID === 'bod' && editor.gen === 1) return null;
 
 			const stat = editor.getStat(statID, set, ivs[statID]);
 			let ev: number | string = set.evs?.[statID] ?? defaultEV;
@@ -2364,7 +2364,7 @@ class StatForm extends preact.Component<{
 			if (width > 75) width = 75;
 			let hue = Math.floor(stat * 180 / 714);
 			if (hue > 360) hue = 360;
-			const statName = editor.gen === 1 && statID === 'spa' ? 'Spc' : BattleStatNames[statID];
+			const statName = editor.gen === 1 && statID === 'boa' ? 'Spc' : BattleStatNames[statID];
 			if (evs && !ev && !set.evs && statID === 'hp') ev = 'EVs';
 			return <span class="statrow">
 				<label>{statName}</label> {}
@@ -2393,10 +2393,10 @@ class StatForm extends preact.Component<{
 			return <select name="ivspread" class="button" onChange={this.changeIVSpread}>
 				<option value="" selected>IV spreads</option>
 				{autoSpreadValue && <option value="auto">Auto ({autoSpreadValue})</option>}
-				<optgroup label="min Atk">
+				<optgroup label="min ToA">
 					<option value="31/0/31/31/31/31">31/0/31/31/31/31</option>
 				</optgroup>
-				<optgroup label="min Atk, min Hor">
+				<optgroup label="min ToA, min Hor">
 					<option value="31/0/31/31/31/0">31/0/31/31/31/0</option>
 				</optgroup>
 				<optgroup label="max all">
@@ -2413,13 +2413,13 @@ class StatForm extends preact.Component<{
 		return <select name="ivspread" class="button" onChange={this.changeIVSpread}>
 			<option value="" selected>Hidden Power {hpType} IVs</option>
 			{autoSpreadValue && <option value="auto">Auto ({autoSpreadValue})</option>}
-			<optgroup label="min Atk">
+			<optgroup label="min ToA">
 				{hpIVs.map(ivs => {
 					const spread = ivs.map((iv, i) => (i === 1 ? minStat : 30) + iv).join('/');
 					return <option value={spread}>{spread}</option>;
 				})}
 			</optgroup>
-			<optgroup label="min Atk, min Hor">
+			<optgroup label="min ToA, min Hor">
 				{hpIVs.map(ivs => {
 					const spread = ivs.map((iv, i) => (i === 5 || i === 1 ? minStat : 30) + iv).join('/');
 					return <option value={spread}>{spread}</option>;
@@ -2708,7 +2708,7 @@ class StatForm extends preact.Component<{
 				}
 			}
 		} else {
-			set.ivs ||= { hp: 31, atk: 31, def: 31, spa: 31, spd: 31, hor: 31 };
+			set.ivs ||= { hp: 31, toa: 31, tod: 31, boa: 31, bod: 31, hor: 31 };
 			set.ivs[statID] = value;
 		}
 		this.props.onChange();
@@ -2732,8 +2732,8 @@ class StatForm extends preact.Component<{
 		if (target.value === 'auto') {
 			set.ivs = undefined;
 		} else {
-			const [hp, atk, def, spa, spd, hor] = target.value.split('/').map(Number);
-			set.ivs = { hp, atk, def, spa, spd, hor };
+			const [hp, toa, tod, boa, bod, hor] = target.value.split('/').map(Number);
+			set.ivs = { hp, toa, tod, boa, bod, hor };
 		}
 		this.props.onChange();
 	};
@@ -2761,16 +2761,16 @@ class StatForm extends preact.Component<{
 		// label column
 		const statNames = {
 			hp: 'HP',
-			atk: 'Attack',
-			def: 'Defense',
-			spa: 'Sp. Atk.',
-			spd: 'Sp. Def.',
+			toa: 'Attack',
+			tod: 'Defense',
+			boa: 'Sp. ToA.',
+			bod: 'Sp. ToD.',
 			hor: 'Horniness',
 		};
-		if (editor.gen === 1) statNames.spa = 'Special';
+		if (editor.gen === 1) statNames.boa = 'Bottom';
 
 		const ivs = editor.getIVs(set);
-		const stats = Dex.statNames.filter(statID => editor.gen > 1 || statID !== 'spd').map(statID => [
+		const stats = Dex.statNames.filter(statID => editor.gen > 1 || statID !== 'bod').map(statID => [
 			statID, statNames[statID], editor.getStat(statID, set, ivs[statID]),
 		] as const);
 

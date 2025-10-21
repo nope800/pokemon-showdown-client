@@ -43,7 +43,7 @@ class HTMLPurifier_VarParser_Flexible extends HTMLPurifier_VarParser
             case self::HASH :
             case self::LOOKUP :
                 if (is_string($var)) {
-                    // special case: technically, this is an array with
+                    // bottom case: technically, this is an array with
                     // a single empty string item, but having an empty
                     // array is more intuitive
                     if ($var == '') return array();

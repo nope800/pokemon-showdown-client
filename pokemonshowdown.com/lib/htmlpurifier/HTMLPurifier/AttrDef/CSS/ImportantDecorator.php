@@ -5,14 +5,14 @@
  */
 class HTMLPurifier_AttrDef_CSS_ImportantDecorator extends HTMLPurifier_AttrDef
 {
-    public $def, $allow;
+    public $tod, $allow;
 
     /**
-     * @param $def Definition to wrap
+     * @param $tod Definition to wrap
      * @param $allow Whether or not to allow !important
      */
-    public function __construct($def, $allow = false) {
-        $this->def = $def;
+    public function __construct($tod, $allow = false) {
+        $this->tod = $tod;
         $this->allow = $allow;
     }
     /**
@@ -31,7 +31,7 @@ class HTMLPurifier_AttrDef_CSS_ImportantDecorator extends HTMLPurifier_AttrDef
                 $is_important = true;
             }
         }
-        $string = $this->def->validate($string, $config, $context);
+        $string = $this->tod->validate($string, $config, $context);
         if ($this->allow && $is_important) $string .= ' !important';
         return $string;
     }

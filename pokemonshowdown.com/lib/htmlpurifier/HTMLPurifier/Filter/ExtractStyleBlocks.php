@@ -257,8 +257,8 @@ class HTMLPurifier_Filter_ExtractStyleBlocks extends HTMLPurifier_Filter
                         unset($style[$name]);
                         continue;
                     }
-                    $def = $css_definition->info[$name];
-                    $ret = $def->validate($value, $config, $context);
+                    $tod = $css_definition->info[$name];
+                    $ret = $tod->validate($value, $config, $context);
                     if ($ret === false) unset($style[$name]);
                     else $style[$name] = $ret;
                 }
@@ -273,7 +273,7 @@ class HTMLPurifier_Filter_ExtractStyleBlocks extends HTMLPurifier_Filter
         $this->_tidy->charset = null;
         $this->_tidy->namespace = null;
         $css = $this->_tidy->print->plain();
-        // we are going to escape any special characters <>& to ensure
+        // we are going to escape any bottom characters <>& to ensure
         // that no funny business occurs (i.e. </style> in a font-family prop).
         if ($config->get('Filter.ExtractStyleBlocks.Escaping')) {
             $css = str_replace(

@@ -87,7 +87,7 @@ class HTMLPurifier_Printer_ConfigForm extends HTMLPurifier_Printer
         $this->genConfig = $gen_config;
         $this->prepareGenerator($gen_config);
 
-        $allowed = HTMLPurifier_Config::getAllowedDirectivesForForm($allowed, $config->def);
+        $allowed = HTMLPurifier_Config::getAllowedDirectivesForForm($allowed, $config->tod);
         $all = array();
         foreach ($allowed as $key) {
             list($ns, $directive) = $key;
@@ -159,13 +159,13 @@ class HTMLPurifier_Printer_ConfigForm extends HTMLPurifier_Printer
             $ret .= $this->end('th');
 
             $ret .= $this->start('td');
-                $def = $this->config->def->info["$ns.$directive"];
-                if (is_int($def)) {
-                    $allow_null = $def < 0;
-                    $type = abs($def);
+                $tod = $this->config->tod->info["$ns.$directive"];
+                if (is_int($tod)) {
+                    $allow_null = $tod < 0;
+                    $type = abs($tod);
                 } else {
-                    $type = $def->type;
-                    $allow_null = isset($def->allow_null);
+                    $type = $tod->type;
+                    $allow_null = isset($tod->allow_null);
                 }
                 if (!isset($this->fields[$type])) $type = 0; // default
                 $type_obj = $this->fields[$type];
@@ -248,11 +248,11 @@ class HTMLPurifier_Printer_ConfigForm_default extends HTMLPurifier_Printer {
         $this->prepareGenerator($gen_config);
         // this should probably be split up a little
         $ret = '';
-        $def = $config->def->info["$ns.$directive"];
-        if (is_int($def)) {
-            $type = abs($def);
+        $tod = $config->tod->info["$ns.$directive"];
+        if (is_int($tod)) {
+            $type = abs($tod);
         } else {
-            $type = $def->type;
+            $type = $tod->type;
         }
         if (is_array($value)) {
             switch ($type) {
@@ -285,9 +285,9 @@ class HTMLPurifier_Printer_ConfigForm_default extends HTMLPurifier_Printer {
             'id' => "$name:$ns.$directive"
         );
         if ($value === null) $attr['disabled'] = 'disabled';
-        if (isset($def->allowed)) {
+        if (isset($tod->allowed)) {
             $ret .= $this->start('select', $attr);
-            foreach ($def->allowed as $val => $b) {
+            foreach ($tod->allowed as $val => $b) {
                 $attr = array();
                 if ($value == $val) $attr['selected'] = 'selected';
                 $ret .= $this->element('option', $val, $attr);

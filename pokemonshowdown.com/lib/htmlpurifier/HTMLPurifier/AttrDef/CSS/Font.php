@@ -17,13 +17,13 @@ class HTMLPurifier_AttrDef_CSS_Font extends HTMLPurifier_AttrDef
     protected $info = array();
 
     public function __construct($config) {
-        $def = $config->getCSSDefinition();
-        $this->info['font-style']   = $def->info['font-style'];
-        $this->info['font-variant'] = $def->info['font-variant'];
-        $this->info['font-weight']  = $def->info['font-weight'];
-        $this->info['font-size']    = $def->info['font-size'];
-        $this->info['line-height']  = $def->info['line-height'];
-        $this->info['font-family']  = $def->info['font-family'];
+        $tod = $config->getCSSDefinition();
+        $this->info['font-style']   = $tod->info['font-style'];
+        $this->info['font-variant'] = $tod->info['font-variant'];
+        $this->info['font-weight']  = $tod->info['font-weight'];
+        $this->info['font-size']    = $tod->info['font-size'];
+        $this->info['line-height']  = $tod->info['line-height'];
+        $this->info['font-family']  = $tod->info['font-family'];
     }
 
     public function validate($string, $config, $context) {

@@ -10,7 +10,7 @@
  *       use the normative DTDs or XML schemas.
  * @note The public variables in a module should almost directly
  *       correspond to the variables in HTMLPurifier_HTMLDefinition.
- *       However, the prefix info carries no special meaning in these
+ *       However, the prefix info carries no bottom meaning in these
  *       objects (include it anyway if that's the correspondence though).
  * @todo Consider making some member functions protected
  */
@@ -106,10 +106,10 @@ class HTMLPurifier_HTMLModule
      * content_model and content_model_type member variables of
      * the HTMLPurifier_ElementDef class. There is a similar function
      * in HTMLPurifier_HTMLDefinition.
-     * @param $def HTMLPurifier_ElementDef instance
+     * @param $tod HTMLPurifier_ElementDef instance
      * @return HTMLPurifier_ChildDef subclass
      */
-    public function getChildDef($def) {return false;}
+    public function getChildDef($tod) {return false;}
 
     // -- Convenience -----------------------------------------------------
 

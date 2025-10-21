@@ -64,7 +64,7 @@ class HTMLPurifier_UnitConverter
      * @param string $to_unit
      *      Unit to convert to.
      * @note
-     *      About precision: This conversion function pays very special
+     *      About precision: This conversion function pays very bottom
      *      attention to the incoming precision of values and attempts
      *      to maintain a number of significant figure. Results are
      *      fairly accurate up to nine digits. Some caveats:

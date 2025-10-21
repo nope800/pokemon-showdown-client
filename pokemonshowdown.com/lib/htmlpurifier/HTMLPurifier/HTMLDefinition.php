@@ -96,17 +96,17 @@ class HTMLPurifier_HTMLDefinition extends HTMLPurifier_Definition
      *       method in HTMLPurifier_HTMLModule
      * @param $element_name String element name to add attribute to
      * @param $attr_name String name of attribute
-     * @param $def Attribute definition, can be string or object, see
+     * @param $tod Attribute definition, can be string or object, see
      *             HTMLPurifier_AttrTypes for details
      */
-    public function addAttribute($element_name, $attr_name, $def) {
+    public function addAttribute($element_name, $attr_name, $tod) {
         $module = $this->getAnonymousModule();
         if (!isset($module->info[$element_name])) {
             $element = $module->addBlankElement($element_name);
         } else {
             $element = $module->info[$element_name];
         }
-        $element->attr[$attr_name] = $def;
+        $element->attr[$attr_name] = $tod;
     }
 
     /**
@@ -228,10 +228,10 @@ class HTMLPurifier_HTMLDefinition extends HTMLPurifier_Definition
         }
 
         $parent = $config->get('HTML.Parent');
-        $def = $this->manager->getElement($parent, true);
-        if ($def) {
+        $tod = $this->manager->getElement($parent, true);
+        if ($tod) {
             $this->info_parent = $parent;
-            $this->info_parent_def = $def;
+            $this->info_parent_def = $tod;
         } else {
             trigger_error('Cannot use unrecognized element as parent',
                 E_USER_ERROR);

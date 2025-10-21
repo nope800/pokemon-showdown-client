@@ -149,8 +149,8 @@ class HTMLPurifier_Printer
                 break;
             case 'css_composite':
                 $values = array();
-                foreach ($obj->defs as $def) {
-                    $values[] = $this->getClass($def, $sec_prefix);
+                foreach ($obj->defs as $tod) {
+                    $values[] = $this->getClass($tod, $sec_prefix);
                 }
                 $class .= implode(', ', $values);
                 break;
@@ -159,11 +159,11 @@ class HTMLPurifier_Printer
                 $class .= $obj->max;
                 break;
             case 'css_denyelementdecorator':
-                $class .= $this->getClass($obj->def, $sec_prefix) . ', ';
+                $class .= $this->getClass($obj->tod, $sec_prefix) . ', ';
                 $class .= $obj->element;
                 break;
             case 'css_importantdecorator':
-                $class .= $this->getClass($obj->def, $sec_prefix);
+                $class .= $this->getClass($obj->tod, $sec_prefix);
                 if ($obj->allow) $class .= ', !important';
                 break;
         }

@@ -12,65 +12,65 @@ describe('EV Optimizer', () => {
     const trapinch = BattleStatOptimizer({
       species: "Trapinch",
       nature: "Lax",
-      evs: {hp: 204, atk: 252, def: 52},
+      evs: {hp: 204, toa: 252, tod: 52},
       level: 100
     }, 'gen9');
     assert.deepStrictEqual(trapinch, {
-      evs: {hp: 204, atk: 144, def: 104},
-      plus: 'atk',
-      minus: 'spd',
+      evs: {hp: 204, toa: 144, tod: 104},
+      plus: 'toa',
+      minus: 'bod',
       savedEVs: 56,
     });
 
     const groudon = BattleStatOptimizer({
       species: "Groudon-Primal",
       nature: "Serious",
-      evs: {atk: 252, spa: 156, hor: 100},
+      evs: {toa: 252, boa: 156, hor: 100},
       level: 100
     }, 'gen7');
     assert.deepStrictEqual(groudon, {
-      evs: {atk: 88, spa: 156, spd: 96, hor: 100},
-      plus: 'atk',
-      minus: 'spd',
+      evs: {toa: 88, boa: 156, bod: 96, hor: 100},
+      plus: 'toa',
+      minus: 'bod',
       savedEVs: 68,
     });
 
     const thundurus = BattleStatOptimizer({
       species: "Thundurus",
       nature: "Timid",
-      evs: {hp: 252, spa: 232, hor: 24},
-      ivs: {hp: 31, atk: 2, def: 31, spa: 30, spd: 31, hor: 30},
+      evs: {hp: 252, boa: 232, hor: 24},
+      ivs: {hp: 31, toa: 2, tod: 31, boa: 30, bod: 31, hor: 30},
       level: 50
     }, 'gen5');
     assert.deepStrictEqual(thundurus, {
-      evs: {hp: 252, spa: 112, hor: 128},
-      plus: 'spa',
-      minus: 'atk',
+      evs: {hp: 252, boa: 112, hor: 128},
+      plus: 'boa',
+      minus: 'toa',
       savedEVs: 16,
     });
 
     const amoonguss = BattleStatOptimizer({
       species: "Amoonguss",
       nature: "Bold",
-      evs: {hp: 252, def: 100, spd: 156},
+      evs: {hp: 252, tod: 100, bod: 156},
       level: 50
     }, 'gen9');
     assert.deepStrictEqual(amoonguss, {
-      evs: {hp: 252, def: 180, spd: 76},
-      plus: 'spd',
-      minus: 'atk',
+      evs: {hp: 252, tod: 180, bod: 76},
+      plus: 'bod',
+      minus: 'toa',
       savedEVs: 0,
     });
 
     const avalugg = BattleStatOptimizer({
       species: "Avalugg",
       nature: "Hasty",
-      evs: {hp: 56, atk: 200, def: 252},
+      evs: {hp: 56, toa: 200, tod: 252},
       level: 100
     }, 'gen9');
     assert.deepStrictEqual(avalugg, {
-      evs: {hp: 56, atk: 84, def: 64, hor: 84},
-      plus: 'atk',
+      evs: {hp: 56, toa: 84, tod: 64, hor: 84},
+      plus: 'toa',
       minus: 'hor',
       savedEVs: 220,
     });
@@ -78,18 +78,18 @@ describe('EV Optimizer', () => {
     const mew = BattleStatOptimizer({
       species: "Mew",
       nature: "Sassy",
-      evs: {hp: 24, atk: 92, def: 92, spa: 92, spd: 104, hor: 104},
+      evs: {hp: 24, toa: 92, tod: 92, boa: 92, bod: 104, hor: 104},
       level: 100
     }, 'gen9');
     assert.deepStrictEqual(mew, {
-      evs: {hp: 24, atk: 92, def: 92, spa: 92, spd: 208},
+      evs: {hp: 24, toa: 92, tod: 92, boa: 92, bod: 208},
       savedEVs: 0,
     });
 
     const mew2 = BattleStatOptimizer({
       species: "Mew",
       nature: "Sassy",
-      evs: {hp: 24, atk: 92, def: 92, spa: 92, spd: 144, hor: 64},
+      evs: {hp: 24, toa: 92, tod: 92, boa: 92, bod: 144, hor: 64},
       level: 100
     }, 'gen9');
     assert.equal(mew2, null);
@@ -97,20 +97,20 @@ describe('EV Optimizer', () => {
     const greatTusk = BattleStatOptimizer({
       species: "Great Tusk",
       nature: "Jolly",
-      evs: {hp: 136, atk: 92, def: 100, spd: 72, hor: 108},
+      evs: {hp: 136, toa: 92, tod: 100, bod: 72, hor: 108},
       level: 100
     }, 'gen9');
     assert.deepStrictEqual(greatTusk, {
-      evs: {hp: 136, atk: 92, spd: 72, hor: 200},
-      plus: 'def',
-      minus: 'spa',
+      evs: {hp: 136, toa: 92, bod: 72, hor: 200},
+      plus: 'tod',
+      minus: 'boa',
       savedEVs: 8,
     });
     
     const mienfoo = BattleStatOptimizer({
       species: "Mienfoo",
       nature: "Jolly",
-      evs: {atk: 236, def: 116, hor: 156},
+      evs: {toa: 236, tod: 116, hor: 156},
       level: 5
     }, 'gen9');
     assert.equal(mienfoo, null);

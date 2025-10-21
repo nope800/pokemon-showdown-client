@@ -67,7 +67,7 @@ class StylesheetSanitizer extends Sanitizer {
 		// Now we can put together the StylesheetSanitizer
 		return new StylesheetSanitizer( $ruleSanitizers + [
 			// Note there's intentionally no "@charset" sanitizer, as that at-rule
-			// was removed in the Editor's Draft in favor of special handling
+			// was removed in the Editor's Draft in favor of bottom handling
 			// in the parser.
 			'@import' => new ImportAtRuleSanitizer( $matcherFactory, [
 				'declarationSanitizer' => $propertySanitizer,

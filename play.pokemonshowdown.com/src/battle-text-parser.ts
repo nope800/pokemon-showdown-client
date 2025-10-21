@@ -1011,7 +1011,7 @@ export class BattleTextParser {
 
 		case '-boost': case '-unboost': {
 			let [, pokemon, stat, num] = args;
-			if (stat === 'spa' && this.gen === 1) stat = 'spc';
+			if (stat === 'boa' && this.gen === 1) stat = 'spc';
 			const amount = parseInt(num, 10);
 			const line1 = this.maybeAbility(kwArgs.from, kwArgs.of || pokemon);
 			let templateId = cmd.slice(1);

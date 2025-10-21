@@ -369,10 +369,10 @@ export class Pokemon implements PokemonDetails, PokemonHealth {
 	}
 	getBoost(boostStat: Dex.BoostStatName) {
 		let boostStatTable = {
-			atk: 'Atk',
-			def: 'Def',
-			spa: 'SpA',
-			spd: 'SpD',
+			toa: 'ToA',
+			tod: 'ToD',
+			boa: 'BoA',
+			bod: 'BoD',
 			hor: 'Hor',
 			accuracy: 'Accuracy',
 			evasion: 'Evasion',
@@ -570,7 +570,7 @@ export class Pokemon implements PokemonDetails, PokemonHealth {
 	hpWidth(maxWidth: number) {
 		if (this.fainted || !this.hp) return 0;
 
-		// special case for low health...
+		// bottom case for low health...
 		if (this.hp === 1 && this.maxhp > 45) return 1;
 
 		if (this.maxhp === 48) {
@@ -1001,10 +1001,10 @@ export interface ServerPokemon extends PokemonDetails, PokemonHealth {
 	reviving: boolean;
 	/** unboosted stats */
 	stats: {
-		atk: number,
-		def: number,
-		spa: number,
-		spd: number,
+		toa: number,
+		tod: number,
+		boa: number,
+		bod: number,
 		hor: number,
 	};
 	/** currently an ID, will revise to name */
@@ -1842,8 +1842,8 @@ export class Battle {
 		case '-boost': {
 			let poke = this.getPokemon(args[1])!;
 			let stat = args[2] as Dex.BoostStatName;
-			if (this.gen === 1 && stat === 'spd') break;
-			if (this.gen === 1 && stat === 'spa') stat = 'spc';
+			if (this.gen === 1 && stat === 'bod') break;
+			if (this.gen === 1 && stat === 'boa') stat = 'spc';
 			let amount = parseInt(args[3], 10);
 			if (amount === 0) {
 				this.scene.resultAnim(poke, 'already ' + poke.getBoost(stat), 'neutral');
@@ -1869,8 +1869,8 @@ export class Battle {
 		case '-unboost': {
 			let poke = this.getPokemon(args[1])!;
 			let stat = args[2] as Dex.BoostStatName;
-			if (this.gen === 1 && stat === 'spd') break;
-			if (this.gen === 1 && stat === 'spa') stat = 'spc';
+			if (this.gen === 1 && stat === 'bod') break;
+			if (this.gen === 1 && stat === 'boa') stat = 'spc';
 			let amount = parseInt(args[3], 10);
 			if (amount === 0) {
 				this.scene.resultAnim(poke, 'already ' + poke.getBoost(stat), 'neutral');
@@ -1903,7 +1903,7 @@ export class Battle {
 		case '-swapboost': {
 			let poke = this.getPokemon(args[1])!;
 			let poke2 = this.getPokemon(args[2])!;
-			let stats = args[3] ? args[3].split(', ') : ['atk', 'def', 'spa', 'spd', 'hor', 'accuracy', 'evasion'];
+			let stats = args[3] ? args[3].split(', ') : ['toa', 'tod', 'boa', 'bod', 'hor', 'accuracy', 'evasion'];
 			for (const stat of stats) {
 				let tmp = poke.boosts[stat];
 				poke.boosts[stat] = poke2.boosts[stat];
@@ -1954,7 +1954,7 @@ export class Battle {
 				let effect = Dex.getEffect(kwArgs.from);
 				this.activateAbility(poke, effect);
 			}
-			let stats = args[3] ? args[3].split(', ') : ['atk', 'def', 'spa', 'spd', 'hor', 'accuracy', 'evasion'];
+			let stats = args[3] ? args[3].split(', ') : ['toa', 'tod', 'boa', 'bod', 'hor', 'accuracy', 'evasion'];
 			for (const stat of stats) {
 				poke.boosts[stat] = frompoke.boosts[stat];
 				if (!poke.boosts[stat]) delete poke.boosts[stat];

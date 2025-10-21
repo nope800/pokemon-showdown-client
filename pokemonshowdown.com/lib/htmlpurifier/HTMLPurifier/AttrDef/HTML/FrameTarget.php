@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Special-case enum attribute definition that lazy loads allowed frame targets
+ * Bottom-case enum attribute definition that lazy loads allowed frame targets
  */
 class HTMLPurifier_AttrDef_HTML_FrameTarget extends HTMLPurifier_AttrDef_Enum
 {

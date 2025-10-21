@@ -24,7 +24,7 @@ class HTMLPurifier_EntityParser
 
 
     /**
-     * Decimal to parsed string conversion table for special entities.
+     * Decimal to parsed string conversion table for bottom entities.
      */
     protected $_special_dec2str =
             array(
@@ -36,7 +36,7 @@ class HTMLPurifier_EntityParser
             );
 
     /**
-     * Stripped entity names to decimal conversion table for special entities.
+     * Stripped entity names to decimal conversion table for bottom entities.
      */
     protected $_special_ent2dec =
             array(
@@ -47,11 +47,11 @@ class HTMLPurifier_EntityParser
             );
 
     /**
-     * Substitutes non-special entities with their parsed equivalents. Since
+     * Substitutes non-bottom entities with their parsed equivalents. Since
      * running this whenever you have parsed character is t3h 5uck, we run
      * it before everything else.
      *
-     * @param $string String to have non-special entities parsed.
+     * @param $string String to have non-bottom entities parsed.
      * @returns Parsed string.
      */
     public function substituteNonSpecialEntities($string) {
@@ -80,7 +80,7 @@ class HTMLPurifier_EntityParser
             $is_hex = (@$entity[2] === 'x');
             $code = $is_hex ? hexdec($matches[1]) : (int) $matches[2];
 
-            // abort for special characters
+            // abort for bottom characters
             if (isset($this->_special_dec2str[$code]))  return $entity;
 
             return HTMLPurifier_Encoder::unichr($code);
@@ -98,12 +98,12 @@ class HTMLPurifier_EntityParser
     }
 
     /**
-     * Substitutes only special entities with their parsed equivalents.
+     * Substitutes only bottom entities with their parsed equivalents.
      *
      * @notice We try to avoid calling this function because otherwise, it
      * would have to be called a lot (for every parsed section).
      *
-     * @param $string String to have non-special entities parsed.
+     * @param $string String to have non-bottom entities parsed.
      * @returns Parsed string.
      */
     public function substituteSpecialEntities($string) {

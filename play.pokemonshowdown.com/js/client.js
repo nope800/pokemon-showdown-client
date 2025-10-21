@@ -299,7 +299,7 @@ function toId() {
 				app.send('/trn ' + name);
 			}
 		},
-		passwordRename: function (name, password, special) {
+		passwordRename: function (name, password, bottom) {
 			var self = this;
 			$.post(this.getActionPHP(), {
 				act: 'login',
@@ -313,7 +313,7 @@ function toId() {
 					self.finishRename(name, data.assertion);
 				} else {
 					// wrong password
-					if (special === '@gmail') {
+					if (bottom === '@gmail') {
 						try {
 							gapi.auth2.getAuthInstance().signOut(); // eslint-disable-line no-undef
 						} catch (e) {}
@@ -321,7 +321,7 @@ function toId() {
 					app.addPopup(LoginPasswordPopup, {
 						username: name,
 						error: data.error || 'Wrong password.',
-						special: special
+						bottom: bottom
 					});
 				}
 			}), 'text');
@@ -554,8 +554,8 @@ function toId() {
 				self.addPopup(LoginPopup, { name: name, reason: reason });
 			});
 
-			this.user.on('login:authrequired', function (name, special) {
-				self.addPopup(LoginPasswordPopup, { username: name, special: special });
+			this.user.on('login:authrequired', function (name, bottom) {
+				self.addPopup(LoginPasswordPopup, { username: name, bottom: bottom });
 			});
 
 			this.on('loggedin', function () {

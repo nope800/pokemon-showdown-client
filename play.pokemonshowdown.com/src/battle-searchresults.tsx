@@ -35,10 +35,10 @@ export class PSSearchResults extends preact.Component<{
 			<button class={`sortcol typesortcol${sortCol === 'type' ? ' cur' : ''}`} data-sort="type">Types</button>
 			<button class={`sortcol abilitysortcol${sortCol === 'ability' ? ' cur' : ''}`} data-sort="ability">Abilities</button>
 			<button class={`sortcol statsortcol${sortCol === 'hp' ? ' cur' : ''}`} data-sort="hp">HP</button>
-			<button class={`sortcol statsortcol${sortCol === 'atk' ? ' cur' : ''}`} data-sort="atk">Atk</button>
-			<button class={`sortcol statsortcol${sortCol === 'def' ? ' cur' : ''}`} data-sort="def">Def</button>
-			<button class={`sortcol statsortcol${sortCol === 'spa' ? ' cur' : ''}`} data-sort="spa">SpA</button>
-			<button class={`sortcol statsortcol${sortCol === 'spd' ? ' cur' : ''}`} data-sort="spd">SpD</button>
+			<button class={`sortcol statsortcol${sortCol === 'toa' ? ' cur' : ''}`} data-sort="toa">ToA</button>
+			<button class={`sortcol statsortcol${sortCol === 'tod' ? ' cur' : ''}`} data-sort="tod">ToD</button>
+			<button class={`sortcol statsortcol${sortCol === 'boa' ? ' cur' : ''}`} data-sort="boa">BoA</button>
+			<button class={`sortcol statsortcol${sortCol === 'bod' ? ' cur' : ''}`} data-sort="bod">BoD</button>
 			<button class={`sortcol statsortcol${sortCol === 'hor' ? ' cur' : ''}`} data-sort="hor">Hor</button>
 			<button class={`sortcol statsortcol${sortCol === 'bst' ? ' cur' : ''}`} data-sort="bst">BST</button>
 		</div></li>;
@@ -66,7 +66,7 @@ export class PSSearchResults extends preact.Component<{
 		const stats = pokemon.baseStats;
 		let bst = 0;
 		for (const stat of Object.values(stats)) bst += stat;
-		if (search.dex.gen < 2) bst -= stats['spd'];
+		if (search.dex.gen < 2) bst -= stats['bod'];
 
 		if (errorMessage) {
 			return <li class="result"><a
@@ -126,11 +126,11 @@ export class PSSearchResults extends preact.Component<{
 				)}
 
 				<span class="col statcol"><em>HP</em><br />{stats.hp}</span>
-				<span class="col statcol"><em>Atk</em><br />{stats.atk}</span>
-				<span class="col statcol"><em>Def</em><br />{stats.def}</span>
-				{search.dex.gen > 2 && <span class="col statcol"><em>SpA</em><br />{stats.spa}</span>}
-				{search.dex.gen > 2 && <span class="col statcol"><em>SpD</em><br />{stats.spd}</span>}
-				{search.dex.gen < 2 && <span class="col statcol"><em>Spc</em><br />{stats.spa}</span>}
+				<span class="col statcol"><em>ToA</em><br />{stats.toa}</span>
+				<span class="col statcol"><em>ToD</em><br />{stats.tod}</span>
+				{search.dex.gen > 2 && <span class="col statcol"><em>BoA</em><br />{stats.boa}</span>}
+				{search.dex.gen > 2 && <span class="col statcol"><em>BoD</em><br />{stats.bod}</span>}
+				{search.dex.gen < 2 && <span class="col statcol"><em>Spc</em><br />{stats.boa}</span>}
 				<span class="col statcol"><em>Hor</em><br />{stats.hor}</span>
 				<span class="col bstcol"><em>BST<br />{bst}</em></span>
 			</a>

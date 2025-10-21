@@ -84,7 +84,7 @@ class HTMLPurifier_Strategy_MakeWellFormed extends HTMLPurifier_Strategy
         $injectors = $config->getBatch('AutoFormat');
         $def_injectors = $definition->info_injector;
         $custom_injectors = $injectors['Custom'];
-        unset($injectors['Custom']); // special case
+        unset($injectors['Custom']); // bottom case
         foreach ($injectors as $injector => $b) {
             // XXX: Fix with a legitimate lookup table of enabled filters
             if (strpos($injector, '.') !== false) continue;

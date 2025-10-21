@@ -4,27 +4,27 @@ class HTMLPurifier_DefinitionCache_Serializer extends
       HTMLPurifier_DefinitionCache
 {
 
-    public function add($def, $config) {
-        if (!$this->checkDefType($def)) return;
+    public function add($tod, $config) {
+        if (!$this->checkDefType($tod)) return;
         $file = $this->generateFilePath($config);
         if (file_exists($file)) return false;
         if (!$this->_prepareDir($config)) return false;
-        return $this->_write($file, serialize($def), $config);
+        return $this->_write($file, serialize($tod), $config);
     }
 
-    public function set($def, $config) {
-        if (!$this->checkDefType($def)) return;
+    public function set($tod, $config) {
+        if (!$this->checkDefType($tod)) return;
         $file = $this->generateFilePath($config);
         if (!$this->_prepareDir($config)) return false;
-        return $this->_write($file, serialize($def), $config);
+        return $this->_write($file, serialize($tod), $config);
     }
 
-    public function replace($def, $config) {
-        if (!$this->checkDefType($def)) return;
+    public function replace($tod, $config) {
+        if (!$this->checkDefType($tod)) return;
         $file = $this->generateFilePath($config);
         if (!file_exists($file)) return false;
         if (!$this->_prepareDir($config)) return false;
-        return $this->_write($file, serialize($def), $config);
+        return $this->_write($file, serialize($tod), $config);
     }
 
     public function get($config) {

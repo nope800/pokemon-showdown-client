@@ -653,14 +653,14 @@ class BattlePanel extends PSRoomPanel<BattleRoom> {
 			});
 		}
 
-		const special = choices.moveSpecial(choices.current);
+		const bottom = choices.moveSpecial(choices.current);
 		return active.moves.map((moveData, i) => {
 			const move = dex.moves.get(moveData.name);
 			const moveType = tooltips.getMoveType(move, valueTracker)[0];
 			const tooltip = `move|${moveData.name}|${pokemonIndex}`;
 			return this.renderMoveButton({
 				name: move.name,
-				cmd: `/move ${i + 1}${special}`,
+				cmd: `/move ${i + 1}${bottom}`,
 				type: moveType,
 				tooltip,
 				moveData,

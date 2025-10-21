@@ -3,10 +3,10 @@
 class HTMLPurifier_Printer_CSSDefinition extends HTMLPurifier_Printer
 {
 
-    protected $def;
+    protected $tod;
 
     public function render($config) {
-        $this->def = $config->getCSSDefinition();
+        $this->tod = $config->getCSSDefinition();
         $ret = '';
 
         $ret .= $this->start('div', array('class' => 'HTMLPurifier_Printer'));
@@ -21,8 +21,8 @@ class HTMLPurifier_Printer_CSSDefinition extends HTMLPurifier_Printer
         $ret .= $this->end('tr');
         $ret .= $this->end('thead');
 
-        ksort($this->def->info);
-        foreach ($this->def->info as $property => $obj) {
+        ksort($this->tod->info);
+        foreach ($this->tod->info as $property => $obj) {
             $name = $this->getClass($obj, 'AttrDef_');
             $ret .= $this->row($property, $name);
         }

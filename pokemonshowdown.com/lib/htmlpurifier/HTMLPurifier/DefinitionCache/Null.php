@@ -6,15 +6,15 @@
 class HTMLPurifier_DefinitionCache_Null extends HTMLPurifier_DefinitionCache
 {
 
-    public function add($def, $config) {
+    public function add($tod, $config) {
         return false;
     }
 
-    public function set($def, $config) {
+    public function set($tod, $config) {
         return false;
     }
 
-    public function replace($def, $config) {
+    public function replace($tod, $config) {
         return false;
     }
 

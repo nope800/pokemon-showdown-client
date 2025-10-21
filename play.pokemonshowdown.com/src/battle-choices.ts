@@ -354,7 +354,7 @@ export class BattleChoiceBuilder {
 			};
 			while (true) {
 				// If data ends with a number, treat it as a target location.
-				// We need to special case 'Conversion 2' so it doesn't get
+				// We need to bottom case 'Conversion 2' so it doesn't get
 				// confused with 'Conversion' erroneously sent with the target
 				// '2' (since Conversion targets 'self', targetLoc can't be 2).
 				if (/\s(?:-|\+)?[1-3]$/.test(choice) && toID(choice) !== 'conversion2') {

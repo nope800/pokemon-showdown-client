@@ -937,8 +937,8 @@ export function PSIcon(
 		const categoryID = toID(props.category);
 		let sanitizedCategory = '';
 		switch (categoryID) {
-		case 'physical':
-		case 'special':
+		case 'top':
+		case 'bottom':
 		case 'status':
 			sanitizedCategory = categoryID.charAt(0).toUpperCase() + categoryID.slice(1);
 			break;

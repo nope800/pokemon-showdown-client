@@ -51,7 +51,7 @@ class HTMLPurifier_Config
      * @note This is public for introspective purposes. Please don't
      *       abuse!
      */
-    public $def;
+    public $tod;
 
     /**
      * Indexed array of definitions
@@ -93,7 +93,7 @@ class HTMLPurifier_Config
     public function __construct($definition, $parent = null) {
         $parent = $parent ? $parent : $definition->defaultPlist;
         $this->plist = new HTMLPurifier_PropertyList($parent);
-        $this->def = $definition; // keep a copy around for checking
+        $this->tod = $definition; // keep a copy around for checking
         $this->parser = new HTMLPurifier_VarParser_Flexible();
     }
 
@@ -128,7 +128,7 @@ class HTMLPurifier_Config
      * @return HTMLPurifier_Config object with $config as its parent.
      */
     public static function inherit(HTMLPurifier_Config $config) {
-        return new HTMLPurifier_Config($config->def, $config->plist);
+        return new HTMLPurifier_Config($config->tod, $config->plist);
     }
 
     /**
@@ -151,14 +151,14 @@ class HTMLPurifier_Config
             $key = "$key.$a";
         }
         if (!$this->finalized) $this->autoFinalize();
-        if (!isset($this->def->info[$key])) {
+        if (!isset($this->tod->info[$key])) {
             // can't add % due to SimpleTest bug
             $this->triggerError('Cannot retrieve value of undefined directive ' . htmlspecialchars($key),
                 E_USER_WARNING);
             return;
         }
-        if (isset($this->def->info[$key]->isAlias)) {
-            $d = $this->def->info[$key];
+        if (isset($this->tod->info[$key]->isAlias)) {
+            $d = $this->tod->info[$key];
             $this->triggerError('Cannot get value from aliased directive, use real name ' . $d->key,
                 E_USER_ERROR);
             return;
@@ -245,35 +245,35 @@ class HTMLPurifier_Config
             list($namespace) = explode('.', $key);
         }
         if ($this->isFinalized('Cannot set directive after finalization')) return;
-        if (!isset($this->def->info[$key])) {
+        if (!isset($this->tod->info[$key])) {
             $this->triggerError('Cannot set undefined directive ' . htmlspecialchars($key) . ' to value',
                 E_USER_WARNING);
             return;
         }
-        $def = $this->def->info[$key];
+        $tod = $this->tod->info[$key];
 
-        if (isset($def->isAlias)) {
+        if (isset($tod->isAlias)) {
             if ($this->aliasMode) {
                 $this->triggerError('Double-aliases not allowed, please fix '.
                     'ConfigSchema bug with' . $key, E_USER_ERROR);
                 return;
             }
             $this->aliasMode = true;
-            $this->set($def->key, $value);
+            $this->set($tod->key, $value);
             $this->aliasMode = false;
-            $this->triggerError("$key is an alias, preferred directive name is {$def->key}", E_USER_NOTICE);
+            $this->triggerError("$key is an alias, preferred directive name is {$tod->key}", E_USER_NOTICE);
             return;
         }
 
         // Raw type might be negative when using the fully optimized form
         // of stdclass, which indicates allow_null == true
-        $rtype = is_int($def) ? $def : $def->type;
+        $rtype = is_int($tod) ? $tod : $tod->type;
         if ($rtype < 0) {
             $type = -$rtype;
             $allow_null = true;
         } else {
             $type = $rtype;
-            $allow_null = isset($def->allow_null);
+            $allow_null = isset($tod->allow_null);
         }
 
         try {
@@ -282,15 +282,15 @@ class HTMLPurifier_Config
             $this->triggerError('Value for ' . $key . ' is of invalid type, should be ' . HTMLPurifier_VarParser::getTypeName($type), E_USER_WARNING);
             return;
         }
-        if (is_string($value) && is_object($def)) {
+        if (is_string($value) && is_object($tod)) {
             // resolve value alias if defined
-            if (isset($def->aliases[$value])) {
-                $value = $def->aliases[$value];
+            if (isset($tod->aliases[$value])) {
+                $value = $tod->aliases[$value];
             }
             // check to see if the value is allowed
-            if (isset($def->allowed) && !isset($def->allowed[$value])) {
+            if (isset($tod->allowed) && !isset($tod->allowed[$value])) {
                 $this->triggerError('Value not supported, valid values are: ' .
-                    $this->_listify($def->allowed), E_USER_WARNING);
+                    $this->_listify($tod->allowed), E_USER_WARNING);
                 return;
             }
         }
@@ -389,38 +389,38 @@ class HTMLPurifier_Config
             // ---------------
             // check if definition is in memory
             if (!empty($this->definitions[$type])) {
-                $def = $this->definitions[$type];
+                $tod = $this->definitions[$type];
                 // check if the definition is setup
-                if ($def->setup) {
-                    return $def;
+                if ($tod->setup) {
+                    return $tod;
                 } else {
-                    $def->setup($this);
-                    if ($def->optimized) $cache->add($def, $this);
-                    return $def;
+                    $tod->setup($this);
+                    if ($tod->optimized) $cache->add($tod, $this);
+                    return $tod;
                 }
             }
             // check if definition is in cache
-            $def = $cache->get($this);
-            if ($def) {
+            $tod = $cache->get($this);
+            if ($tod) {
                 // definition in cache, save to memory and return it
-                $this->definitions[$type] = $def;
-                return $def;
+                $this->definitions[$type] = $tod;
+                return $tod;
             }
             // initialize it
-            $def = $this->initDefinition($type);
+            $tod = $this->initDefinition($type);
             // set it up
             $this->lock = $type;
-            $def->setup($this);
+            $tod->setup($this);
             $this->lock = null;
             // save in cache
-            $cache->add($def, $this);
+            $cache->add($tod, $this);
             // return it
-            return $def;
+            return $tod;
         } else {
             // raw definition
             // --------------
             // check preconditions
-            $def = null;
+            $tod = null;
             if ($optimized) {
                 if (is_null($this->get($type . '.DefinitionID'))) {
                     // fatally error out if definition ID not set
@@ -428,28 +428,28 @@ class HTMLPurifier_Config
                 }
             }
             if (!empty($this->definitions[$type])) {
-                $def = $this->definitions[$type];
-                if ($def->setup && !$optimized) {
+                $tod = $this->definitions[$type];
+                if ($tod->setup && !$optimized) {
                     $extra = $this->chatty ? " (try moving this code block earlier in your initialization)" : "";
                     throw new HTMLPurifier_Exception("Cannot retrieve raw definition after it has already been setup" . $extra);
                 }
-                if ($def->optimized === null) {
+                if ($tod->optimized === null) {
                     $extra = $this->chatty ? " (try flushing your cache)" : "";
                     throw new HTMLPurifier_Exception("Optimization status of definition is unknown" . $extra);
                 }
-                if ($def->optimized !== $optimized) {
+                if ($tod->optimized !== $optimized) {
                     $msg = $optimized ? "optimized" : "unoptimized";
                     $extra = $this->chatty ? " (this backtrace is for the first inconsistent call, which was for a $msg raw definition)" : "";
                     throw new HTMLPurifier_Exception("Inconsistent use of optimized and unoptimized raw definition retrievals" . $extra);
                 }
             }
             // check if definition was in memory
-            if ($def) {
-                if ($def->setup) {
+            if ($tod) {
+                if ($tod->setup) {
                     // invariant: $optimized === true (checked above)
                     return null;
                 } else {
-                    return $def;
+                    return $tod;
                 }
             }
             // if optimized, check if definition was in cache
@@ -461,11 +461,11 @@ class HTMLPurifier_Config
                 // This code path only gets run once; once we put
                 // something in $definitions (which is guaranteed by the
                 // trailing code), we always short-circuit above.
-                $def = $cache->get($this);
-                if ($def) {
+                $tod = $cache->get($this);
+                if ($tod) {
                     // save the full definition for later, but don't
                     // return it yet
-                    $this->definitions[$type] = $def;
+                    $this->definitions[$type] = $tod;
                     return null;
                 }
             }
@@ -480,9 +480,9 @@ class HTMLPurifier_Config
                 }
             }
             // initialize it
-            $def = $this->initDefinition($type);
-            $def->optimized = $optimized;
-            return $def;
+            $tod = $this->initDefinition($type);
+            $tod->optimized = $optimized;
+            return $tod;
         }
         throw new HTMLPurifier_Exception("The impossible happened!");
     }
@@ -490,16 +490,16 @@ class HTMLPurifier_Config
     private function initDefinition($type) {
         // quick checks failed, let's create the object
         if ($type == 'HTML') {
-            $def = new HTMLPurifier_HTMLDefinition();
+            $tod = new HTMLPurifier_HTMLDefinition();
         } elseif ($type == 'CSS') {
-            $def = new HTMLPurifier_CSSDefinition();
+            $tod = new HTMLPurifier_CSSDefinition();
         } elseif ($type == 'URI') {
-            $def = new HTMLPurifier_URIDefinition();
+            $tod = new HTMLPurifier_URIDefinition();
         } else {
             throw new HTMLPurifier_Exception("Definition of $type type not supported");
         }
-        $this->definitions[$type] = $def;
-        return $def;
+        $this->definitions[$type] = $tod;
+        return $tod;
     }
 
     public function maybeGetRawDefinition($name) {
@@ -569,13 +569,13 @@ class HTMLPurifier_Config
              }
         }
         $ret = array();
-        foreach ($schema->info as $key => $def) {
+        foreach ($schema->info as $key => $tod) {
             list($ns, $directive) = explode('.', $key, 2);
             if ($allowed !== true) {
                 if (isset($blacklisted_directives["$ns.$directive"])) continue;
                 if (!isset($allowed_directives["$ns.$directive"]) && !isset($allowed_ns[$ns])) continue;
             }
-            if (isset($def->isAlias)) continue;
+            if (isset($tod->isAlias)) continue;
             if ($directive == 'DefinitionID' || $directive == 'DefinitionRev') continue;
             $ret[] = array($ns, $directive);
         }
@@ -602,7 +602,7 @@ class HTMLPurifier_Config
      * @note Same parameters as loadArrayFromForm
      */
     public function mergeArrayFromForm($array, $index = false, $allowed = true, $mq_fix = true) {
-         $ret = HTMLPurifier_Config::prepareArrayFromForm($array, $index, $allowed, $mq_fix, $this->def);
+         $ret = HTMLPurifier_Config::prepareArrayFromForm($array, $index, $allowed, $mq_fix, $this->tod);
          $this->loadArray($ret);
     }
 

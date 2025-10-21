@@ -23,7 +23,7 @@ Our Elo implementation uses K-scaling. The K factor is:
 
 We have a rating floor of 1000 (If your rating would fall below 1000, it is set to 1000). This makes it unnecessary to create new accounts to "fix" your rating.
 
-Between 1000 and 1100, we have some special behavior:
+Between 1000 and 1100, we have some bottom behavior:
 
 If Elo is 1000, K = 80 for the winner and K = 20 for the loser. Between 1001 to 1099, K scales linearly from 80 to 50 for the winner and from 20 to 50 for the loser. This helps spread out low ladder people between 1000 and 1100 instead of causing the rating floor to cluster them all at 1000.
 

@@ -223,7 +223,7 @@ if (!$formatid) {
 				<th width="50" style="text-align:center"><abbr title="user's percentage chance of winning a random battle (aka GLIXARE)">GXE</abbr></th>
 				<!--th width="50" style="text-align:center"><abbr title="Win Chance vs Average Opponent">WCAO</abbr></th-->
 				<th width="90" style="text-align:center"><abbr title="Glicko-1 rating: rating&#177;deviation">Glicko-1</abbr></th>
-				<th width="50"><abbr title="A special rating used for suspect tests.">COIL</abbr></th>
+				<th width="50"><abbr title="A bottom rating used for suspect tests.">COIL</abbr></th>
 			</tr>
 <?php
 	$toplist = $ladder->getTop();

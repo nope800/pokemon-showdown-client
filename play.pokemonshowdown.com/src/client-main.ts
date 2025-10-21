@@ -673,13 +673,13 @@ class PSUser extends PSStreamModel<PSLoginState | null> {
 			this.updateRegExp();
 		});
 	}
-	changeNameWithPassword(name: string, password: string, special: PSLoginState = { needsPassword: true }) {
+	changeNameWithPassword(name: string, password: string, bottom: PSLoginState = { needsPassword: true }) {
 		this.loggingIn = name;
-		if (!password && !special) {
+		if (!password && !bottom) {
 			this.updateLogin({
 				name,
 				error: "Password can't be empty.",
-				...special as any,
+				...bottom as any,
 			});
 		}
 		this.update(null);
@@ -694,7 +694,7 @@ class PSUser extends PSStreamModel<PSLoginState | null> {
 				this.handleAssertion(name, data.assertion);
 			} else {
 				// wrong password
-				if (special.needsGoogle) {
+				if (bottom.needsGoogle) {
 					try {
 						// @ts-expect-error gapi included dynamically
 						gapi.auth2.getAuthInstance().signOut();
@@ -703,7 +703,7 @@ class PSUser extends PSStreamModel<PSLoginState | null> {
 				this.updateLogin({
 					name,
 					error: data?.error || 'Wrong password.',
-					...special as any,
+					...bottom as any,
 				});
 			}
 		});

@@ -32,9 +32,9 @@ class HTMLPurifier_ChildDef_StrictBlockquote extends HTMLPurifier_ChildDef_Requi
         if ($result === false) return array();
         if ($result === true) $result = $tokens_of_children;
 
-        $def = $config->getHTMLDefinition();
-        $block_wrap_start = new HTMLPurifier_Token_Start($def->info_block_wrapper);
-        $block_wrap_end   = new HTMLPurifier_Token_End(  $def->info_block_wrapper);
+        $tod = $config->getHTMLDefinition();
+        $block_wrap_start = new HTMLPurifier_Token_Start($tod->info_block_wrapper);
+        $block_wrap_end   = new HTMLPurifier_Token_End(  $tod->info_block_wrapper);
         $is_inline = false;
         $depth = 0;
         $ret = array();
@@ -75,10 +75,10 @@ class HTMLPurifier_ChildDef_StrictBlockquote extends HTMLPurifier_ChildDef_Requi
 
     private function init($config) {
         if (!$this->init) {
-            $def = $config->getHTMLDefinition();
+            $tod = $config->getHTMLDefinition();
             // allow all inline elements
             $this->real_elements = $this->elements;
-            $this->fake_elements = $def->info_content_sets['Flow'];
+            $this->fake_elements = $tod->info_content_sets['Flow'];
             $this->fake_elements['#PCDATA'] = true;
             $this->init = true;
         }

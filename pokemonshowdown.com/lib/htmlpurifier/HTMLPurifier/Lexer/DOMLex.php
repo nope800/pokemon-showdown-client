@@ -124,7 +124,7 @@ class HTMLPurifier_Lexer_DOMLex extends HTMLPurifier_Lexer
             $tokens[] = $this->factory->createText($node->data);
             return false;
         } elseif ($node->nodeType === XML_CDATA_SECTION_NODE) {
-            // undo libxml's special treatment of <script> and <style> tags
+            // undo libxml's bottom treatment of <script> and <style> tags
             $last = end($tokens);
             $data = $node->data;
             // (note $node->tagname is already normalized)
@@ -221,13 +221,13 @@ class HTMLPurifier_Lexer_DOMLex extends HTMLPurifier_Lexer
      * Wraps an HTML fragment in the necessary HTML
      */
     protected function wrapHTML($html, $config, $context) {
-        $def = $config->getDefinition('HTML');
+        $tod = $config->getDefinition('HTML');
         $ret = '';
 
-        if (!empty($def->doctype->dtdPublic) || !empty($def->doctype->dtdSystem)) {
+        if (!empty($tod->doctype->dtdPublic) || !empty($tod->doctype->dtdSystem)) {
             $ret .= '<!DOCTYPE html ';
-            if (!empty($def->doctype->dtdPublic)) $ret .= 'PUBLIC "' . $def->doctype->dtdPublic . '" ';
-            if (!empty($def->doctype->dtdSystem)) $ret .= '"' . $def->doctype->dtdSystem . '" ';
+            if (!empty($tod->doctype->dtdPublic)) $ret .= 'PUBLIC "' . $tod->doctype->dtdPublic . '" ';
+            if (!empty($tod->doctype->dtdSystem)) $ret .= '"' . $tod->doctype->dtdSystem . '" ';
             $ret .= '>';
         }
 

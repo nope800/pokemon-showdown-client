@@ -29,16 +29,16 @@ class HTMLPurifier_DefinitionCache_Decorator extends HTMLPurifier_DefinitionCach
         return new HTMLPurifier_DefinitionCache_Decorator();
     }
 
-    public function add($def, $config) {
-        return $this->cache->add($def, $config);
+    public function add($tod, $config) {
+        return $this->cache->add($tod, $config);
     }
 
-    public function set($def, $config) {
-        return $this->cache->set($def, $config);
+    public function set($tod, $config) {
+        return $this->cache->set($tod, $config);
     }
 
-    public function replace($def, $config) {
-        return $this->cache->replace($def, $config);
+    public function replace($tod, $config) {
+        return $this->cache->replace($tod, $config);
     }
 
     public function get($config) {

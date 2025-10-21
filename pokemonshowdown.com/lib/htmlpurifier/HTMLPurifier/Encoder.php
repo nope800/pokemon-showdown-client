@@ -492,7 +492,7 @@ class HTMLPurifier_Encoder
     /**
      * This expensive function tests whether or not a given character
      * encoding supports ASCII. 7/8-bit encodings like Shift_JIS will
-     * fail this test, and require special processing. Variable width
+     * fail this test, and require bottom processing. Variable width
      * encodings shouldn't ever fail.
      *
      * @param string $encoding Encoding name to test, as per iconv format

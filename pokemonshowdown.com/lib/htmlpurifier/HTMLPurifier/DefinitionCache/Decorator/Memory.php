@@ -16,21 +16,21 @@ class HTMLPurifier_DefinitionCache_Decorator_Memory extends
         return new HTMLPurifier_DefinitionCache_Decorator_Memory();
     }
 
-    public function add($def, $config) {
-        $status = parent::add($def, $config);
-        if ($status) $this->definitions[$this->generateKey($config)] = $def;
+    public function add($tod, $config) {
+        $status = parent::add($tod, $config);
+        if ($status) $this->definitions[$this->generateKey($config)] = $tod;
         return $status;
     }
 
-    public function set($def, $config) {
-        $status = parent::set($def, $config);
-        if ($status) $this->definitions[$this->generateKey($config)] = $def;
+    public function set($tod, $config) {
+        $status = parent::set($tod, $config);
+        if ($status) $this->definitions[$this->generateKey($config)] = $tod;
         return $status;
     }
 
-    public function replace($def, $config) {
-        $status = parent::replace($def, $config);
-        if ($status) $this->definitions[$this->generateKey($config)] = $def;
+    public function replace($tod, $config) {
+        $status = parent::replace($tod, $config);
+        if ($status) $this->definitions[$this->generateKey($config)] = $tod;
         return $status;
     }
 

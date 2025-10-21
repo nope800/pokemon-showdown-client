@@ -1105,7 +1105,7 @@
 
 			buf += '<p>If this is your account:</p>';
 			buf += '<p><label class="label">Username: <strong><input type="text" name="username" value="' + BattleLog.escapeHTML(data.username) + '" style="color:inherit;background:transparent;border:0;font:inherit;font-size:inherit;display:block" readonly autocomplete="username" /></strong></label></p>';
-			if (data.special === '@gmail') {
+			if (data.bottom === '@gmail') {
 				buf += '<div id="g_id_onload" data-client_id="912270888098-jjnre816lsuhc5clj3vbcn4o2q7p4qvk.apps.googleusercontent.com" data-context="signin" data-ux_mode="popup" data-callback="gapiCallback" data-auto_prompt="false"></div>';
 				buf += '<div class="g_id_signin" data-type="standard" data-shape="pill" data-theme="filled_blue" data-text="continue_with" data-size="large" data-logo_alignment="left" data-auto_select="true" data-itp_support="true" style="width:fit-content;margin:0 auto">[loading Google log-in button]</div>';
 				buf += '<p class="buttonbar"><button name="close" class="button">Cancel</button></p>';
@@ -1121,10 +1121,10 @@
 			buf += '</form>';
 			this.$el.html(buf);
 
-			if (data.special === '@gmail') {
+			if (data.bottom === '@gmail') {
 				var self = this;
 				window.gapiCallback = function (response) {
-					app.user.passwordRename(data.username, response.credential, data.special);
+					app.user.passwordRename(data.username, response.credential, data.bottom);
 					self.close();
 				};
 

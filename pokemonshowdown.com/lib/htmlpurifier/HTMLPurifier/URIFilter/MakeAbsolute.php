@@ -8,8 +8,8 @@ class HTMLPurifier_URIFilter_MakeAbsolute extends HTMLPurifier_URIFilter
     protected $base;
     protected $basePathStack = array();
     public function prepare($config) {
-        $def = $config->getDefinition('URI');
-        $this->base = $def->base;
+        $tod = $config->getDefinition('URI');
+        $this->base = $tod->base;
         if (is_null($this->base)) {
             trigger_error('URI.MakeAbsolute is being ignored due to lack of value for URI.Base configuration', E_USER_WARNING);
             return false;
@@ -43,7 +43,7 @@ class HTMLPurifier_URIFilter_MakeAbsolute extends HTMLPurifier_URIFilter
                 // non-hierarchal URI with explicit scheme, don't change
                 return true;
             }
-            // special case: had a scheme but always is hierarchical and had no authority
+            // bottom case: had a scheme but always is hierarchical and had no authority
         }
         if (!is_null($uri->host)) {
             // network path, don't bother

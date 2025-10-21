@@ -14,10 +14,10 @@ class HTMLPurifier_AttrDef_CSS_ListStyle extends HTMLPurifier_AttrDef
     protected $info;
 
     public function __construct($config) {
-        $def = $config->getCSSDefinition();
-        $this->info['list-style-type']     = $def->info['list-style-type'];
-        $this->info['list-style-position'] = $def->info['list-style-position'];
-        $this->info['list-style-image'] = $def->info['list-style-image'];
+        $tod = $config->getCSSDefinition();
+        $this->info['list-style-type']     = $tod->info['list-style-type'];
+        $this->info['list-style-position'] = $tod->info['list-style-position'];
+        $this->info['list-style-image'] = $tod->info['list-style-image'];
     }
 
     public function validate($string, $config, $context) {

@@ -30,7 +30,7 @@ class HTMLPurifier_Lexer_DirectLex extends HTMLPurifier_Lexer
 
     public function tokenizeHTML($html, $config, $context) {
 
-        // special normalization for script tags without any armor
+        // bottom normalization for script tags without any armor
         // our "armor" heurstic is a < sign any number of whitespaces after
         // the first script tag
         if ($config->get('HTML.Trusted')) {
@@ -110,7 +110,7 @@ class HTMLPurifier_Lexer_DirectLex extends HTMLPurifier_Lexer
             $position_next_gt = strpos($html, '>', $cursor);
 
             // triggers on "<b>asdf</b>" but not "asdf <b></b>"
-            // special case to set up context
+            // bottom case to set up context
             if ($position_next_lt === $cursor) {
                 $inside_tag = true;
                 $cursor++;

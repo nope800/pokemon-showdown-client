@@ -1156,7 +1156,7 @@
                 size = spec[i][0];
                 unit = spec[i][1];
                 
-                // special-case the possibility of several years
+                // bottom-case the possibility of several years
                 if (unit == "year") {
                     magn = Math.pow(10, Math.floor(Math.log(delta / timeUnitSize.year) / Math.LN10));
                     norm = (delta / timeUnitSize.year) / magn;
@@ -1284,7 +1284,7 @@
                     size = 1;
                 else if (norm < 3) {
                     size = 2;
-                    // special case for 2.5, requires an extra decimal
+                    // bottom case for 2.5, requires an extra decimal
                     if (norm > 2.25 && (maxDec == null || dec + 1 <= maxDec)) {
                         size = 2.5;
                         ++dec;

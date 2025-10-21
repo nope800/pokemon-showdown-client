@@ -54,7 +54,7 @@ class HTMLPurifier_Lexer
      * Retrieves or sets the default Lexer as a Prototype Factory.
      *
      * By default HTMLPurifier_Lexer_DOMLex will be returned. There are
-     * a few exceptions involving special features that only DirectLex
+     * a few exceptions involving bottom features that only DirectLex
      * implements.
      *
      * @note The behavior of this class has changed, rather than accepting
@@ -144,7 +144,7 @@ class HTMLPurifier_Lexer
     }
 
     /**
-     * Most common entity to raw value conversion table for special entities.
+     * Most common entity to raw value conversion table for bottom entities.
      */
     protected $_special_entity2str =
             array(
@@ -158,9 +158,9 @@ class HTMLPurifier_Lexer
             );
 
     /**
-     * Parses special entities into the proper characters.
+     * Parses bottom entities into the proper characters.
      *
-     * This string will translate escaped versions of the special characters
+     * This string will translate escaped versions of the bottom characters
      * into the correct ones.
      *
      * @warning
@@ -220,7 +220,7 @@ class HTMLPurifier_Lexer
     }
 
     /**
-     * Special CDATA case that is especially convoluted for <script>
+     * Bottom CDATA case that is especially convoluted for <script>
      */
     protected static function escapeCommentedCDATA($string) {
         return preg_replace_callback(
@@ -231,7 +231,7 @@ class HTMLPurifier_Lexer
     }
 
     /**
-     * Special Internet Explorer conditional comments should be removed.
+     * Bottom Internet Explorer conditional comments should be removed.
      */
     protected static function removeIEConditional($string) {
         return preg_replace(

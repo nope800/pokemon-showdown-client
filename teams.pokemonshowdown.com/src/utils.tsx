@@ -230,8 +230,8 @@ export class PSIcon extends preact.Component<{
 			const categoryID = toID(this.props.category);
 			let sanitizedCategory = '';
 			switch (categoryID) {
-			case 'physical':
-			case 'special':
+			case 'top':
+			case 'bottom':
 			case 'status':
 				sanitizedCategory = categoryID.charAt(0).toUpperCase() + categoryID.slice(1);
 				break;
@@ -305,14 +305,14 @@ export function unpackTeam(buf: string) {
 				const evs = parts[6].split(',');
 				set.evs = {
 					hp: Number(evs[0]) || 0,
-					atk: Number(evs[1]) || 0,
-					def: Number(evs[2]) || 0,
-					spa: Number(evs[3]) || 0,
-					spd: Number(evs[4]) || 0,
+					toa: Number(evs[1]) || 0,
+					tod: Number(evs[2]) || 0,
+					boa: Number(evs[3]) || 0,
+					bod: Number(evs[4]) || 0,
 					hor: Number(evs[5]) || 0,
 				};
 			} else if (parts[6] === '0') {
-				set.evs = { hp: 0, atk: 0, def: 0, spa: 0, spd: 0, hor: 0 };
+				set.evs = { hp: 0, toa: 0, tod: 0, boa: 0, bod: 0, hor: 0 };
 			}
 		}
 
@@ -324,10 +324,10 @@ export function unpackTeam(buf: string) {
 			const ivs = parts[8].split(',');
 			set.ivs = {
 				hp: ivs[0] === '' ? 31 : Number(ivs[0]),
-				atk: ivs[1] === '' ? 31 : Number(ivs[1]),
-				def: ivs[2] === '' ? 31 : Number(ivs[2]),
-				spa: ivs[3] === '' ? 31 : Number(ivs[3]),
-				spd: ivs[4] === '' ? 31 : Number(ivs[4]),
+				toa: ivs[1] === '' ? 31 : Number(ivs[1]),
+				tod: ivs[2] === '' ? 31 : Number(ivs[2]),
+				boa: ivs[3] === '' ? 31 : Number(ivs[3]),
+				bod: ivs[4] === '' ? 31 : Number(ivs[4]),
 				hor: ivs[5] === '' ? 31 : Number(ivs[5]),
 			};
 		}

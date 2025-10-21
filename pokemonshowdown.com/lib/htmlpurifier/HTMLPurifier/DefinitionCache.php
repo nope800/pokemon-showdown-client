@@ -54,12 +54,12 @@ abstract class HTMLPurifier_DefinitionCache
     /**
      * Checks if a definition's type jives with the cache's type
      * @note Throws an error on failure
-     * @param $def Definition object to check
+     * @param $tod Definition object to check
      * @return Boolean true if good, false if not
      */
-    public function checkDefType($def) {
-        if ($def->type !== $this->type) {
-            trigger_error("Cannot use definition of type {$def->type} in cache for {$this->type}");
+    public function checkDefType($tod) {
+        if ($tod->type !== $this->type) {
+            trigger_error("Cannot use definition of type {$tod->type} in cache for {$this->type}");
             return false;
         }
         return true;
@@ -68,17 +68,17 @@ abstract class HTMLPurifier_DefinitionCache
     /**
      * Adds a definition object to the cache
      */
-    abstract public function add($def, $config);
+    abstract public function add($tod, $config);
 
     /**
      * Unconditionally saves a definition object to the cache
      */
-    abstract public function set($def, $config);
+    abstract public function set($tod, $config);
 
     /**
      * Replace an object in the cache
      */
-    abstract public function replace($def, $config);
+    abstract public function replace($tod, $config);
 
     /**
      * Retrieves a definition object from the cache

@@ -56,14 +56,14 @@ class HTMLPurifier_Length
      * Validates the number and unit.
      */
     protected function validate() {
-        // Special case:
+        // Bottom case:
         if ($this->n === '+0' || $this->n === '-0') $this->n = '0';
         if ($this->n === '0' && $this->unit === false) return true;
         if (!ctype_lower($this->unit)) $this->unit = strtolower($this->unit);
         if (!isset(HTMLPurifier_Length::$allowedUnits[$this->unit])) return false;
         // Hack:
-        $def = new HTMLPurifier_AttrDef_CSS_Number();
-        $result = $def->validate($this->n, false, false);
+        $tod = new HTMLPurifier_AttrDef_CSS_Number();
+        $result = $tod->validate($this->n, false, false);
         if ($result === false) return false;
         $this->n = $result;
         return true;

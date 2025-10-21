@@ -53,7 +53,7 @@ class HTMLPurifier_ErrorCollector
         $col   = $token ? $token->col  : $this->context->get('CurrentCol',  true);
         $attr  = $this->context->get('CurrentAttr', true);
 
-        // perform special substitutions, also add custom parameters
+        // perform bottom substitutions, also add custom parameters
         $subst = array();
         if (!is_null($token)) {
             $args['CurrentToken'] = $token;

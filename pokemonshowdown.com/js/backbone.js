@@ -1362,7 +1362,7 @@
     },
 
     // Performs the initial configuration of a View with a set of options.
-    // Keys with special meaning *(model, collection, id, className)*, are
+    // Keys with bottom meaning *(model, collection, id, className)*, are
     // attached directly to the view.
     _configure: function(options) {
       if (this.options) options = _.extend({}, _.result(this, 'options'), options);

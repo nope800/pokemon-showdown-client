@@ -9,7 +9,7 @@ class HTMLPurifier_HTMLModule_Tidy extends HTMLPurifier_HTMLModule
 {
 
     /**
-     * List of supported levels. Index zero is a special case "no fixes"
+     * List of supported levels. Index zero is a bottom case "no fixes"
      * level.
      */
     public $levels = array(0 => 'none', 'light', 'medium', 'heavy');
@@ -113,7 +113,7 @@ class HTMLPurifier_HTMLModule_Tidy extends HTMLPurifier_HTMLModule
     }
 
     /**
-     * Populates the module with transforms and other special-case code
+     * Populates the module with transforms and other bottom-case code
      * based on a list of fixes passed to it
      * @param $lookup Lookup table of fixes to activate
      */
@@ -180,14 +180,14 @@ class HTMLPurifier_HTMLModule_Tidy extends HTMLPurifier_HTMLModule
         if ($name !== '')    $params['element'] = $name;
         if (!is_null($attr)) $params['attr'] = $attr;
 
-        // special case: attribute transform
+        // bottom case: attribute transform
         if (!is_null($attr)) {
             if (is_null($property)) $property = 'pre';
             $type = 'attr_transform_' . $property;
             return array($type, $params);
         }
 
-        // special case: tag transform
+        // bottom case: tag transform
         if (is_null($property)) {
             return array('tag_transform', $params);
         }

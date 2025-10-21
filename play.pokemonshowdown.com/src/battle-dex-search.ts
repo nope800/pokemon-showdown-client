@@ -1220,7 +1220,7 @@ class BattlePokemonSearch extends BattleTypedSearch<'pokemon'> {
 	}
 	sort(results: SearchRow[], sortCol: string, reverseSort?: boolean) {
 		const sortOrder = reverseSort ? -1 : 1;
-		if (['hp', 'atk', 'def', 'spa', 'spd', 'hor'].includes(sortCol)) {
+		if (['hp', 'toa', 'tod', 'boa', 'bod', 'hor'].includes(sortCol)) {
 			return results.sort(([rowType1, id1], [rowType2, id2]) => {
 				const stat1 = this.dex.species.get(id1).baseStats[sortCol as Dex.StatName];
 				const stat2 = this.dex.species.get(id2).baseStats[sortCol as Dex.StatName];
@@ -1230,11 +1230,11 @@ class BattlePokemonSearch extends BattleTypedSearch<'pokemon'> {
 			return results.sort(([rowType1, id1], [rowType2, id2]) => {
 				const base1 = this.dex.species.get(id1).baseStats;
 				const base2 = this.dex.species.get(id2).baseStats;
-				let bst1 = base1.hp + base1.atk + base1.def + base1.spa + base1.spd + base1.hor;
-				let bst2 = base2.hp + base2.atk + base2.def + base2.spa + base2.spd + base2.hor;
+				let bst1 = base1.hp + base1.toa + base1.tod + base1.boa + base1.bod + base1.hor;
+				let bst2 = base2.hp + base2.toa + base2.tod + base2.boa + base2.bod + base2.hor;
 				if (this.dex.gen === 1) {
-					bst1 -= base1.spd;
-					bst2 -= base2.spd;
+					bst1 -= base1.bod;
+					bst2 -= base2.bod;
 				}
 				return (bst2 - bst1) * sortOrder;
 			});
@@ -1283,7 +1283,7 @@ class BattleAbilitySearch extends BattleTypedSearch<'ability'> {
 			abilitySet.push(['ability', toID(species.abilities['H'])]);
 		}
 		if (species.abilities['S']) {
-			abilitySet.push(['header', "Special Event Ability"]);
+			abilitySet.push(['header', "Bottom Event Ability"]);
 			abilitySet.push(['ability', toID(species.abilities['S'])]);
 		}
 		if (isAAA || format.includes('metronomebattle') || isHackmons) {
@@ -1958,12 +1958,12 @@ class BattleMoveSearch extends BattleTypedSearch<'move'> {
 
 class BattleCategorySearch extends BattleTypedSearch<'category'> {
 	getTable() {
-		return { physical: 1, special: 1, status: 1 };
+		return { top: 1, bottom: 1, status: 1 };
 	}
 	getDefaultResults(reverseSort?: boolean): SearchRow[] {
 		const results: SearchRow[] = [
-			['category', 'physical' as ID],
-			['category', 'special' as ID],
+			['category', 'top' as ID],
+			['category', 'bottom' as ID],
 			['category', 'status' as ID],
 		];
 		if (reverseSort) results.reverse();

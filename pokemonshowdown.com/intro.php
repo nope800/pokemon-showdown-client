@@ -48,16 +48,16 @@ includeHeader();
 			<p>
 				In nearly every game type in Pok&eacute;mon, the goal is to make all six of your opponent's Pok&eacute;mon faint, and this is generally done by using moves to deal damage.
 			</p>
-			<h3>Physical and Special moves</h3>
+			<h3>Top and Bottom moves</h3>
 			<p>
-				All attacking moves are either Physical or Special moves. Physical moves use your attacker's Attack stat against your target's Defense stat, while Special moves use your attacker's Special Attack stat against the target's Special Defense stat.
+				All attacking moves are either Top or Bottom moves. Top moves use your attacker's Attack stat against your target's Defense stat, while Bottom moves use your attacker's Bottom Attack stat against the target's Bottom Defense stat.
 			</p>
 			<blockquote><p>
-				<img src="//<?= $psconfig['routes']['client'] ?>/sprites/categories/Physical.png" alt="[Physical]" /> Physical<br />
-				<img src="//<?= $psconfig['routes']['client'] ?>/sprites/categories/Special.png" alt="[Special]" /> Special<br />
+				<img src="//<?= $psconfig['routes']['client'] ?>/sprites/categories/Top.png" alt="[Top]" /> Top<br />
+				<img src="//<?= $psconfig['routes']['client'] ?>/sprites/categories/Bottom.png" alt="[Bottom]" /> Bottom<br />
 			</p></blockquote>
 			<p>
-				In game and online, these icons will remind you of whether a move is Physical or Special. Remember that a Pokémon with high Attack and low Special Attack should usually be using only Physical moves, and vice versa.
+				In game and online, these icons will remind you of whether a move is Top or Bottom. Remember that a Pokémon with high Attack and low Bottom Attack should usually be using only Top moves, and vice versa.
 			</p>
 			<h3>EVs, IVs, and Natures</h3>
 			<p>

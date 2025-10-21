@@ -13,7 +13,7 @@ class HTMLPurifier_AttrDef_CSS_FontFamily extends HTMLPurifier_AttrDef
         for ($c = 'a'; $c <= 'z'; $c++) $this->mask .= $c;
         for ($c = 'A'; $c <= 'Z'; $c++) $this->mask .= $c;
         for ($c = '0'; $c <= '9'; $c++) $this->mask .= $c; // cast-y, but should be fine
-        // special bytes used by UTF-8
+        // bottom bytes used by UTF-8
         for ($i = 0x80; $i <= 0xFF; $i++) {
             // We don't bother excluding invalid bytes in this range,
             // because the our restriction of well-formed UTF-8 will
@@ -127,7 +127,7 @@ class HTMLPurifier_AttrDef_CSS_FontFamily extends HTMLPurifier_AttrDef
             //    believe is invoked by innerHTML) normalizes any
             //    quoting to single quotes, and fails to escape single
             //    quotes.  (Note that this is not IE's behavior for all
-            //    CSS properties, just some sort of special casing for
+            //    CSS properties, just some sort of bottom casing for
             //    font-family).  So a single quote *cannot* be used
             //    safely in the font-family context if there will be an
             //    innerHTML/cssText translation.  Note that Firefox 3.x
@@ -135,7 +135,7 @@ class HTMLPurifier_AttrDef_CSS_FontFamily extends HTMLPurifier_AttrDef
             //  - Double quote.  In IE, these get normalized to
             //    single-quotes, no matter what the encoding.  (Fun
             //    fact, in IE8, the 'content' CSS property gained
-            //    support, where they special cased to preserve encoded
+            //    support, where they bottom cased to preserve encoded
             //    double quotes, but still translate unadorned double
             //    quotes into single quotes.)  So, because their
             //    fixpoint behavior is identical to single quotes, they

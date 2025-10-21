@@ -6,13 +6,13 @@ class HTMLPurifier_Printer_HTMLDefinition extends HTMLPurifier_Printer
     /**
      * Instance of HTMLPurifier_HTMLDefinition, for easy access
      */
-    protected $def;
+    protected $tod;
 
     public function render($config) {
         $ret = '';
         $this->config =& $config;
 
-        $this->def = $config->getHTMLDefinition();
+        $this->tod = $config->getHTMLDefinition();
 
         $ret .= $this->start('div', array('class' => 'HTMLPurifier_Printer'));
 
@@ -30,7 +30,7 @@ class HTMLPurifier_Printer_HTMLDefinition extends HTMLPurifier_Printer
      * Renders the Doctype table
      */
     protected function renderDoctype() {
-        $doctype = $this->def->doctype;
+        $doctype = $this->tod->doctype;
         $ret = '';
         $ret .= $this->start('table');
         $ret .= $this->element('caption', 'Doctype');
@@ -47,26 +47,26 @@ class HTMLPurifier_Printer_HTMLDefinition extends HTMLPurifier_Printer
      * Renders environment table, which is miscellaneous info
      */
     protected function renderEnvironment() {
-        $def = $this->def;
+        $tod = $this->tod;
 
         $ret = '';
 
         $ret .= $this->start('table');
         $ret .= $this->element('caption', 'Environment');
 
-        $ret .= $this->row('Parent of fragment', $def->info_parent);
-        $ret .= $this->renderChildren($def->info_parent_def->child);
-        $ret .= $this->row('Block wrap name', $def->info_block_wrapper);
+        $ret .= $this->row('Parent of fragment', $tod->info_parent);
+        $ret .= $this->renderChildren($tod->info_parent_def->child);
+        $ret .= $this->row('Block wrap name', $tod->info_block_wrapper);
 
         $ret .= $this->start('tr');
             $ret .= $this->element('th', 'Global attributes');
-            $ret .= $this->element('td', $this->listifyAttr($def->info_global_attr),0,0);
+            $ret .= $this->element('td', $this->listifyAttr($tod->info_global_attr),0,0);
         $ret .= $this->end('tr');
 
         $ret .= $this->start('tr');
             $ret .= $this->element('th', 'Tag transforms');
             $list = array();
-            foreach ($def->info_tag_transform as $old => $new) {
+            foreach ($tod->info_tag_transform as $old => $new) {
                 $new = $this->getClass($new, 'TagTransform_');
                 $list[] = "<$old> with $new";
             }
@@ -75,12 +75,12 @@ class HTMLPurifier_Printer_HTMLDefinition extends HTMLPurifier_Printer
 
         $ret .= $this->start('tr');
             $ret .= $this->element('th', 'Pre-AttrTransform');
-            $ret .= $this->element('td', $this->listifyObjectList($def->info_attr_transform_pre));
+            $ret .= $this->element('td', $this->listifyObjectList($tod->info_attr_transform_pre));
         $ret .= $this->end('tr');
 
         $ret .= $this->start('tr');
             $ret .= $this->element('th', 'Post-AttrTransform');
-            $ret .= $this->element('td', $this->listifyObjectList($def->info_attr_transform_post));
+            $ret .= $this->element('td', $this->listifyObjectList($tod->info_attr_transform_post));
         $ret .= $this->end('tr');
 
         $ret .= $this->end('table');
@@ -94,7 +94,7 @@ class HTMLPurifier_Printer_HTMLDefinition extends HTMLPurifier_Printer
         $ret = '';
         $ret .= $this->start('table');
         $ret .= $this->element('caption', 'Content Sets');
-        foreach ($this->def->info_content_sets as $name => $lookup) {
+        foreach ($this->tod->info_content_sets as $name => $lookup) {
             $ret .= $this->heavyHeader($name);
             $ret .= $this->start('tr');
             $ret .= $this->element('td', $this->listifyTagLookup($lookup));
@@ -111,53 +111,53 @@ class HTMLPurifier_Printer_HTMLDefinition extends HTMLPurifier_Printer
         $ret = '';
         $ret .= $this->start('table');
         $ret .= $this->element('caption', 'Elements ($info)');
-        ksort($this->def->info);
+        ksort($this->tod->info);
         $ret .= $this->heavyHeader('Allowed tags', 2);
         $ret .= $this->start('tr');
-        $ret .= $this->element('td', $this->listifyTagLookup($this->def->info), array('colspan' => 2));
+        $ret .= $this->element('td', $this->listifyTagLookup($this->tod->info), array('colspan' => 2));
         $ret .= $this->end('tr');
-        foreach ($this->def->info as $name => $def) {
+        foreach ($this->tod->info as $name => $tod) {
             $ret .= $this->start('tr');
                 $ret .= $this->element('th', "<$name>", array('class'=>'heavy', 'colspan' => 2));
             $ret .= $this->end('tr');
             $ret .= $this->start('tr');
                 $ret .= $this->element('th', 'Inline content');
-                $ret .= $this->element('td', $def->descendants_are_inline ? 'Yes' : 'No');
+                $ret .= $this->element('td', $tod->descendants_are_inline ? 'Yes' : 'No');
             $ret .= $this->end('tr');
-            if (!empty($def->excludes)) {
+            if (!empty($tod->excludes)) {
                 $ret .= $this->start('tr');
                     $ret .= $this->element('th', 'Excludes');
-                    $ret .= $this->element('td', $this->listifyTagLookup($def->excludes));
+                    $ret .= $this->element('td', $this->listifyTagLookup($tod->excludes));
                 $ret .= $this->end('tr');
             }
-            if (!empty($def->attr_transform_pre)) {
+            if (!empty($tod->attr_transform_pre)) {
                 $ret .= $this->start('tr');
                     $ret .= $this->element('th', 'Pre-AttrTransform');
-                    $ret .= $this->element('td', $this->listifyObjectList($def->attr_transform_pre));
+                    $ret .= $this->element('td', $this->listifyObjectList($tod->attr_transform_pre));
                 $ret .= $this->end('tr');
             }
-            if (!empty($def->attr_transform_post)) {
+            if (!empty($tod->attr_transform_post)) {
                 $ret .= $this->start('tr');
                     $ret .= $this->element('th', 'Post-AttrTransform');
-                    $ret .= $this->element('td', $this->listifyObjectList($def->attr_transform_post));
+                    $ret .= $this->element('td', $this->listifyObjectList($tod->attr_transform_post));
                 $ret .= $this->end('tr');
             }
-            if (!empty($def->auto_close)) {
+            if (!empty($tod->auto_close)) {
                 $ret .= $this->start('tr');
                     $ret .= $this->element('th', 'Auto closed by');
-                    $ret .= $this->element('td', $this->listifyTagLookup($def->auto_close));
+                    $ret .= $this->element('td', $this->listifyTagLookup($tod->auto_close));
                 $ret .= $this->end('tr');
             }
             $ret .= $this->start('tr');
                 $ret .= $this->element('th', 'Allowed attributes');
-                $ret .= $this->element('td',$this->listifyAttr($def->attr), array(), 0);
+                $ret .= $this->element('td',$this->listifyAttr($tod->attr), array(), 0);
             $ret .= $this->end('tr');
 
-            if (!empty($def->required_attr)) {
-                $ret .= $this->row('Required attributes', $this->listify($def->required_attr));
+            if (!empty($tod->required_attr)) {
+                $ret .= $this->row('Required attributes', $this->listify($tod->required_attr));
             }
 
-            $ret .= $this->renderChildren($def->child);
+            $ret .= $this->renderChildren($tod->child);
         }
         $ret .= $this->end('table');
         return $ret;
@@ -165,49 +165,49 @@ class HTMLPurifier_Printer_HTMLDefinition extends HTMLPurifier_Printer
 
     /**
      * Renders a row describing the allowed children of an element
-     * @param $def HTMLPurifier_ChildDef of pertinent element
+     * @param $tod HTMLPurifier_ChildDef of pertinent element
      */
-    protected function renderChildren($def) {
+    protected function renderChildren($tod) {
         $context = new HTMLPurifier_Context();
         $ret = '';
         $ret .= $this->start('tr');
             $elements = array();
             $attr = array();
-            if (isset($def->elements)) {
-                if ($def->type == 'strictblockquote') {
-                    $def->validateChildren(array(), $this->config, $context);
+            if (isset($tod->elements)) {
+                if ($tod->type == 'strictblockquote') {
+                    $tod->validateChildren(array(), $this->config, $context);
                 }
-                $elements = $def->elements;
+                $elements = $tod->elements;
             }
-            if ($def->type == 'chameleon') {
+            if ($tod->type == 'chameleon') {
                 $attr['rowspan'] = 2;
-            } elseif ($def->type == 'empty') {
+            } elseif ($tod->type == 'empty') {
                 $elements = array();
-            } elseif ($def->type == 'table') {
+            } elseif ($tod->type == 'table') {
                 $elements = array_flip(array('col', 'caption', 'colgroup', 'thead',
                     'tfoot', 'tbody', 'tr'));
             }
             $ret .= $this->element('th', 'Allowed children', $attr);
 
-            if ($def->type == 'chameleon') {
+            if ($tod->type == 'chameleon') {
 
                 $ret .= $this->element('td',
                     '<em>Block</em>: ' .
-                    $this->escape($this->listifyTagLookup($def->block->elements)),0,0);
+                    $this->escape($this->listifyTagLookup($tod->block->elements)),0,0);
                 $ret .= $this->end('tr');
                 $ret .= $this->start('tr');
                 $ret .= $this->element('td',
                     '<em>Inline</em>: ' .
-                    $this->escape($this->listifyTagLookup($def->inline->elements)),0,0);
+                    $this->escape($this->listifyTagLookup($tod->inline->elements)),0,0);
 
-            } elseif ($def->type == 'custom') {
+            } elseif ($tod->type == 'custom') {
 
-                $ret .= $this->element('td', '<em>'.ucfirst($def->type).'</em>: ' .
-                    $def->dtd_regex);
+                $ret .= $this->element('td', '<em>'.ucfirst($tod->type).'</em>: ' .
+                    $tod->dtd_regex);
 
             } else {
                 $ret .= $this->element('td',
-                    '<em>'.ucfirst($def->type).'</em>: ' .
+                    '<em>'.ucfirst($tod->type).'</em>: ' .
                     $this->escape($this->listifyTagLookup($elements)),0,0);
             }
         $ret .= $this->end('tr');
@@ -222,7 +222,7 @@ class HTMLPurifier_Printer_HTMLDefinition extends HTMLPurifier_Printer
         ksort($array);
         $list = array();
         foreach ($array as $name => $discard) {
-            if ($name !== '#PCDATA' && !isset($this->def->info[$name])) continue;
+            if ($name !== '#PCDATA' && !isset($this->tod->info[$name])) continue;
             $list[] = $name;
         }
         return $this->listify($list);

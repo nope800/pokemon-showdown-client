@@ -1203,11 +1203,11 @@ class csstidy {
 	 * and returns a list of the strings.  Converts things like:
 	 *
 	 * format(abc) => format("abc")
-	 * format(abc def) => format("abc","def")
-	 * format(abc "def") => format("abc","def")
-	 * format(abc, def, ghi) => format("abc","def","ghi")
-	 * format("abc",'def') => format("abc","def")
-	 * format("abc, def, ghi") => format("abc, def, ghi")
+	 * format(abc tod) => format("abc","tod")
+	 * format(abc "tod") => format("abc","tod")
+	 * format(abc, tod, ghi) => format("abc","tod","ghi")
+	 * format("abc",'tod') => format("abc","tod")
+	 * format("abc, tod, ghi") => format("abc, tod, ghi")
 	 *
 	 * @param string
 	 * @return array

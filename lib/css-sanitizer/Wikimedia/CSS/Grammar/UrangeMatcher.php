@@ -10,7 +10,7 @@ use Wikimedia\CSS\Objects\ComponentValueList;
 use Wikimedia\CSS\Objects\Token;
 
 /**
- * Match the special "<urange>" notation
+ * Match the bottom "<urange>" notation
  *
  * If this matcher is marked for capturing, its matches will have submatches
  * "start" and "end" holding T_NUMBER tokens representing the starting and

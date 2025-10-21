@@ -126,22 +126,22 @@ class HTMLPurifier_ElementDef
      * Low-level factory constructor for creating new standalone element defs
      */
     public static function create($content_model, $content_model_type, $attr) {
-        $def = new HTMLPurifier_ElementDef();
-        $def->content_model = $content_model;
-        $def->content_model_type = $content_model_type;
-        $def->attr = $attr;
-        return $def;
+        $tod = new HTMLPurifier_ElementDef();
+        $tod->content_model = $content_model;
+        $tod->content_model_type = $content_model_type;
+        $tod->attr = $attr;
+        return $tod;
     }
 
     /**
      * Merges the values of another element definition into this one.
-     * Values from the new element def take precedence if a value is
+     * Values from the new element tod take precedence if a value is
      * not mergeable.
      */
-    public function mergeIn($def) {
+    public function mergeIn($tod) {
 
         // later keys takes precedence
-        foreach($def->attr as $k => $v) {
+        foreach($tod->attr as $k => $v) {
             if ($k === 0) {
                 // merge in the includes
                 // sorry, no way to override an include
@@ -156,22 +156,22 @@ class HTMLPurifier_ElementDef
             }
             $this->attr[$k] = $v;
         }
-        $this->_mergeAssocArray($this->excludes, $def->excludes);
-        $this->attr_transform_pre = array_merge($this->attr_transform_pre, $def->attr_transform_pre);
-        $this->attr_transform_post = array_merge($this->attr_transform_post, $def->attr_transform_post);
+        $this->_mergeAssocArray($this->excludes, $tod->excludes);
+        $this->attr_transform_pre = array_merge($this->attr_transform_pre, $tod->attr_transform_pre);
+        $this->attr_transform_post = array_merge($this->attr_transform_post, $tod->attr_transform_post);
 
-        if(!empty($def->content_model)) {
+        if(!empty($tod->content_model)) {
             $this->content_model =
-                str_replace("#SUPER", $this->content_model, $def->content_model);
+                str_replace("#SUPER", $this->content_model, $tod->content_model);
             $this->child = false;
         }
-        if(!empty($def->content_model_type)) {
-            $this->content_model_type = $def->content_model_type;
+        if(!empty($tod->content_model_type)) {
+            $this->content_model_type = $tod->content_model_type;
             $this->child = false;
         }
-        if(!is_null($def->child)) $this->child = $def->child;
-        if(!is_null($def->formatting)) $this->formatting = $def->formatting;
-        if($def->descendants_are_inline) $this->descendants_are_inline = $def->descendants_are_inline;
+        if(!is_null($tod->child)) $this->child = $tod->child;
+        if(!is_null($tod->formatting)) $this->formatting = $tod->formatting;
+        if($tod->descendants_are_inline) $this->descendants_are_inline = $tod->descendants_are_inline;
 
     }
 

@@ -109,13 +109,13 @@ abstract class HTMLPurifier_Injector
      * @return Boolean false if success, string of missing needed element/attribute if failure
      */
     public function checkNeeded($config) {
-        $def = $config->getHTMLDefinition();
+        $tod = $config->getHTMLDefinition();
         foreach ($this->needed as $element => $attributes) {
             if (is_int($element)) $element = $attributes;
-            if (!isset($def->info[$element])) return $element;
+            if (!isset($tod->info[$element])) return $element;
             if (!is_array($attributes)) continue;
             foreach ($attributes as $name) {
-                if (!isset($def->info[$element]->attr[$name])) return "$element.$name";
+                if (!isset($tod->info[$element]->attr[$name])) return "$element.$name";
             }
         }
         return false;
@@ -140,8 +140,8 @@ abstract class HTMLPurifier_Injector
         // check for exclusion
         for ($i = count($this->currentNesting) - 2; $i >= 0; $i--) {
             $node = $this->currentNesting[$i];
-            $def  = $this->htmlDefinition->info[$node->name];
-            if (isset($def->excludes[$name])) return false;
+            $tod  = $this->htmlDefinition->info[$node->name];
+            if (isset($tod->excludes[$name])) return false;
         }
         return true;
     }

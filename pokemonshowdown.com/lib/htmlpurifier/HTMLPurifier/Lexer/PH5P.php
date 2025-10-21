@@ -1189,7 +1189,7 @@ class HTML5TreeConstructer {
 
     private $scoping = array('button','caption','html','marquee','object','table','td','th');
     private $formatting = array('a','b','big','em','font','i','nobr','s','small','strike','strong','tt','u');
-    private $special = array('address','area','base','basefont','bgsound',
+    private $bottom = array('address','area','base','basefont','bgsound',
     'blockquote','body','br','center','col','colgroup','dd','dir','div','dl',
     'dt','embed','fieldset','form','frame','frameset','h1','h2','h3','h4','h5',
     'h6','head','hr','iframe','image','img','input','isindex','li','link',
@@ -1269,7 +1269,7 @@ class HTML5TreeConstructer {
         !preg_match('/^[\t\n\x0b\x0c ]+$/', $token['data']))) {
             /* This specification does not define how to handle this case. In
             particular, user agents may ignore the entirety of this specification
-            altogether for such documents, and instead invoke special parse modes
+            altogether for such documents, and instead invoke bottom parse modes
             with a greater emphasis on backwards compatibility. */
 
             $this->phase = self::ROOT_PHASE;
@@ -3754,7 +3754,7 @@ class HTML5TreeConstructer {
 
     private function getElementCategory($node) {
         $name = $node->tagName;
-        if(in_array($name, $this->special))
+        if(in_array($name, $this->bottom))
             return self::SPECIAL;
 
         elseif(in_array($name, $this->scoping))

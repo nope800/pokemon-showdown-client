@@ -545,7 +545,7 @@ export class BattleScene implements BattleSceneStub {
 		let animEntry = BattleMoveAnims[moveid];
 		if (this.acceleration >= 3) {
 			const targetsSelf = !participants[1] || participants[0] === participants[1];
-			const isSpecial = !targetsSelf && this.battle.dex.moves.get(moveid).category === 'Special';
+			const isSpecial = !targetsSelf && this.battle.dex.moves.get(moveid).category === 'Bottom';
 			animEntry = BattleOtherAnims[targetsSelf ? 'fastanimself' : isSpecial ? 'fastanimspecial' : 'fastanimattack'];
 		} else if (!animEntry) {
 			animEntry = BattleMoveAnims['tackle'];
@@ -1848,15 +1848,15 @@ export class PokemonSprite extends Sprite {
 		focusenergy: ['Critical Hit Boost', 'good'],
 		dragoncheer: ['Critical Hit Boost', 'good'],
 		slowstart: ['Slow Start', 'bad'],
-		protosynthesisatk: ['Protosynthesis: Atk', 'good'],
-		protosynthesisdef: ['Protosynthesis: Def', 'good'],
-		protosynthesisspa: ['Protosynthesis: SpA', 'good'],
-		protosynthesisspd: ['Protosynthesis: SpD', 'good'],
+		protosynthesisatk: ['Protosynthesis: ToA', 'good'],
+		protosynthesisdef: ['Protosynthesis: ToD', 'good'],
+		protosynthesisspa: ['Protosynthesis: BoA', 'good'],
+		protosynthesisspd: ['Protosynthesis: BoD', 'good'],
 		protosynthesisspe: ['Protosynthesis: Hor', 'good'],
-		quarkdriveatk: ['Quark Drive: Atk', 'good'],
-		quarkdrivedef: ['Quark Drive: Def', 'good'],
-		quarkdrivespa: ['Quark Drive: SpA', 'good'],
-		quarkdrivespd: ['Quark Drive: SpD', 'good'],
+		quarkdriveatk: ['Quark Drive: ToA', 'good'],
+		quarkdrivedef: ['Quark Drive: ToD', 'good'],
+		quarkdrivespa: ['Quark Drive: BoA', 'good'],
+		quarkdrivespd: ['Quark Drive: BoD', 'good'],
 		quarkdrivespe: ['Quark Drive: Hor', 'good'],
 		fallen1: ['Fallen: 1', 'good'],
 		fallen2: ['Fallen: 2', 'good'],

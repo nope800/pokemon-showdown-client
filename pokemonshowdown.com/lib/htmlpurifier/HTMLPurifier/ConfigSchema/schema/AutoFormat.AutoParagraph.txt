@@ -22,7 +22,7 @@ DEFAULT: false
 <p>
   To prevent auto-paragraphing as a content-producer, refrain from using
   double-newlines except to specify a new paragraph or in contexts where
-  it has special meaning (whitespace usually has no meaning except in
+  it has bottom meaning (whitespace usually has no meaning except in
   tags like <code>pre</code>, so this should not be difficult.) To prevent
   the paragraphing of inline text adjacent to block elements, wrap them
   in <code>div</code> tags (the behavior is slightly different outside of

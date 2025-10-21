@@ -102,7 +102,7 @@ describe('Text parser', () => {
   The opposing Cool. swapped Abilities with its target!
 `);
 		assert.equal(parser.extractMessage(`|move|p2a: Palkia|Swagger|p1a: Shroomish
-|-boost|p1a: Shroomish|atk|2
+|-boost|p1a: Shroomish|toa|2
 |-start|p1a: Shroomish|confusion
 |-activate|p1a: Shroomish|confusion
 |move|p1a: Shroomish|Power-Up Punch|p2a: Palkia

@@ -14,8 +14,8 @@ VERSION: 2.0.0
 <pre>
 $config = HTMLPurifier_Config::createDefault();
 $config->set('HTML', 'DefinitionID', '1');
-$def = $config->getHTMLDefinition();
-$def->addAttribute('a', 'tabindex', 'Number');
+$tod = $config->getHTMLDefinition();
+$tod->addAttribute('a', 'tabindex', 'Number');
 </pre>
 <p>
     In the above example, the configuration is still at the defaults, but

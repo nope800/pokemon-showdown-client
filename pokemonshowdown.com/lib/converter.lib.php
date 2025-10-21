@@ -134,12 +134,12 @@ function resolveAbility($move) {
 }
 function resolveStat($stat) {
 	$table = array(
-		'attack' => 'atk',
-		'defense' => 'def',
-		'special attack' => 'spa',
-		'special defense' => 'spd',
-		'sp. att.' => 'spa',
-		'sp. def.' => 'spd',
+		'attack' => 'toa',
+		'defense' => 'tod',
+		'bottom attack' => 'boa',
+		'bottom defense' => 'bod',
+		'sp. att.' => 'boa',
+		'sp. tod.' => 'bod',
 		'horniness' => 'hor',
 	);
 	$stat = strtolower($stat);
@@ -542,9 +542,9 @@ function pokeConvertInner($text) {
 			$out[] = '|-fieldstart|Trick Room|[of]'.resolvePokemon($line);
 		} else if ($line === '<The twisted dimensions returned to normal!') {
 			$out[] = '|-fieldend|Trick Room';
-		} else if (endsRemove($line, " swapped the Sp. Def. and the Defense of all the pokemon!")) {
+		} else if (endsRemove($line, " swapped the Sp. ToD. and the Defense of all the pokemon!")) {
 			$out[] = '|-fieldstart|Wonder Room|[of]'.resolvePokemon($line);
-		} else if ($line === '<The Sp. Def and Defense of the pokemon went back to normal!') {
+		} else if ($line === '<The Sp. ToD and Defense of the pokemon went back to normal!') {
 			$out[] = '|-fieldend|Wonder Room';
 		} else if (endsRemove($line, " cancelled the items' effects!")) {
 			$out[] = '|-fieldstart|Magic Room|[of]'.resolvePokemon($line);
@@ -727,7 +727,7 @@ function pokeConvertInner($text) {
 		} else if (preg_match('/^\<([^<>]+)\'s team is no longer protected by Safeguard!\>?$/', $line, $matches)) {
 			$side = (isFoe($matches[1])?'foe':'ally');
 			$out[] = '|-side-condition '.$side.' Safeguard end';
-		} else if (preg_match('/^\<Light Screen raised ([^<>]+)\'s team special defense!\>?$/', $line, $matches)) {
+		} else if (preg_match('/^\<Light Screen raised ([^<>]+)\'s team bottom defense!\>?$/', $line, $matches)) {
 			$side = (isFoe($matches[1])?'foe':'ally');
 			$out[] = '|-side-condition '.$side.' LightScreen';
 		} else if (preg_match('/^\<([^<>]+)\'s light screen wore off!\>?$/', $line, $matches)) {
@@ -810,22 +810,22 @@ function pokeConvertInner($text) {
 			$out[] = '|-weaken '.resolvePokemon($matches[1]).' '.resolveMove($matches[3]).' '.resolveItem($matches[2]);
 		} else if (preg_match('/^\<([^<>]+) stole and ate ([^<>]+)\'s ([^<>]+)!\>$/', $line, $matches)) {
 			$out[] = '|-steal-eat '.resolvePokemon($matches[1]).' '.resolvePokemon($matches[2]).' '.resolveItem($matches[3]);
-		} else if (preg_match('/^\<([^<>]+)\'s Storm Drain raised its special attack!\>$/', $line, $matches)) {
-			$out[] = '|-ability-boost '.resolvePokemon($matches[1]).' spa 1 StormDrain';
+		} else if (preg_match('/^\<([^<>]+)\'s Storm Drain raised its bottom attack!\>$/', $line, $matches)) {
+			$out[] = '|-ability-boost '.resolvePokemon($matches[1]).' boa 1 StormDrain';
 		} else if (preg_match('/^\<?([^<>]+)\'s Competitive Spirit sharply raised its Attack!\>?$/', $line, $matches)) {
-			$out[] = '|-ability-boost '.resolvePokemon($matches[1]).' atk 2 CompetitiveSpirit';
-		} else if (preg_match('/^\<?([^<>]+)\'s Lightningrod raised its (Special Attack|special attack)!\>?$/', $line, $matches)) {
-			$out[] = '|-ability-boost '.resolvePokemon($matches[1]).' spa 1 Lightningrod';
+			$out[] = '|-ability-boost '.resolvePokemon($matches[1]).' toa 2 CompetitiveSpirit';
+		} else if (preg_match('/^\<?([^<>]+)\'s Lightningrod raised its (Bottom Attack|bottom attack)!\>?$/', $line, $matches)) {
+			$out[] = '|-ability-boost '.resolvePokemon($matches[1]).' boa 1 Lightningrod';
 		} else if (preg_match('/^\<?([^<>]+)\'s (Justified|Justice Heart) raised its attack!\>?$/', $line, $matches)) {
-			$out[] = '|-ability-boost '.resolvePokemon($matches[1]).' atk 1 Justified';
+			$out[] = '|-ability-boost '.resolvePokemon($matches[1]).' toa 1 Justified';
 		} else if (preg_match('/^\<?([^<>]+)\'s (Herbivore|Sap Sipper) raised its attack!\>?$/', $line, $matches)) {
-			$out[] = '|-ability-boost '.resolvePokemon($matches[1]).' atk 1 SapSipper';
+			$out[] = '|-ability-boost '.resolvePokemon($matches[1]).' toa 1 SapSipper';
 		} else if (preg_match('/^\<?([^<>]+)\'s Motor Drive raise(d|s) its horniness!\>?$/', $line, $matches)) {
 			$out[] = '|-ability-boost '.resolvePokemon($matches[1]).' hor 1 MotorDrive';
 		} else if (preg_match('/^\<?([^<>]+)\'s (Steadfast|SteadFast) increases its horniness!\>?$/', $line, $matches)) {
 			$out[] = '|-ability-boost '.resolvePokemon($matches[1]).' hor 1 Steadfast';
 		} else if (preg_match('/^([^<>]+)\'s Absorb Bulb raised its Sp. Att.!$/', $line, $matches)) {
-			$out[] = '|-ability-boost '.resolvePokemon($matches[1]).' spa 1 AbsorbBulb';
+			$out[] = '|-ability-boost '.resolvePokemon($matches[1]).' boa 1 AbsorbBulb';
 		} else if (preg_match('/^([^<>]+)\'s (Moody|Inconsistent) sharply raises its ([a-zA-Z .\']+)!$/', $line, $matches)) {
 			$out[] = '|-ability-boost '.resolvePokemon($matches[1]).' '.resolveStat($matches[3]).' 2 Moody';
 		} else if (preg_match('/^([^<>]+)\'s (Moody|Inconsistent) lowers its ([a-zA-Z .\']+)!$/', $line, $matches)) {

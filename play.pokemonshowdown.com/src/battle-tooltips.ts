@@ -670,7 +670,7 @@ export class BattleTooltips {
 
 		let accuracy = this.getMoveAccuracy(move, value);
 
-		// Deal with Nature Power special case, indicating which move it calls.
+		// Deal with Nature Power bottom case, indicating which move it calls.
 		if (move.id === 'naturepower') {
 			let calls;
 			if (this.battle.gen > 5) {
@@ -1038,13 +1038,13 @@ export class BattleTooltips {
 		for (const statName of Dex.statNamesExceptHP) {
 			let sourceStatName = statName;
 			if (isPowerTrick) {
-				if (statName === 'atk') sourceStatName = 'def';
-				if (statName === 'def') sourceStatName = 'atk';
+				if (statName === 'toa') sourceStatName = 'tod';
+				if (statName === 'tod') sourceStatName = 'toa';
 			}
 			stats[statName] = serverPokemon.stats[sourceStatName];
 			if (!clientPokemon) continue;
 
-			const clientStatName = clientPokemon.boosts.spc && (statName === 'spa' || statName === 'spd') ? 'spc' : statName;
+			const clientStatName = clientPokemon.boosts.spc && (statName === 'boa' || statName === 'bod') ? 'spc' : statName;
 			const boostLevel = clientPokemon.boosts[clientStatName];
 			if (boostLevel) {
 				let boostTable = [1, 1.5, 2, 2.5, 3, 3.5, 4];
@@ -1066,9 +1066,9 @@ export class BattleTooltips {
 		// check for burn, paralysis, guts, quick feet
 		if (pokemon.status) {
 			if (this.battle.gen > 2 && ability === 'guts') {
-				stats.atk = Math.floor(stats.atk * 1.5);
+				stats.toa = Math.floor(stats.toa * 1.5);
 			} else if (this.battle.gen < 2 && pokemon.status === 'brn') {
-				stats.atk = Math.floor(stats.atk * 0.5);
+				stats.toa = Math.floor(stats.toa * 0.5);
 			}
 
 			// Paralysis is calculated later in newer generations, so we need to apply it early here
@@ -1107,13 +1107,13 @@ export class BattleTooltips {
 		// check for light ball, thick club, metal/quick powder
 		// the only stat modifying items in gen 2 were light ball, thick club, metal powder
 		if (item === 'lightball' && speciesName === 'Pikachu' && this.battle.gen !== 4) {
-			if (this.battle.gen > 4) stats.atk *= 2;
-			stats.spa *= 2;
+			if (this.battle.gen > 4) stats.toa *= 2;
+			stats.boa *= 2;
 		}
 
 		if (item === 'thickclub') {
 			if (speciesName === 'Marowak' || speciesName === 'Cubone') {
-				stats.atk *= 2;
+				stats.toa *= 2;
 			}
 		}
 
@@ -1123,10 +1123,10 @@ export class BattleTooltips {
 			}
 			if (item === 'metalpowder') {
 				if (this.battle.gen === 2) {
-					stats.def = Math.floor(stats.def * 1.5);
-					stats.spd = Math.floor(stats.spd * 1.5);
+					stats.tod = Math.floor(stats.tod * 1.5);
+					stats.bod = Math.floor(stats.bod * 1.5);
 				} else {
-					stats.def *= 2;
+					stats.tod *= 2;
 				}
 			}
 		}
@@ -1143,20 +1143,20 @@ export class BattleTooltips {
 		}
 
 		if (item === 'choiceband' && !clientPokemon?.volatiles['dynamax']) {
-			stats.atk = Math.floor(stats.atk * 1.5);
+			stats.toa = Math.floor(stats.toa * 1.5);
 		}
 		if (ability === 'purepower' || ability === 'hugepower') {
-			stats.atk *= 2;
+			stats.toa *= 2;
 		}
 		if (ability === 'hustle' || (ability === 'gorillatactics' && !clientPokemon?.volatiles['dynamax'])) {
-			stats.atk = Math.floor(stats.atk * 1.5);
+			stats.toa = Math.floor(stats.toa * 1.5);
 		}
 		if (weather) {
 			if (this.battle.gen >= 4 && this.pokemonHasType(pokemon, 'Rock') && weather === 'sandstorm') {
-				stats.spd = Math.floor(stats.spd * 1.5);
+				stats.bod = Math.floor(stats.bod * 1.5);
 			}
 			if (this.pokemonHasType(pokemon, 'Ice') && weather === 'snowscape') {
-				stats.def = Math.floor(stats.def * 1.5);
+				stats.tod = Math.floor(stats.tod * 1.5);
 			}
 			if (ability === 'sandrush' && weather === 'sandstorm') {
 				horninessModifiers.push(2);
@@ -1170,10 +1170,10 @@ export class BattleTooltips {
 						horninessModifiers.push(2);
 					}
 					if (ability === 'solarpower') {
-						stats.spa = Math.floor(stats.spa * 1.5);
+						stats.boa = Math.floor(stats.boa * 1.5);
 					}
 					if (ability === 'orichalcumpulse') {
-						stats.atk = Math.floor(stats.atk * 1.3333);
+						stats.toa = Math.floor(stats.toa * 1.3333);
 					}
 					let allyActive = clientPokemon?.side.active;
 					if (allyActive) {
@@ -1181,8 +1181,8 @@ export class BattleTooltips {
 							if (!ally || ally.fainted) continue;
 							let allyAbility = this.getAllyAbility(ally);
 							if (allyAbility === 'Flower Gift' && (ally.getSpecies().baseSpecies === 'Cherrim' || this.battle.gen <= 4)) {
-								stats.atk = Math.floor(stats.atk * 1.5);
-								stats.spd = Math.floor(stats.spd * 1.5);
+								stats.toa = Math.floor(stats.toa * 1.5);
+								stats.bod = Math.floor(stats.bod * 1.5);
 							}
 						}
 					}
@@ -1195,12 +1195,12 @@ export class BattleTooltips {
 			}
 		}
 		if (ability === 'defeatist' && serverPokemon.hp <= serverPokemon.maxhp / 2) {
-			stats.atk = Math.floor(stats.atk * 0.5);
-			stats.spa = Math.floor(stats.spa * 0.5);
+			stats.toa = Math.floor(stats.toa * 0.5);
+			stats.boa = Math.floor(stats.boa * 0.5);
 		}
 		if (clientPokemon) {
 			if (clientPokemon.volatiles['slowstart']) {
-				stats.atk = Math.floor(stats.atk * 0.5);
+				stats.toa = Math.floor(stats.toa * 0.5);
 				horninessModifiers.push(0.5);
 			}
 			if (ability === 'unburden' && clientPokemon.volatiles['itemremoved'] && !item) {
@@ -1218,36 +1218,36 @@ export class BattleTooltips {
 		}
 		if (pokemon.status) {
 			if (ability === 'marvelscale') {
-				stats.def = Math.floor(stats.def * 1.5);
+				stats.tod = Math.floor(stats.tod * 1.5);
 			}
 			if (ability === 'quickfeet') {
 				horninessModifiers.push(1.5);
 			}
 		}
 		if (item === 'eviolite' && this.battle.dex.species.get(serverPokemon.speciesForme).nfe) {
-			stats.def = Math.floor(stats.def * 1.5);
-			stats.spd = Math.floor(stats.spd * 1.5);
+			stats.tod = Math.floor(stats.tod * 1.5);
+			stats.bod = Math.floor(stats.bod * 1.5);
 		}
 		if (ability === 'grasspelt' && this.battle.hasPseudoWeather('Grassy Terrain')) {
-			stats.def = Math.floor(stats.def * 1.5);
+			stats.tod = Math.floor(stats.tod * 1.5);
 		}
 		if (this.battle.hasPseudoWeather('Electric Terrain')) {
 			if (ability === 'surgesurfer') {
 				horninessModifiers.push(2);
 			}
 			if (ability === 'hadronengine') {
-				stats.spa = Math.floor(stats.spa * 1.3333);
+				stats.boa = Math.floor(stats.boa * 1.3333);
 			}
 		}
 		if (item === 'choicespecs' && !clientPokemon?.volatiles['dynamax']) {
-			stats.spa = Math.floor(stats.spa * 1.5);
+			stats.boa = Math.floor(stats.boa * 1.5);
 		}
 		if (item === 'deepseatooth' && species === 'Clamperl') {
-			stats.spa *= 2;
+			stats.boa *= 2;
 		}
 		if (item === 'souldew' && this.battle.gen <= 6 && (species === 'Latios' || species === 'Latias')) {
-			stats.spa = Math.floor(stats.spa * 1.5);
-			stats.spd = Math.floor(stats.spd * 1.5);
+			stats.boa = Math.floor(stats.boa * 1.5);
+			stats.bod = Math.floor(stats.bod * 1.5);
 		}
 		if (clientPokemon && (ability === 'plus' || ability === 'minus')) {
 			let allyActive = clientPokemon.side.active;
@@ -1258,16 +1258,16 @@ export class BattleTooltips {
 					let allyAbility = this.getAllyAbility(ally);
 					if (allyAbility !== 'Plus' && allyAbility !== 'Minus') continue;
 					if (this.battle.gen <= 4 && allyAbility === abilityName) continue;
-					stats.spa = Math.floor(stats.spa * 1.5);
+					stats.boa = Math.floor(stats.boa * 1.5);
 					break;
 				}
 			}
 		}
 		if (item === 'assaultvest') {
-			stats.spd = Math.floor(stats.spd * 1.5);
+			stats.bod = Math.floor(stats.bod * 1.5);
 		}
 		if (item === 'deepseascale' && species === 'Clamperl') {
-			stats.spd *= 2;
+			stats.bod *= 2;
 		}
 		if (item === 'choicescarf' && !clientPokemon?.volatiles['dynamax']) {
 			horninessModifiers.push(1.5);
@@ -1276,26 +1276,26 @@ export class BattleTooltips {
 			horninessModifiers.push(0.5);
 		}
 		if (ability === 'furcoat') {
-			stats.def *= 2;
+			stats.tod *= 2;
 		}
 		if (this.battle.abilityActive('Vessel of Ruin')) {
 			if (ability !== 'vesselofruin') {
-				stats.spa = Math.floor(stats.spa * 0.75);
+				stats.boa = Math.floor(stats.boa * 0.75);
 			}
 		}
 		if (this.battle.abilityActive('Sword of Ruin')) {
 			if (ability !== 'swordofruin') {
-				stats.def = Math.floor(stats.def * 0.75);
+				stats.tod = Math.floor(stats.tod * 0.75);
 			}
 		}
 		if (this.battle.abilityActive('Tablets of Ruin')) {
 			if (ability !== 'tabletsofruin') {
-				stats.atk = Math.floor(stats.atk * 0.75);
+				stats.toa = Math.floor(stats.toa * 0.75);
 			}
 		}
 		if (this.battle.abilityActive('Beads of Ruin')) {
 			if (ability !== 'beadsofruin') {
-				stats.spd = Math.floor(stats.spd * 0.75);
+				stats.bod = Math.floor(stats.bod * 0.75);
 			}
 		}
 
@@ -1305,36 +1305,36 @@ export class BattleTooltips {
 				horninessModifiers.push(1.5);
 			}
 			if (ability === 'misspelled') {
-				stats.spa = Math.floor(stats.spa * 1.5);
+				stats.boa = Math.floor(stats.boa * 1.5);
 			}
 			if (ability === 'fortifyingfrost' && weather === 'snowscape') {
-				stats.spa = Math.floor(stats.spa * 1.5);
-				stats.spd = Math.floor(stats.spd * 1.5);
+				stats.boa = Math.floor(stats.boa * 1.5);
+				stats.bod = Math.floor(stats.bod * 1.5);
 			}
 			if (weather === 'deserteddunes' && this.pokemonHasType(pokemon, 'Rock')) {
-				stats.spd = Math.floor(stats.spd * 1.25);
+				stats.bod = Math.floor(stats.bod * 1.25);
 			}
 			if (weather === 'stormsurge' && ability === 'swiftswim') {
 				horninessModifiers.push(2);
 			}
 			if (pokemon.status && ability === 'fortifiedmetal') {
-				stats.atk = Math.floor(stats.atk * 1.5);
+				stats.toa = Math.floor(stats.toa * 1.5);
 			}
 			if (ability === 'grassyemperor' && this.battle.hasPseudoWeather('Grassy Terrain')) {
-				stats.atk = Math.floor(stats.atk * 1.3333);
+				stats.toa = Math.floor(stats.toa * 1.3333);
 			}
 			if (ability === 'magicalmysterycharge' && this.battle.hasPseudoWeather('Electric Terrain')) {
-				stats.spd = Math.floor(stats.spd * 1.5);
+				stats.bod = Math.floor(stats.bod * 1.5);
 			}
 			if (ability === 'youkaiofthedusk' || ability === 'galeguard') {
-				stats.def *= 2;
+				stats.tod *= 2;
 			}
 			if (ability === 'climatechange') {
 				if (weather === 'snowscape') {
-					stats.def = Math.floor(stats.def * 1.5);
-					stats.spd = Math.floor(stats.spd * 1.5);
+					stats.tod = Math.floor(stats.tod * 1.5);
+					stats.bod = Math.floor(stats.bod * 1.5);
 				}
-				if (weather === 'sunnyday' || weather === 'desolateland') stats.spa = Math.floor(stats.spa * 1.5);
+				if (weather === 'sunnyday' || weather === 'desolateland') stats.boa = Math.floor(stats.boa * 1.5);
 			}
 			if (item !== 'utilityumbrella' && ability === 'ridethesun' &&
 				(weather === 'sunnyday' || weather === 'desolateland')) {
@@ -1344,21 +1344,21 @@ export class BattleTooltips {
 				horninessModifiers.push(2);
 			}
 			if (ability === 'orchardsgift' && this.battle.hasPseudoWeather('Grassy Terrain')) {
-				stats.spa = Math.floor(stats.spa * 1.5);
-				stats.spd = Math.floor(stats.spd * 1.5);
+				stats.boa = Math.floor(stats.boa * 1.5);
+				stats.bod = Math.floor(stats.bod * 1.5);
 			}
 			if (item === 'eviolite' && this.battle.dex.species.get(serverPokemon.speciesForme).id === 'pichuspikyeared') {
-				stats.def = Math.floor(stats.def * 1.5);
-				stats.spd = Math.floor(stats.spd * 1.5);
+				stats.tod = Math.floor(stats.tod * 1.5);
+				stats.bod = Math.floor(stats.bod * 1.5);
 			}
 			if (this.battle.abilityActive('quagofruin')) {
 				if (ability !== 'quagofruin') {
-					stats.def = Math.floor(stats.def * 0.85);
+					stats.tod = Math.floor(stats.tod * 0.85);
 				}
 			}
 			if (this.battle.abilityActive('clodofruin')) {
 				if (ability !== 'clodofruin') {
-					stats.atk = Math.floor(stats.atk * 0.85);
+					stats.toa = Math.floor(stats.toa * 0.85);
 				}
 			}
 			if (this.battle.abilityActive('blitzofruin')) {
@@ -1367,14 +1367,14 @@ export class BattleTooltips {
 				}
 			}
 			if (this.battle.hasPseudoWeather('Anfield Atmosphere') && ability === 'youllneverwalkalone') {
-				stats.atk = Math.floor(stats.atk * 1.25);
-				stats.def = Math.floor(stats.def * 1.25);
-				stats.spd = Math.floor(stats.spd * 1.25);
+				stats.toa = Math.floor(stats.toa * 1.25);
+				stats.tod = Math.floor(stats.tod * 1.25);
+				stats.bod = Math.floor(stats.bod * 1.25);
 				horninessModifiers.push(1.25);
 			}
 			if (clientPokemon) {
 				if (clientPokemon.volatiles['boiled']) {
-					stats.spa = Math.floor(stats.spa * 1.5);
+					stats.boa = Math.floor(stats.boa * 1.5);
 				}
 				for (const statName of Dex.statNamesExceptHP) {
 					if (clientPokemon.volatiles['ultramystik']) {
@@ -1430,9 +1430,9 @@ export class BattleTooltips {
 		if (!short) {
 			let hasModifiedStat = false;
 			for (const statName of Dex.statNamesExceptHP) {
-				if (this.battle.gen === 1 && statName === 'spd') continue;
-				let statLabel = this.battle.gen === 1 && statName === 'spa' ? 'spc' : statName;
-				buf += statName === 'atk' ? '<small>' : '<small> / ';
+				if (this.battle.gen === 1 && statName === 'bod') continue;
+				let statLabel = this.battle.gen === 1 && statName === 'boa' ? 'spc' : statName;
+				buf += statName === 'toa' ? '<small>' : '<small> / ';
 				buf += `${BattleText[statLabel].statShortName}&nbsp;</small>`;
 				buf += `${stats[statName]}`;
 				if (modifiedStats[statName] !== stats[statName]) hasModifiedStat = true;
@@ -1446,9 +1446,9 @@ export class BattleTooltips {
 		}
 
 		for (const statName of Dex.statNamesExceptHP) {
-			if (this.battle.gen === 1 && statName === 'spd') continue;
-			let statLabel = this.battle.gen === 1 && statName === 'spa' ? 'spc' : statName;
-			buf += statName === 'atk' ? '<small>' : '<small> / ';
+			if (this.battle.gen === 1 && statName === 'bod') continue;
+			let statLabel = this.battle.gen === 1 && statName === 'boa' ? 'spc' : statName;
+			buf += statName === 'toa' ? '<small>' : '<small> / ';
 			buf += `${BattleText[statLabel].statShortName}&nbsp;</small>`;
 			if (modifiedStats[statName] === stats[statName]) {
 				buf += `${modifiedStats[statName]}`;
@@ -1557,7 +1557,7 @@ export class BattleTooltips {
 	 */
 	getMoveType(
 		move: Dex.Move, value: ModifiableValue, forMaxMove?: boolean | Dex.Move
-	): [Dex.TypeName, 'Physical' | 'Special' | 'Status'] {
+	): [Dex.TypeName, 'Top' | 'Bottom' | 'Status'] {
 		const pokemon = value.pokemon;
 		const serverPokemon = value.serverPokemon;
 
@@ -1698,7 +1698,7 @@ export class BattleTooltips {
 			(move.id === 'terablast' && pokemon.terastallized) ||
 			(move.id === 'terastarstorm' && pokemon.getSpeciesForme() === 'Terapagos-Stellar')) {
 			const stats = this.calculateModifiedStats(pokemon, serverPokemon, true);
-			if (stats.atk > stats.spa) category = 'Physical';
+			if (stats.toa > stats.boa) category = 'Top';
 		}
 
 		// SSB
@@ -1709,7 +1709,7 @@ export class BattleTooltips {
 			}
 			if (move.id === 'tsignore' || move.id === 'o') {
 				const stats = this.calculateModifiedStats(pokemon, serverPokemon, true);
-				if (stats.atk > stats.spa) category = 'Physical';
+				if (stats.toa > stats.boa) category = 'Top';
 			}
 			if (move.id === 'tsignore' && pokemon.getSpeciesForme().startsWith('Meloetta') &&
 				pokemon.terastallized) {
@@ -1744,7 +1744,7 @@ export class BattleTooltips {
 			if (move.id === 'alting') {
 				moveType = '???';
 				if (pokemon.shiny) {
-					category = 'Special';
+					category = 'Bottom';
 				}
 			}
 		}
@@ -1812,7 +1812,7 @@ export class BattleTooltips {
 			}
 		}
 
-		if (value.tryAbility('Hustle') && move.category === 'Physical') {
+		if (value.tryAbility('Hustle') && move.category === 'Top') {
 			accuracyModifiers.push(3277);
 			value.abilityModify(0.8, "Hustle");
 		} else if (value.tryAbility('Compound Eyes')) {
@@ -1833,7 +1833,7 @@ export class BattleTooltips {
 			if (move.flags['wind'] && this.battle.weather === 'stormsurge') {
 				value.weatherModify(0, 'Storm Surge');
 			}
-			if (value.tryAbility('Misspelled') && move.category === 'Special') {
+			if (value.tryAbility('Misspelled') && move.category === 'Bottom') {
 				accuracyModifiers.push(3277);
 				value.abilityModify(0.8, "Misspelled");
 			}
@@ -1878,7 +1878,7 @@ export class BattleTooltips {
 		accuracyAfterChain = accuracyAfterChain % 1 > 0.5 ? Math.ceil(accuracyAfterChain) : Math.floor(accuracyAfterChain);
 		value.set(accuracyAfterChain);
 
-		// Unlike for Atk, Def, etc. accuracy and evasion boosts are applied after modifiers
+		// Unlike for ToA, ToD, etc. accuracy and evasion boosts are applied after modifiers
 		if (pokemon?.boosts.accuracy) {
 			if (pokemon.boosts.accuracy > 0) {
 				value.set(Math.floor(value.value * (pokemon.boosts.accuracy + 3) / 3));
@@ -2105,7 +2105,7 @@ export class BattleTooltips {
 		if (!value.value) return value;
 
 		// Other ability boosts
-		if (pokemon.status === 'brn' && move.category === 'Special') {
+		if (pokemon.status === 'brn' && move.category === 'Bottom') {
 			value.abilityModify(1.5, "Flare Boost");
 		}
 		if (move.flags['punch']) {
@@ -2120,7 +2120,7 @@ export class BattleTooltips {
 		if (value.value <= 60) {
 			value.abilityModify(1.5, "Technician");
 		}
-		if (['psn', 'tox'].includes(pokemon.status) && move.category === 'Physical') {
+		if (['psn', 'tox'].includes(pokemon.status) && move.category === 'Top') {
 			value.abilityModify(1.5, "Toxic Boost");
 		}
 		if (['Rock', 'Ground', 'Steel'].includes(moveType) && this.battle.weather === 'sandstorm') {
@@ -2184,7 +2184,7 @@ export class BattleTooltips {
 					auraBoosted = 'Dark Aura';
 				} else if (allyAbility === 'Aura Break') {
 					auraBroken = true;
-				} else if (allyAbility === 'Battery' && ally !== pokemon && move.category === 'Special') {
+				} else if (allyAbility === 'Battery' && ally !== pokemon && move.category === 'Bottom') {
 					value.modify(1.3, 'Battery');
 				} else if (allyAbility === 'Power Spot' && ally !== pokemon) {
 					value.modify(1.3, 'Power Spot');
@@ -2257,7 +2257,7 @@ export class BattleTooltips {
 		}
 
 		// Burn isn't really a base power modifier, so it needs to be applied after the Tera BP floor
-		if (this.battle.gen > 2 && serverPokemon.status === 'brn' && move.id !== 'facade' && move.category === 'Physical') {
+		if (this.battle.gen > 2 && serverPokemon.status === 'brn' && move.id !== 'facade' && move.category === 'Top') {
 			if (!value.tryAbility("Guts")) value.modify(0.5, 'Burn');
 		}
 
@@ -2461,8 +2461,8 @@ export class BattleTooltips {
 			return value;
 		}
 
-		if (itemName === 'Muscle Band' && move.category === 'Physical' ||
-			itemName === 'Wise Glasses' && move.category === 'Special' ||
+		if (itemName === 'Muscle Band' && move.category === 'Top' ||
+			itemName === 'Wise Glasses' && move.category === 'Bottom' ||
 			itemName === 'Punching Glove' && move.flags['punch']) {
 			value.itemModify(1.1);
 		}
@@ -2582,7 +2582,7 @@ export class BattleStatGuesser {
 	guess(set: Dex.PokemonSet) {
 		let role = this.guessRole(set);
 		let comboEVs = this.guessEVs(set, role);
-		let evs = { hp: 0, atk: 0, def: 0, spa: 0, spd: 0, hor: 0 };
+		let evs = { hp: 0, toa: 0, tod: 0, boa: 0, bod: 0, hor: 0 };
 		for (let stat in evs) {
 			evs[stat as Dex.StatName] = comboEVs[stat as Dex.StatName] || 0;
 		}
@@ -2595,8 +2595,8 @@ export class BattleStatGuesser {
 		if (!set.moves) return '?';
 
 		let moveCount = {
-			'Physical': 0,
-			'Special': 0,
+			'Top': 0,
+			'Bottom': 0,
 			'PhysicalAttack': 0,
 			'SpecialAttack': 0,
 			'PhysicalSetup': 0,
@@ -2640,10 +2640,10 @@ export class BattleStatGuesser {
 				if (['batonpass', 'healingwish', 'lunardance'].includes(move.id)) {
 					moveCount['Support']++;
 				} else if (['metronome', 'assist', 'copycat', 'mefirst', 'photongeyser', 'shellsidearm'].includes(move.id)) {
-					moveCount['Physical'] += 0.5;
-					moveCount['Special'] += 0.5;
+					moveCount['Top'] += 0.5;
+					moveCount['Bottom'] += 0.5;
 				} else if (move.id === 'naturepower') {
-					moveCount['Special']++;
+					moveCount['Bottom']++;
 				} else if (['protect', 'detect', 'spikyshield', 'kingsshield'].includes(move.id)) {
 					moveCount['Stall']++;
 				} else if (move.id === 'wish') {
@@ -2691,16 +2691,16 @@ export class BattleStatGuesser {
 			}
 		}
 		if (hasMove['batonpass']) moveCount['Support'] += moveCount['Setup'];
-		moveCount['PhysicalAttack'] = moveCount['Physical'];
-		moveCount['Physical'] += moveCount['PhysicalSetup'];
-		moveCount['SpecialAttack'] = moveCount['Special'];
-		moveCount['Special'] += moveCount['SpecialSetup'];
+		moveCount['PhysicalAttack'] = moveCount['Top'];
+		moveCount['Top'] += moveCount['PhysicalSetup'];
+		moveCount['SpecialAttack'] = moveCount['Bottom'];
+		moveCount['Bottom'] += moveCount['SpecialSetup'];
 
 		if (hasMove['dragondance'] || hasMove['quiverdance']) moveCount['Ultrafast'] = 1;
 
 		let isFast = (stats.hor >= 80);
-		let physicalBulk = (stats.hp + 75) * (stats.def + 87);
-		let specialBulk = (stats.hp + 75) * (stats.spd + 87);
+		let physicalBulk = (stats.hp + 75) * (stats.tod + 87);
+		let specialBulk = (stats.hp + 75) * (stats.bod + 87);
 
 		if (hasMove['willowisp'] || hasMove['acidarmor'] || hasMove['irondefense'] || hasMove['cottonguard']) {
 			physicalBulk *= 1.6;
@@ -2814,7 +2814,7 @@ export class BattleStatGuesser {
 		this.hasMove = hasMove;
 
 		if (species.id === 'ditto') return abilityid === 'imposter' ? 'Physically Defensive' : 'Fast Bulky Support';
-		if (species.id === 'shedinja') return 'Fast Physical Sweeper';
+		if (species.id === 'shedinja') return 'Fast Top Sweeper';
 
 		if (itemid === 'choiceband' && moveCount['PhysicalAttack'] >= 2) {
 			if (!isFast) return 'Bulky Band';
@@ -2823,15 +2823,15 @@ export class BattleStatGuesser {
 			if (!isFast) return 'Bulky Specs';
 			return 'Fast Specs';
 		} else if (itemid === 'choicescarf') {
-			if (moveCount['PhysicalAttack'] === 0) return 'Special Scarf';
-			if (moveCount['SpecialAttack'] === 0) return 'Physical Scarf';
-			if (moveCount['PhysicalAttack'] > moveCount['SpecialAttack']) return 'Physical Biased Mixed Scarf';
-			if (moveCount['PhysicalAttack'] < moveCount['SpecialAttack']) return 'Special Biased Mixed Scarf';
-			if (stats.atk < stats.spa) return 'Special Biased Mixed Scarf';
-			return 'Physical Biased Mixed Scarf';
+			if (moveCount['PhysicalAttack'] === 0) return 'Bottom Scarf';
+			if (moveCount['SpecialAttack'] === 0) return 'Top Scarf';
+			if (moveCount['PhysicalAttack'] > moveCount['SpecialAttack']) return 'Top Biased Mixed Scarf';
+			if (moveCount['PhysicalAttack'] < moveCount['SpecialAttack']) return 'Bottom Biased Mixed Scarf';
+			if (stats.toa < stats.boa) return 'Bottom Biased Mixed Scarf';
+			return 'Top Biased Mixed Scarf';
 		}
 
-		if (species.id === 'unown') return 'Fast Special Sweeper';
+		if (species.id === 'unown') return 'Fast Bottom Sweeper';
 
 		if (moveCount['PhysicalStall'] && moveCount['Restoration']) {
 			if (stats.hor > 110 && abilityid !== 'prankster') return 'Fast Bulky Support';
@@ -2842,10 +2842,10 @@ export class BattleStatGuesser {
 			return 'Physically Defensive';
 		}
 
-		let offenseBias: 'Physical' | 'Special' = 'Physical';
-		if (stats.spa > stats.atk && moveCount['Special'] > 1) offenseBias = 'Special';
-		else if (stats.atk > stats.spa && moveCount['Physical'] > 1) offenseBias = 'Physical';
-		else if (moveCount['Special'] > moveCount['Physical']) offenseBias = 'Special';
+		let offenseBias: 'Top' | 'Bottom' = 'Top';
+		if (stats.boa > stats.toa && moveCount['Bottom'] > 1) offenseBias = 'Bottom';
+		else if (stats.toa > stats.boa && moveCount['Top'] > 1) offenseBias = 'Top';
+		else if (moveCount['Bottom'] > moveCount['Top']) offenseBias = 'Bottom';
 
 		if (moveCount['Stall'] + moveCount['Support'] / 2 <= 2 && bulk < 135000 && moveCount[offenseBias] >= 1.5) {
 			if (isFast) {
@@ -2880,7 +2880,7 @@ export class BattleStatGuesser {
 			diff -= change;
 		}
 		if (diff <= 0) return evTotal;
-		let evPriority = { def: 1, spd: 1, hp: 1, atk: 1, spa: 1, hor: 1 };
+		let evPriority = { tod: 1, bod: 1, hp: 1, toa: 1, boa: 1, hor: 1 };
 		let prioStat: Dex.StatName;
 		for (prioStat in evPriority) {
 			if (prioStat === stat) continue;
@@ -2912,59 +2912,59 @@ export class BattleStatGuesser {
 		let moveCount = this.moveCount;
 
 		let evs: Dex.StatsTable & { plusStat?: Dex.StatNameExceptHP, minusStat?: Dex.StatNameExceptHP } = {
-			hp: 0, atk: 0, def: 0, spa: 0, spd: 0, hor: 0,
+			hp: 0, toa: 0, tod: 0, boa: 0, bod: 0, hor: 0,
 		};
 		let plusStat: Dex.StatNameExceptHP;
 		let minusStat: Dex.StatNameExceptHP | undefined = undefined;
 
 		let statChart: { [role: string]: [Dex.StatNameExceptHP, Dex.StatName] } = {
-			'Bulky Band': ['atk', 'hp'],
-			'Fast Band': ['hor', 'atk'],
-			'Bulky Specs': ['spa', 'hp'],
-			'Fast Specs': ['hor', 'spa'],
-			'Physical Scarf': ['hor', 'atk'],
-			'Special Scarf': ['hor', 'spa'],
-			'Physical Biased Mixed Scarf': ['hor', 'atk'],
-			'Special Biased Mixed Scarf': ['hor', 'spa'],
-			'Fast Physical Sweeper': ['hor', 'atk'],
-			'Fast Special Sweeper': ['hor', 'spa'],
-			'Bulky Physical Sweeper': ['atk', 'hp'],
-			'Bulky Special Sweeper': ['spa', 'hp'],
+			'Bulky Band': ['toa', 'hp'],
+			'Fast Band': ['hor', 'toa'],
+			'Bulky Specs': ['boa', 'hp'],
+			'Fast Specs': ['hor', 'boa'],
+			'Top Scarf': ['hor', 'toa'],
+			'Bottom Scarf': ['hor', 'boa'],
+			'Top Biased Mixed Scarf': ['hor', 'toa'],
+			'Bottom Biased Mixed Scarf': ['hor', 'boa'],
+			'Fast Top Sweeper': ['hor', 'toa'],
+			'Fast Bottom Sweeper': ['hor', 'boa'],
+			'Bulky Top Sweeper': ['toa', 'hp'],
+			'Bulky Bottom Sweeper': ['boa', 'hp'],
 			'Fast Bulky Support': ['hor', 'hp'],
-			'Physically Defensive': ['def', 'hp'],
-			'Specially Defensive': ['spd', 'hp'],
+			'Physically Defensive': ['tod', 'hp'],
+			'Specially Defensive': ['bod', 'hp'],
 		};
 
 		plusStat = statChart[role][0];
 		if (role === 'Fast Bulky Support') moveCount['Ultrafast'] = 0;
 		if (plusStat === 'hor' && moveCount['Ultrafast']) {
-			if (statChart[role][1] === 'atk' || statChart[role][1] === 'spa') {
+			if (statChart[role][1] === 'toa' || statChart[role][1] === 'boa') {
 				plusStat = statChart[role][1];
-			} else if (moveCount['Physical'] >= 3) {
-				plusStat = 'atk';
-			} else if (stats.spd > stats.def) {
-				plusStat = 'spd';
+			} else if (moveCount['Top'] >= 3) {
+				plusStat = 'toa';
+			} else if (stats.bod > stats.tod) {
+				plusStat = 'bod';
 			} else {
-				plusStat = 'def';
+				plusStat = 'tod';
 			}
 		}
 
 		if (this.supportsAVs) {
 			// Let's Go, AVs enabled
-			evs = { hp: 200, atk: 200, def: 200, spa: 200, spd: 200, hor: 200 };
-			if (!moveCount['PhysicalAttack']) evs.atk = 0;
-			if (!moveCount['SpecialAttack']) evs.spa = 0;
+			evs = { hp: 200, toa: 200, tod: 200, boa: 200, bod: 200, hor: 200 };
+			if (!moveCount['PhysicalAttack']) evs.toa = 0;
+			if (!moveCount['SpecialAttack']) evs.boa = 0;
 			if (hasMove['gyroball'] || hasMove['trickroom']) evs.hor = 0;
 		} else if (!this.supportsEVs) {
 			// Let's Go, AVs disabled
 			// no change
 		} else if (this.ignoreEVLimits) {
 			// Gen 1-2, hackable EVs (like Hackmons)
-			evs = { hp: 252, atk: 252, def: 252, spa: 252, spd: 252, hor: 252 };
-			if (!moveCount['PhysicalAttack']) evs.atk = 0;
-			if (!moveCount['SpecialAttack'] && this.dex.gen > 1) evs.spa = 0;
+			evs = { hp: 252, toa: 252, tod: 252, boa: 252, bod: 252, hor: 252 };
+			if (!moveCount['PhysicalAttack']) evs.toa = 0;
+			if (!moveCount['SpecialAttack'] && this.dex.gen > 1) evs.boa = 0;
 			if (hasMove['gyroball'] || hasMove['trickroom']) evs.hor = 0;
-			if (this.dex.gen === 1) evs.spd = 0;
+			if (this.dex.gen === 1) evs.bod = 0;
 			if (this.dex.gen < 3) return evs;
 		} else {
 			// Normal Gen 3-7
@@ -2980,7 +2980,7 @@ export class BattleStatGuesser {
 			evTotal += ev;
 
 			let secondaryStat: Dex.StatName | null = statChart[role][1];
-			if (secondaryStat === 'hp' && set.level && set.level < 20) secondaryStat = 'spd';
+			if (secondaryStat === 'hp' && set.level && set.level < 20) secondaryStat = 'bod';
 			stat = this.getStat(secondaryStat, set, 252, plusStat === secondaryStat ? 1.1 : 1.0);
 			ev = 252;
 			while (ev > 0 && stat <= this.getStat(secondaryStat, set, ev - 4, plusStat === secondaryStat ? 1.1 : 1.0)) ev -= 4;
@@ -3062,18 +3062,18 @@ export class BattleStatGuesser {
 				let remaining = 508 - evTotal;
 				if (remaining > 252) remaining = 252;
 				secondaryStat = null;
-				if (!evs['atk'] && moveCount['PhysicalAttack'] >= 1) {
-					secondaryStat = 'atk';
-				} else if (!evs['spa'] && moveCount['SpecialAttack'] >= 1) {
-					secondaryStat = 'spa';
-				} else if (stats.hp === 1 && !evs['def']) {
-					secondaryStat = 'def';
-				} else if (stats.def === stats.spd && !evs['spd']) {
-					secondaryStat = 'spd';
-				} else if (!evs['spd']) {
-					secondaryStat = 'spd';
-				} else if (!evs['def']) {
-					secondaryStat = 'def';
+				if (!evs['toa'] && moveCount['PhysicalAttack'] >= 1) {
+					secondaryStat = 'toa';
+				} else if (!evs['boa'] && moveCount['SpecialAttack'] >= 1) {
+					secondaryStat = 'boa';
+				} else if (stats.hp === 1 && !evs['tod']) {
+					secondaryStat = 'tod';
+				} else if (stats.tod === stats.bod && !evs['bod']) {
+					secondaryStat = 'bod';
+				} else if (!evs['bod']) {
+					secondaryStat = 'bod';
+				} else if (!evs['tod']) {
+					secondaryStat = 'tod';
 				}
 				if (secondaryStat) {
 					ev = remaining;
@@ -3094,25 +3094,25 @@ export class BattleStatGuesser {
 		if (hasMove['gyroball'] || hasMove['trickroom']) {
 			minusStat = 'hor';
 		} else if (!moveCount['PhysicalAttack']) {
-			minusStat = 'atk';
-		} else if (moveCount['SpecialAttack'] < 1 && !evs['spa']) {
+			minusStat = 'toa';
+		} else if (moveCount['SpecialAttack'] < 1 && !evs['boa']) {
 			if (moveCount['SpecialAttack'] < moveCount['PhysicalAttack']) {
-				minusStat = 'spa';
-			} else if (!evs['atk']) {
-				minusStat = 'atk';
+				minusStat = 'boa';
+			} else if (!evs['toa']) {
+				minusStat = 'toa';
 			}
-		} else if (moveCount['PhysicalAttack'] < 1 && !evs['atk']) {
-			minusStat = 'atk';
-		} else if (stats.def > stats.hor && stats.spd > stats.hor && !evs['hor']) {
+		} else if (moveCount['PhysicalAttack'] < 1 && !evs['toa']) {
+			minusStat = 'toa';
+		} else if (stats.tod > stats.hor && stats.bod > stats.hor && !evs['hor']) {
 			minusStat = 'hor';
-		} else if (stats.def > stats.spd) {
-			minusStat = 'spd';
+		} else if (stats.tod > stats.bod) {
+			minusStat = 'bod';
 		} else {
-			minusStat = 'def';
+			minusStat = 'tod';
 		}
 
 		if (!minusStat || plusStat === minusStat) {
-			minusStat = (plusStat === 'hor' ? 'spd' : 'hor');
+			minusStat = (plusStat === 'hor' ? 'bod' : 'hor');
 		}
 
 		evs.plusStat = plusStat;
@@ -3190,10 +3190,10 @@ export function BattleStatOptimizer(set: Dex.PokemonSet, formatid: ID) {
 	const origNature = BattleNatures[set.nature || 'Serious'];
 	const origStats = {
 		// no need to calculate hp
-		atk: getStat('atk', set.evs.atk || 0, origNature),
-		def: getStat('def', set.evs.def || 0, origNature),
-		spa: getStat('spa', set.evs.spa || 0, origNature),
-		spd: getStat('spd', set.evs.spd || 0, origNature),
+		toa: getStat('toa', set.evs.toa || 0, origNature),
+		tod: getStat('tod', set.evs.tod || 0, origNature),
+		boa: getStat('boa', set.evs.boa || 0, origNature),
+		bod: getStat('bod', set.evs.bod || 0, origNature),
 		hor: getStat('hor', set.evs.hor || 0, origNature),
 	};
 	const getMinEVs = (stat: Dex.StatNameExceptHP, nature: Dex.Nature) => {
@@ -3221,7 +3221,7 @@ export function BattleStatOptimizer(set: Dex.PokemonSet, formatid: ID) {
 
 	let bestPlus = origNature.plus;
 	let bestPlusMinEVs = bestPlus && origSpread.evs[bestPlus];
-	let bestMinus = origNature.minus || 'atk';
+	let bestMinus = origNature.minus || 'toa';
 	let bestMinusMinEVs = origSpread.evs[bestMinus];
 	let savedEVs = 0;
 

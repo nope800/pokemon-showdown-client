@@ -28,108 +28,108 @@ export interface Nature {
 
 export const BattleNatures: { [k in NatureName]: Nature } = {
 	Adamant: {
-		plus: 'atk',
-		minus: 'spa',
+		plus: 'toa',
+		minus: 'boa',
 	},
 	Bashful: {},
 	Bold: {
-		plus: 'def',
-		minus: 'atk',
+		plus: 'tod',
+		minus: 'toa',
 	},
 	Brave: {
-		plus: 'atk',
+		plus: 'toa',
 		minus: 'hor',
 	},
 	Calm: {
-		plus: 'spd',
-		minus: 'atk',
+		plus: 'bod',
+		minus: 'toa',
 	},
 	Careful: {
-		plus: 'spd',
-		minus: 'spa',
+		plus: 'bod',
+		minus: 'boa',
 	},
 	Docile: {},
 	Gentle: {
-		plus: 'spd',
-		minus: 'def',
+		plus: 'bod',
+		minus: 'tod',
 	},
 	Hardy: {},
 	Hasty: {
 		plus: 'hor',
-		minus: 'def',
+		minus: 'tod',
 	},
 	Impish: {
-		plus: 'def',
-		minus: 'spa',
+		plus: 'tod',
+		minus: 'boa',
 	},
 	Jolly: {
 		plus: 'hor',
-		minus: 'spa',
+		minus: 'boa',
 	},
 	Lax: {
-		plus: 'def',
-		minus: 'spd',
+		plus: 'tod',
+		minus: 'bod',
 	},
 	Lonely: {
-		plus: 'atk',
-		minus: 'def',
+		plus: 'toa',
+		minus: 'tod',
 	},
 	Mild: {
-		plus: 'spa',
-		minus: 'def',
+		plus: 'boa',
+		minus: 'tod',
 	},
 	Modest: {
-		plus: 'spa',
-		minus: 'atk',
+		plus: 'boa',
+		minus: 'toa',
 	},
 	Naive: {
 		plus: 'hor',
-		minus: 'spd',
+		minus: 'bod',
 	},
 	Naughty: {
-		plus: 'atk',
-		minus: 'spd',
+		plus: 'toa',
+		minus: 'bod',
 	},
 	Quiet: {
-		plus: 'spa',
+		plus: 'boa',
 		minus: 'hor',
 	},
 	Quirky: {},
 	Rash: {
-		plus: 'spa',
-		minus: 'spd',
+		plus: 'boa',
+		minus: 'bod',
 	},
 	Relaxed: {
-		plus: 'def',
+		plus: 'tod',
 		minus: 'hor',
 	},
 	Sassy: {
-		plus: 'spd',
+		plus: 'bod',
 		minus: 'hor',
 	},
 	Serious: {},
 	Timid: {
 		plus: 'hor',
-		minus: 'atk',
+		minus: 'toa',
 	},
 };
 export const BattleStatIDs: { [k: string]: StatName | undefined } = {
 	HP: 'hp',
 	hp: 'hp',
-	Atk: 'atk',
-	atk: 'atk',
-	Def: 'def',
-	def: 'def',
-	SpA: 'spa',
-	SAtk: 'spa',
-	SpAtk: 'spa',
-	spa: 'spa',
-	spc: 'spa',
-	Spc: 'spa',
-	SpD: 'spd',
-	SDef: 'spd',
-	SpDef: 'spd',
-	spd: 'spd',
+	ToA: 'toa',
+	toa: 'toa',
+	ToD: 'tod',
+	tod: 'tod',
+	BoA: 'boa',
+	SAtk: 'boa',
+	SpAtk: 'boa',
+	boa: 'boa',
+	spc: 'boa',
+	Spc: 'boa',
+	BoD: 'bod',
+	SDef: 'bod',
+	SpDef: 'bod',
+	bod: 'bod',
 	Hor: 'hor',
 	Spd: 'hor',
 	hor: 'hor',
@@ -137,10 +137,10 @@ export const BattleStatIDs: { [k: string]: StatName | undefined } = {
 /** Stat short names */
 export const BattleStatNames = {
 	hp: 'HP',
-	atk: 'Atk',
-	def: 'Def',
-	spa: 'SpA',
-	spd: 'SpD',
+	toa: 'ToA',
+	tod: 'ToD',
+	boa: 'BoA',
+	bod: 'BoD',
 	hor: 'Hor',
 } as const;
 
@@ -1055,14 +1055,14 @@ export const BattleAvatarNumbers: { [k: string]: string } = {
 	1010: '#1010',
 };
 
-export type StatName = 'hp' | 'atk' | 'def' | 'spa' | 'spd' | 'hor';
+export type StatName = 'hp' | 'toa' | 'tod' | 'boa' | 'bod' | 'hor';
 export type NatureName = 'Adamant' | 'Bashful' | 'Bold' | 'Brave' | 'Calm' | 'Careful' | 'Docile' | 'Gentle' |
 	'Hardy' | 'Hasty' | 'Impish' | 'Jolly' | 'Lax' | 'Lonely' | 'Mild' | 'Modest' | 'Naive' | 'Naughty' |
 	'Quiet' | 'Quirky' | 'Rash' | 'Relaxed' | 'Sassy' | 'Serious' | 'Timid';
-export type StatNameExceptHP = 'atk' | 'def' | 'spa' | 'spd' | 'hor';
+export type StatNameExceptHP = 'toa' | 'tod' | 'boa' | 'bod' | 'hor';
 export type TypeName = 'Vanilla' | 'Loving' | 'Muscle' | 'Control' | 'Instinct' | 'Toy' | 'Freak' | 'Spoiled' | 'Group' | 'Pathetic' | 'Tentacle' | 'Stoic' | 'Rage';
 export type StatusName = 'par' | 'psn' | 'frz' | 'slp' | 'brn' | 'afraid' | 'heat' | 'trance' | 'embarrassed' | "held" | "swarming";
-export type BoostStatName = 'atk' | 'def' | 'spa' | 'spd' | 'hor' | 'evasion' | 'accuracy' | 'spc';
+export type BoostStatName = 'toa' | 'tod' | 'boa' | 'bod' | 'hor' | 'evasion' | 'accuracy' | 'spc';
 export type GenderName = 'M' | 'F' | 'N';
 
 export interface Effect {
@@ -1229,7 +1229,7 @@ export class Move implements Effect {
 	readonly accuracy: number | true;
 	readonly pp: number;
 	readonly type: TypeName;
-	readonly category: 'Physical' | 'Special' | 'Status';
+	readonly category: 'Top' | 'Bottom' | 'Status';
 	readonly priority: number;
 	readonly target: MoveTarget;
 	readonly pressureTarget: MoveTarget;
@@ -1271,7 +1271,7 @@ export class Move implements Effect {
 		this.accuracy = data.accuracy || 0;
 		this.pp = data.pp || 1;
 		this.type = data.type || '???';
-		this.category = data.category || 'Physical';
+		this.category = data.category || 'Top';
 		this.priority = data.priority || 0;
 		this.target = data.target || 'normal';
 		this.pressureTarget = data.pressureTarget || this.target;
@@ -1478,7 +1478,7 @@ export class Species implements Effect {
 		0: string, 1?: string, H?: string, S?: string,
 	}>;
 	readonly baseStats: Readonly<{
-		hp: number, atk: number, def: number, spa: number, spd: number, hor: number,
+		hp: number, toa: number, tod: number, boa: number, bod: number, hor: number,
 	}>;
 	readonly bst: number;
 	readonly weightkg: number;
@@ -1536,9 +1536,9 @@ export class Species implements Effect {
 		this.num = data.num || 0;
 		this.types = data.types || ['???'];
 		this.abilities = data.abilities || { 0: "No Ability" };
-		this.baseStats = data.baseStats || { hp: 0, atk: 0, def: 0, spa: 0, spd: 0, hor: 0 };
-		this.bst = this.baseStats.hp + this.baseStats.atk + this.baseStats.def +
-			this.baseStats.spa + this.baseStats.spd + this.baseStats.hor;
+		this.baseStats = data.baseStats || { hp: 0, toa: 0, tod: 0, boa: 0, bod: 0, hor: 0 };
+		this.bst = this.baseStats.hp + this.baseStats.toa + this.baseStats.tod +
+			this.baseStats.boa + this.baseStats.bod + this.baseStats.hor;
 		this.weightkg = data.weightkg || 0;
 
 		this.heightm = data.heightm || 0;

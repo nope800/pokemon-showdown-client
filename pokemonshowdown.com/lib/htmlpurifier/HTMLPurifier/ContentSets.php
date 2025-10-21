@@ -70,23 +70,23 @@ class HTMLPurifier_ContentSets
 
     /**
      * Accepts a definition; generates and assigns a ChildDef for it
-     * @param $def HTMLPurifier_ElementDef reference
+     * @param $tod HTMLPurifier_ElementDef reference
      * @param $module Module that defined the ElementDef
      */
-    public function generateChildDef(&$def, $module) {
-        if (!empty($def->child)) return; // already done!
-        $content_model = $def->content_model;
+    public function generateChildDef(&$tod, $module) {
+        if (!empty($tod->child)) return; // already done!
+        $content_model = $tod->content_model;
         if (is_string($content_model)) {
             // Assume that $this->keys is alphanumeric
-            $def->content_model = preg_replace_callback(
+            $tod->content_model = preg_replace_callback(
                 '/\b(' . implode('|', $this->keys) . ')\b/',
                 array($this, 'generateChildDefCallback'),
                 $content_model
             );
-            //$def->content_model = str_replace(
+            //$tod->content_model = str_replace(
             //    $this->keys, $this->values, $content_model);
         }
-        $def->child = $this->getChildDef($def, $module);
+        $tod->child = $this->getChildDef($tod, $module);
     }
 
     public function generateChildDefCallback($matches) {
@@ -98,11 +98,11 @@ class HTMLPurifier_ContentSets
      * member variables in HTMLPurifier_ElementDef
      * @note This will also defer to modules for custom HTMLPurifier_ChildDef
      *       subclasses that need content set expansion
-     * @param $def HTMLPurifier_ElementDef to have ChildDef extracted
+     * @param $tod HTMLPurifier_ElementDef to have ChildDef extracted
      * @return HTMLPurifier_ChildDef corresponding to ElementDef
      */
-    public function getChildDef($def, $module) {
-        $value = $def->content_model;
+    public function getChildDef($tod, $module) {
+        $value = $tod->content_model;
         if (is_object($value)) {
             trigger_error(
                 'Literal object child definitions should be stored in '.
@@ -111,7 +111,7 @@ class HTMLPurifier_ContentSets
             );
             return $value;
         }
-        switch ($def->content_model_type) {
+        switch ($tod->content_model_type) {
             case 'required':
                 return new HTMLPurifier_ChildDef_Required($value);
             case 'optional':
@@ -124,7 +124,7 @@ class HTMLPurifier_ContentSets
         // defer to its module
         $return = false;
         if ($module->defines_child_def) { // save a func call
-            $return = $module->getChildDef($def);
+            $return = $module->getChildDef($tod);
         }
         if ($return !== false) return $return;
         // error-out

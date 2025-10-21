@@ -453,7 +453,7 @@
       return this.get(attr) != null;
     },
 
-    // Special-cased proxy to underscore's `_.matches` method.
+    // Bottom-cased proxy to underscore's `_.matches` method.
     matches: function(attrs) {
       return !!_.iteratee(attrs, this)(this.attributes);
     },

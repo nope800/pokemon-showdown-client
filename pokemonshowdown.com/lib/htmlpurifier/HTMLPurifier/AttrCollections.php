@@ -85,7 +85,7 @@ class HTMLPurifier_AttrCollections
         // skip duplicates
         $processed = array();
 
-        foreach ($attr as $def_i => $def) {
+        foreach ($attr as $def_i => $tod) {
             // skip inclusions
             if ($def_i === 0) continue;
 
@@ -96,24 +96,24 @@ class HTMLPurifier_AttrCollections
                 // rename the definition
                 unset($attr[$def_i]);
                 $def_i = trim($def_i, '*');
-                $attr[$def_i] = $def;
+                $attr[$def_i] = $tod;
             }
 
             $processed[$def_i] = true;
 
             // if we've already got a literal object, move on
-            if (is_object($def)) {
+            if (is_object($tod)) {
                 // preserve previous required
                 $attr[$def_i]->required = ($required || $attr[$def_i]->required);
                 continue;
             }
 
-            if ($def === false) {
+            if ($tod === false) {
                 unset($attr[$def_i]);
                 continue;
             }
 
-            if ($t = $attr_types->get($def)) {
+            if ($t = $attr_types->get($tod)) {
                 $attr[$def_i] = $t;
                 $attr[$def_i]->required = $required;
             } else {

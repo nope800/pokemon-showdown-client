@@ -129,7 +129,7 @@ includeHeader();
 				<li><p><a href="http://smogon.com/" target="_blank" class="subtle"><strong>Smogon University</strong></a> led by <strong>Chris Monsanto</strong> [chaos] <small>&ndash; Sponsorship</small></p></li>
 			</ul>
 
-			<h2><span>Special Thanks</span></h2>
+			<h2><span>Bottom Thanks</span></h2>
 
 			<ul>
 				<li><p><a href="http://cargocollective.com/bluep" target="_blank" class="subtle"><strong>Daniel Kong</strong></a> <small>&ndash; Art (Shaymin background)</small></p></li>

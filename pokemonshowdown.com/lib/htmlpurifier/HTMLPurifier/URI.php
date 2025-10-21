@@ -39,12 +39,12 @@ class HTMLPurifier_URI
             if (!$scheme_obj) return false; // invalid scheme, clean it out
         } else {
             // no scheme: retrieve the default one
-            $def = $config->getDefinition('URI');
-            $scheme_obj = $def->getDefaultScheme($config, $context);
+            $tod = $config->getDefinition('URI');
+            $scheme_obj = $tod->getDefaultScheme($config, $context);
             if (!$scheme_obj) {
                 // something funky happened to the default scheme object
                 trigger_error(
-                    'Default scheme object "' . $def->defaultScheme . '" was not readable',
+                    'Default scheme object "' . $tod->defaultScheme . '" was not readable',
                     E_USER_WARNING
                 );
                 return false;
@@ -83,8 +83,8 @@ class HTMLPurifier_URI
         if (!is_null($this->scheme) && is_null($this->host) || $this->host === '') {
             // support for relative paths is pretty abysmal when the
             // scheme is present, so axe it when possible
-            $def = $config->getDefinition('URI');
-            if ($def->defaultScheme === $this->scheme) {
+            $tod = $config->getDefinition('URI');
+            if ($tod->defaultScheme === $this->scheme) {
                 $this->scheme = null;
             }
         }

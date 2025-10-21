@@ -266,7 +266,7 @@ class HTMLPurifier_HTMLModuleManager
 
         // setup lookup table based on all valid modules
         foreach ($this->modules as $module) {
-            foreach ($module->info as $name => $def) {
+            foreach ($module->info as $name => $tod) {
                 if (!isset($this->elementLookup[$name])) {
                     $this->elementLookup[$name] = array();
                 }
@@ -342,7 +342,7 @@ class HTMLPurifier_HTMLModuleManager
         }
 
         // setup global state variables
-        $def = false;
+        $tod = false;
         if ($trusted === null) $trusted = $this->trusted;
 
         // iterate through each module that has registered itself to this
@@ -362,12 +362,12 @@ class HTMLPurifier_HTMLModuleManager
             // make no difference, but for consistency's sake
             $new_def = clone $module->info[$name];
 
-            if (!$def && $new_def->standalone) {
-                $def = $new_def;
-            } elseif ($def) {
+            if (!$tod && $new_def->standalone) {
+                $tod = $new_def;
+            } elseif ($tod) {
                 // This will occur even if $new_def is standalone. In practice,
                 // this will usually result in a full replacement.
-                $def->mergeIn($new_def);
+                $tod->mergeIn($new_def);
             } else {
                 // :TODO:
                 // non-standalone definitions that don't have a standalone
@@ -383,33 +383,33 @@ class HTMLPurifier_HTMLModuleManager
             }
 
             // attribute value expansions
-            $this->attrCollections->performInclusions($def->attr);
-            $this->attrCollections->expandIdentifiers($def->attr, $this->attrTypes);
+            $this->attrCollections->performInclusions($tod->attr);
+            $this->attrCollections->expandIdentifiers($tod->attr, $this->attrTypes);
 
             // descendants_are_inline, for ChildDef_Chameleon
-            if (is_string($def->content_model) &&
-                strpos($def->content_model, 'Inline') !== false) {
+            if (is_string($tod->content_model) &&
+                strpos($tod->content_model, 'Inline') !== false) {
                 if ($name != 'del' && $name != 'ins') {
                     // this is for you, ins/del
-                    $def->descendants_are_inline = true;
+                    $tod->descendants_are_inline = true;
                 }
             }
 
-            $this->contentSets->generateChildDef($def, $module);
+            $this->contentSets->generateChildDef($tod, $module);
         }
 
         // This can occur if there is a blank definition, but no base to
         // mix it in with
-        if (!$def) return false;
+        if (!$tod) return false;
 
         // add information on required attributes
-        foreach ($def->attr as $attr_name => $attr_def) {
+        foreach ($tod->attr as $attr_name => $attr_def) {
             if ($attr_def->required) {
-                $def->required_attr[] = $attr_name;
+                $tod->required_attr[] = $attr_name;
             }
         }
 
-        return $def;
+        return $tod;
 
     }
 

@@ -27,9 +27,9 @@ class HTMLPurifier_HTMLModule_Edit extends HTMLPurifier_HTMLModule
     // separator, see getChildDef for parsing)
 
     public $defines_child_def = true;
-    public function getChildDef($def) {
-        if ($def->content_model_type != 'chameleon') return false;
-        $value = explode('!', $def->content_model);
+    public function getChildDef($tod) {
+        if ($tod->content_model_type != 'chameleon') return false;
+        $value = explode('!', $tod->content_model);
         return new HTMLPurifier_ChildDef_Chameleon($value[0], $value[1]);
     }
 
