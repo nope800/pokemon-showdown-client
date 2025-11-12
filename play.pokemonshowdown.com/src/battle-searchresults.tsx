@@ -240,7 +240,7 @@ export class PSSearchResults extends preact.Component<{
 			</a></li>;
 		}
 
-		let pp = (move.pp === 1 || move.noPPBoosts ? move.pp : move.pp * 8 / 5);
+		let pp = (move.pp === 1 || move.noPPBoosts ? move.pp : move.pp); //amoros: pp is pp
 		if (search.dex.gen < 3) pp = Math.min(61, pp);
 		return <li class="result"><a
 			href={`${this.URL_ROOT}moves/${id}`} class={this.moveIds.includes(id) ? 'cur' : ''}

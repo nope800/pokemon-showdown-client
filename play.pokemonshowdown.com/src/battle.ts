@@ -841,12 +841,19 @@ export class Side {
 		pokemon.lastMove = '';
 		this.battle.lastMove = 'switch-in';
 		const effect = Dex.getEffect(kwArgs.from);
+		if (['cheerlead'].includes(effect.id)) {
+			if (effect.id == 'cheerlead') {
+				pokemon.status = "swarming"
+				//this.battle.add()
+			}
+		}
 		if (['batonpass', 'zbatonpass', 'shedtail'].includes(effect.id)) {
 			pokemon.copyVolatileFrom(this.lastPokemon!, effect.id === 'shedtail' ? 'shedtail' : false);
 		} else if (this.battle.tier.includes(`Relay Race`) && !effect.id) {
 			if (this.lastPokemon && !this.lastPokemon.fainted) pokemon.copyVolatileFrom(this.lastPokemon, false);
 		}
-
+		if (effect.id == 'shedtail') {
+		}
 		this.battle.scene.animSummon(pokemon, slot);
 	}
 	dragIn(pokemon: Pokemon, slot = pokemon.slot) {

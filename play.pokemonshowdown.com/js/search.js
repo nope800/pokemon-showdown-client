@@ -564,7 +564,7 @@
 		buf += '</span> ';
 
 		// power, accuracy, pp
-		var pp = (move.pp === 1 || move.noPPBoosts ? move.pp : move.pp * 8 / 5);
+		var pp = (move.pp === 1 || move.noPPBoosts ? move.pp : move.pp); //amoros: pp is pp
 		if (this.engine && this.engine.dex.gen < 3) pp = Math.min(61, pp);
 		buf += '<span class="col labelcol">' + (move.category !== 'Status' ? ('<em>Power</em><br />' + (move.basePower || '&mdash;')) : '') + '</span> ';
 		buf += '<span class="col widelabelcol"><em>Accuracy</em><br />' + (move.accuracy && move.accuracy !== true ? move.accuracy + '%' : '&mdash;') + '</span> ';
@@ -601,7 +601,7 @@
 		buf += '</span> ';
 
 		// power, accuracy, pp
-		var pp = (move.pp === 1 || move.noPPBoosts ? move.pp : move.pp * 8 / 5);
+		var pp = (move.pp === 1 || move.noPPBoosts ? move.pp : move.pp); //pp is pp amoros
 		if (this.engine && this.engine.dex.gen < 3) pp = Math.min(61, pp);
 		buf += '<span class="col labelcol">' + (move.category !== 'Status' ? ('<em>Power</em><br />' + (move.basePower || '&mdash;')) : '') + '</span> ';
 		buf += '<span class="col widelabelcol"><em>Accuracy</em><br />' + (move.accuracy && move.accuracy !== true ? move.accuracy + '%' : '&mdash;') + '</span> ';
@@ -642,7 +642,8 @@
 		// power, accuracy, pp
 		buf += '<span class="col labelcol">' + (move.category !== 'Status' ? ('<em>Power</em><br />' + (move.basePower || '&mdash;')) : '') + '</span> ';
 		buf += '<span class="col widelabelcol"><em>Accuracy</em><br />' + (move.accuracy && move.accuracy !== true ? move.accuracy + '%' : '&mdash;') + '</span> ';
-		buf += '<span class="col pplabelcol"><em>PP</em><br />' + (move.pp !== 1 ? move.pp * 8 / 5 : move.pp) + '</span> ';
+		buf += '<span class="col pplabelcol"><em>PP</em><br />' + (move.pp !== 1 ? move.pp : move.pp) + '</span> ';
+		//amoros: pp is pp
 
 		// desc
 		buf += '<span class="col movedesccol">' + BattleLog.escapeHTML(move.shortDesc || move.desc) + '</span> ';
