@@ -596,12 +596,12 @@
 		setNoanim: function (e) {
 			var noanim = !!e.currentTarget.checked;
 			Storage.prefs('noanim', noanim);
-			Dex.loadSpriteData(noanim || Dex.prefs('bwgfx') ? 'bw' : 'xy');
+			Dex.loadSpriteData(noanim || Dex.prefs('bwgfx') ? 'bw' : 'bw');
 		},
 		setNogif: function (e) {
 			var nogif = !!e.currentTarget.checked;
 			Storage.prefs('nogif', nogif);
-			Dex.loadSpriteData(nogif || Dex.prefs('bwgfx') ? 'bw' : 'xy');
+			Dex.loadSpriteData(nogif || Dex.prefs('bwgfx') ? 'bw' : 'bw');
 		},
 		setTheme: function (e) {
 			var theme = e.currentTarget.value;
@@ -618,7 +618,7 @@
 		setBwgfx: function (e) {
 			var bwgfx = !!e.currentTarget.checked;
 			Storage.prefs('bwgfx', bwgfx);
-			Dex.loadSpriteData(bwgfx || Dex.prefs('noanim') ? 'bw' : 'xy');
+			Dex.loadSpriteData(bwgfx || Dex.prefs('noanim') ? 'bw' : 'bw');
 		},
 		setNopastgens: function (e) {
 			var nopastgens = !!e.currentTarget.checked;

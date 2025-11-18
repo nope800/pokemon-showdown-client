@@ -616,7 +616,7 @@ class OptionsPanel extends PSRoomPanel {
 		}
 		case 'bwgfx': {
 			PS.prefs.set('bwgfx', value);
-			Dex.loadSpriteData(value || PS.prefs.noanim ? 'bw' : 'xy');
+			Dex.loadSpriteData(value || PS.prefs.noanim ? 'bw' : 'bw');
 			break;
 		}
 		case 'language': {

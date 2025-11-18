@@ -505,13 +505,11 @@ function toId() {
 					self.singlePanelMode = true;
 					self.updateLayout();
 				}
-
-				if (Dex.prefs('bwgfx') || Dex.prefs('noanim')) {
+				//AMOROS: always use bw sprites.
 					// since xy data is loaded by default, only call
 					// loadSpriteData if we want bw sprites or if we need bw
 					// sprite data (if animations are disabled)
-					Dex.loadSpriteData('bw');
-				}
+				Dex.loadSpriteData('bw');
 			});
 
 			this.on('init:unsupported', function () {

@@ -40,9 +40,8 @@ export class BattlesRoom extends PSRoom {
 		super(options);
 		this.refresh();
 		// If graphics preference is set to use BW sprites
-		if (PS.prefs.bwgfx) {
-			Dex.loadSpriteData('bw');
-		}
+		//AMOROS: always use bwgx
+		Dex.loadSpriteData('bw');
 	}
 	setFormat(format: string) {
 		if (format === this.format) return this.refresh();
