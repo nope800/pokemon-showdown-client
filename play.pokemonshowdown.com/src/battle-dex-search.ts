@@ -1446,6 +1446,11 @@ class BattleMoveSearch extends BattleTypedSearch<'move'> {
 		// business of taking sides in arguments, or making judgments about
 		// specific metagames. If it could potentially be useful in some metagame,
 		// it is not useless.
+		
+		//AMOROS: everything is useful.
+		return true
+
+
 		const dex = this.dex;
 
 		let abilityid: ID = set ? toID(set.ability) : '' as ID;

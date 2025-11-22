@@ -554,6 +554,7 @@ export const Dex = new class implements ModdedDex {
 	}
 
 	loadSpriteData(gen: 'xy' | 'bw') {
+		gen = 'bw' //AMOROS
 		if (this.loadedSpriteData[gen]) return;
 		this.loadedSpriteData[gen] = 1;
 
@@ -574,6 +575,7 @@ export const Dex = new class implements ModdedDex {
 		mod?: string,
 		dynamax?: boolean,
 	} = { gen: 6 }) {
+		options.noScale = true //AMOROS: no scaling the sprites. I'm lazy.
 		const mechanicsGen = options.gen || 6;
 		let isDynamax = !!options.dynamax;
 		if (pokemon instanceof Pokemon) {
@@ -710,8 +712,9 @@ export const Dex = new class implements ModdedDex {
 			spriteData.cryurl += '.mp3';
 		}
 
-		let animatedSprite = false;
-		if (!Dex.prefs('noanim') && !Dex.prefs('nogif') && spriteData.gen >= 5) {
+		let animatedSprite = false; //AMOROS no anim
+		console.log("HERE")
+		if (false) {
 			const animationArray: [AnyObject, string][] = [];
 			if (baseDir === '' && window.BattlePokemonSprites) {
 				animationArray.push([BattlePokemonSprites[speciesid], '']);
@@ -856,6 +859,16 @@ export const Dex = new class implements ModdedDex {
 				y: 5,
 			};
 		}
+		//AMOROS: set the data ourselves I don't want to deal with all that
+		return {
+			spriteid,
+			spriteDir: 'sprites/gen5',
+			shiny: !!pokemon.shiny,
+			x: 0,
+			y: 0,		
+			h: 100,	
+		}
+
 		const spriteData: TeambuilderSpriteData = {
 			spriteid,
 			spriteDir: 'sprites/dex',

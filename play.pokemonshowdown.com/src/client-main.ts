@@ -89,7 +89,7 @@ class PSPrefs extends PSStreamModel<string | null> {
 	 * false - Enable GIFs all the time.
 	 * null - Enable GIFs only on Chrome 64.
 	 */
-	nogif: boolean | null = null;
+	nogif: boolean | null = true;
 
 	/* Graphics Preferences */
 	noanim: boolean | null = null;
@@ -232,13 +232,13 @@ class PSPrefs extends PSStreamModel<string | null> {
 		}
 
 		const isChrome64 = navigator.userAgent.includes(' Chrome/64.');
-		if (newPrefs['nogif'] !== undefined) {
-			if (!isChrome64) {
-				delete newPrefs['nogif'];
-			}
+		if (newPrefs['nogif'] !== undefined) { //AMOROS: always treat nogif as true
+			//if (!isChrome64) {
+			//	delete newPrefs['nogif'];
+			//}
 		} else if (isChrome64) {
 			newPrefs['nogif'] = true;
-			PS.alert('Your version of Chrome has a bug that makes animated GIFs freeze games sometimes, so certain animations have been disabled. Only some people have the problem, so you can experiment and enable them in the Options menu setting "Disable GIFs for Chrome 64 bug".');
+			//PS.alert('Your version of Chrome has a bug that makes animated GIFs freeze games sometimes, so certain animations have been disabled. Only some people have the problem, so you can experiment and enable them in the Options menu setting "Disable GIFs for Chrome 64 bug".');
 		}
 
 		const colorSchemeQuerySupported = window.matchMedia?.('(prefers-color-scheme: dark)').media !== 'not all';

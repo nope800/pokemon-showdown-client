@@ -598,8 +598,9 @@
 			Storage.prefs('noanim', noanim);
 			Dex.loadSpriteData(noanim || Dex.prefs('bwgfx') ? 'bw' : 'bw');
 		},
-		setNogif: function (e) {
-			var nogif = !!e.currentTarget.checked;
+		setNogif: function (e) {//AMOROS: always set this to true
+			//var nogif = !!e.currentTarget.checked; 
+			var nogif = true;
 			Storage.prefs('nogif', nogif);
 			Dex.loadSpriteData(nogif || Dex.prefs('bwgfx') ? 'bw' : 'bw');
 		},
