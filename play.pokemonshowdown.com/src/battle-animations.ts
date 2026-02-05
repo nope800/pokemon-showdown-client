@@ -1600,7 +1600,7 @@ export class BattleScene implements BattleSceneStub {
 		this.preloadImage(Dex.resourcePrefix + 'sprites/ani-back/substitute.gif');
 	}
 	rollBgm() {
-		this.setBgm(1 + this.numericId % 2);
+		this.setBgm(1 + this.numericId % 15);
 	}
 	setBgm(bgmNum: number) {
 		if (this.bgmNum === bgmNum) return;
@@ -1617,12 +1617,10 @@ export class BattleScene implements BattleSceneStub {
 			this.bgm = BattleSound.loadBgm('audio/colosseum-miror-b.mp3', 896, 47462, this.bgm);
 			break;
 		case 1:
-			console.log("SHOULD BE GYM THEME")
-			this.bgm = BattleSound.loadBgm('audio/Amoros-Gym-Battle-Theme.mp3', 32000, 122000, this.bgm);
+			this.bgm = BattleSound.loadBgm('audio/dpp-trainer.mp3', 13440, 96959, this.bgm);
 			break;
 		case 2:
-			console.log("SHOULD BE PKMN THEME")
-			this.bgm = BattleSound.loadBgm('audio/Amoros-Battle-PKMN.mp3', 2500, 58500, this.bgm);
+			this.bgm = BattleSound.loadBgm('audio/dpp-rival.mp3', 13888, 66352, this.bgm);
 			break;
 		case 3:
 			this.bgm = BattleSound.loadBgm('audio/hgss-johto-trainer.mp3', 23731, 125086, this.bgm);
