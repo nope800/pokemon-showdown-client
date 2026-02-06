@@ -37973,7 +37973,7 @@ export const BattleMoveAnims: AnimTable = {
 	pleadingeyes: {
 		anim: BattleOtherAnims.dance.anim,
 	},
-	failforwards: {
+	failforward: {
 		anim: BattleOtherAnims.fastattack.anim,
 	},
 	clench: {
